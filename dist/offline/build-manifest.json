@@ -1,7 +1,7 @@
 {
   "name": "Youth Fighter Offline Build",
-  "generatedAt": "2026-11-16T04:58:53.385Z",
-  "version": "0.11.0-combat.0",
+  "generatedAt": "2026-11-16T05:41:33.429Z",
+  "version": "0.11.0-combat.1",
   "sourceHashes": {
     "index.html": "dcfee0e6fc93f592e91d231f683beb38116e9feeb990ef0b56b55f2f2d5181e3",
     "style.css": "f6a107b3b8748c3bd6116922fd239dd7ca4ac47abafa7e3673c6ab8de0a48f92",
@@ -48,7 +48,7 @@
     "performance.js": "a58e8f45a53e4f20a20029fe02fad3442fb39f358d386e8a120fecef49e01f3a",
     "performance-ui.js": "a26be088f2608938659f5b21074a45e20ed0ce4d3afad4af42d995315ba31186",
     "terrain-cache.js": "815ef97ecb65f19866e39848f5b350c13e5680ce8c4e52547514255de076428a",
-    "game.js": "08fc28decc3f7c93b455820e78e171e5da87e689a8de7c70a79d7486a2f9e817"
+    "game.js": "e4145677de29bcd9542205169cdacc5acf711b9186c9c73bb57d8df2a7a0c66a"
   },
   "entryPoints": [
     "public/index.html",
