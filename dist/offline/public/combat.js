@@ -1,12 +1,12 @@
 /* Shared simulation actions. Rendering and client timers never resolve hits. */
 (function(r,f){if(typeof module==='object')module.exports=f(require('./combat-data.js'),require('./combat-combos.js'),require('./combat-focus.js'));else r.YFCombat=f(r.YFCombatData,r.YFCombos,r.YFFocus);})(typeof globalThis!=='undefined'?globalThis:this,(Data,Combos,Focus)=>{
  'use strict';const EPS=1e-9;
- function init(p){p.combatVersion=1;p.action=null;p.combatState='ready';p.combo=null;p.pendingAttack=null;p.defenseReadyAt=0;p.staggerUntil=0;p.staggerResistUntil=0;p.counterUntil=0;Focus.reset(p);}
+ function init(p){p.combatVersion=1;p.action=null;p.combatState='ready';p.combo=null;p.comboLockUntil=0;p.pendingAttack=null;p.defenseReadyAt=0;p.staggerUntil=0;p.staggerResistUntil=0;p.counterUntil=0;Focus.reset(p);}
  function emit(w,p,a,result,extra={}){
   const e={id:++w.seq,version:1,kind:'combat',text:'',actionId:a?.id||null,skillId:a?.skillId||null,actorId:p.id,targetId:a?.targetId||null,mapId:p.mapId,time:w.time,tick:w.tick||0,result,x:p.x,y:p.y,...extra};
   e.eventId='combat:'+e.id;w.events.push(e);if(w.events.length>128)w.events.shift();return e;
  }
- function clear(w,p,reason='interrupted'){if(p.action)emit(w,p,p.action,'interrupted',{reason});p.action=null;p.pendingAttack=null;p.ultimateLink=null;Combos.clear(p);p.counterUntil=0;if(['travel','arrest','defeat','path-change','invalid-owner'].includes(reason)){p.challenge=null;p.drill=null;p.hiddenFollowupUntil=0;Focus.reset(p);}p.combatState=p.hp>0?'ready':'defeated';}
+ function clear(w,p,reason='interrupted'){if(p.action)emit(w,p,p.action,'interrupted',{reason});p.action=null;p.pendingAttack=null;p.ultimateLink=null;Combos.clear(p);p.counterUntil=0;if(['travel','arrest','defeat','path-change','invalid-owner'].includes(reason)){p.challenge=null;p.drill=null;p.hiddenFollowupUntil=0;p.comboLockUntil=0;p.staggerUntil=0;p.staggerResistUntil=0;Focus.reset(p);}p.combatState=p.hp>0?'ready':'defeated';}
  function state(a,time){if(time+EPS<a.startAt+a.startup)return 'startup';if(time+EPS<a.startAt+a.startup+a.active)return 'active';return 'recovery';}
  function equipmentValid(p){const id=p.city?.equipment?.weapon;return !id||(p.path==='fist'?id==='wraps':id==='reed-spear');}
  function lineClear(p,t,blocked){const d=Math.hypot(t.x-p.x,t.y-p.y),n=Math.max(1,Math.ceil(d/.08));for(let i=0;i<=n;i++)if(blocked(p.x+(t.x-p.x)*i/n,p.y+(t.y-p.y)*i/n,p.mapId))return false;return true;}
@@ -52,7 +52,7 @@
   const phase=state(a,w.time);if(p.combatState!==phase){p.combatState=phase;emit(w,p,a,phase);}
  }
  function boundary(w){let next=Infinity;for(const p of Object.values(w.players)){const a=p.action,points=[p.staggerUntil,p.combo?.until,p.drill?.impactAt,p.drill?.endAt];if(a){const s=Data.get(a.skillId);points.push(a.startAt+a.startup,a.startAt+a.startup+a.active,a.endAt,...(s?s.hits.slice(a.nextHit).map(h=>a.startAt+a.startup+h.at-s.startup):[]));}for(const at of points)if(at>w.time+EPS)next=Math.min(next,at);}for(const e of w.entities)if(e.telegraph)for(const at of [e.telegraph.impactAt,e.telegraph.endAt])if(at>w.time+EPS)next=Math.min(next,at);return next;}
- function confirm(w,p,t,s,a,ordinal){if(ordinal!==0)return;if(s.id==='fist.basin-echo'){p.hiddenFollowupUntil=w.time+.9;emit(w,p,a,'hidden-followup',{until:p.hiddenFollowupUntil});}const result=Combos.hit(p,s,a,t.id,w.time);if(result)emit(w,p,a,'combo-'+result,{comboId:Combos.routes[p.path].id,until:p.combo?.until||null});return result;}
+ function confirm(w,p,t,s,a,ordinal){if(ordinal!==0)return;if(s.followup){p.hiddenFollowupUntil=w.time+s.followup.window;emit(w,p,a,'hidden-followup',{until:p.hiddenFollowupUntil});}const result=Combos.hit(p,s,a,t.id,w.time);if(result)emit(w,p,a,'combo-'+result,{comboId:a.comboLink?.id||p.combo?.id||Combos.routes[p.path].id,until:p.combo?.until||null});return result;}
  function defend(w,p,type,intent,hooks){
   if(p.action||p.hp<=0||p.jail>0||p.travelLock>0||p.staggerUntil>w.time+EPS||w.time+EPS<(p.defenseReadyAt||0))return false;
   const dodge=type==='dodge',cost=dodge?18:8;if(p.energy<cost)return false;
@@ -64,14 +64,14 @@
   p.facing=facing;p.combatState='startup';emit(w,p,p.action,'defense-start',{defense:type});return true;
  }
  function defenseResult(w,v,source,damage){const a=v.action;if(!a||a.kind!=='defense'||state(a,w.time)!=='active')return {result:'hit',damage};
-  if(a.defense==='dodge'){v.counterUntil=w.time+.9;const gain=Focus.defense(w,v,source,a);if(gain)emit(w,v,a,'focus',{gain,focus:v.focus});emit(w,v,a,'dodged',{targetId:source.id});return {result:'dodged',damage:0,timed:true};}
+  if(a.defense==='dodge'){v.counterUntil=w.time+.9;if(Combos.defense(v,source,w.time))emit(w,v,a,'counter-opportunity',{comboId:Combos.counterRoute.id,until:v.combo.until,targetId:source.id});const gain=Focus.defense(w,v,source,a);if(gain)emit(w,v,a,'focus',{gain,focus:v.focus});emit(w,v,a,'dodged',{targetId:source.id});return {result:'dodged',damage:0,timed:true};}
   const bearing=Math.atan2(source.y-v.y,source.x-v.x),angle=Math.atan2(Math.sin(bearing-a.facing),Math.cos(bearing-a.facing));
   if(Math.abs(angle)>Math.PI*70/180)return {result:'hit',damage};
   if(v.energy<10){clear(w,v,'guard-break');stagger(w,v,.2);return {result:'hit',damage};}
   v.energy-=10;const timed=w.time<=a.startAt+a.startup+.12+EPS;if(timed){v.counterUntil=w.time+.9;const gain=Focus.defense(w,v,source,a);if(gain)emit(w,v,a,'focus',{gain,focus:v.focus});}
   emit(w,v,a,'guarded',{targetId:source.id});return {result:'guarded',damage:Math.max(1,Math.round(damage*.4)),timed};
  }
- function stagger(w,p,duration=.12){if(w.time<(p.staggerResistUntil||0)||p.hp<=0)return false;clear(w,p,'stagger');p.staggerUntil=w.time+duration;p.staggerResistUntil=w.time+1.2;p.combatState='stagger';emit(w,p,null,'stagger',{until:p.staggerUntil});return true;}
+ function stagger(w,p,duration=.12,resistance=1.2){if(w.time<(p.staggerResistUntil||0)||p.hp<=0)return false;clear(w,p,'stagger');p.staggerUntil=w.time+duration;p.staggerResistUntil=w.time+resistance;p.combatState='stagger';emit(w,p,null,'stagger',{until:p.staggerUntil});return true;}
  function motion(w,p,dt,move){const a=p.action;if(!a)return false;p.currentSpeed=0;p.groundSpeed=0;p.movementLockReason='Combat commitment';
   if(a.kind==='defense'&&a.defense==='dodge'&&w.time-dt<a.startAt+a.startup+a.active-EPS){const begin=Math.max(w.time-dt,a.startAt),end=Math.min(w.time,a.startAt+a.startup+a.active),distance=Math.max(0,end-begin)*5;move(p,p.x+a.dx*distance,p.y+a.dy*distance);}return true;
  }

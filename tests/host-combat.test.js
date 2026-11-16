@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),{spawn}=require('node:child_process'),net=require('node:net'),path=require('node:path');
-test('actual host ingress owns delayed hits, rejects forged/malformed intent and resets reconnect', {timeout:15000},async t=>{
+test('actual host ingress owns delayed hits, rejects forged/malformed intent and resets reconnect', {timeout:15000,skip:typeof WebSocket!=='function'?'Native test WebSocket requires Node 22+':false},async t=>{
  const probe=net.createServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const port=probe.address().port;await new Promise(r=>probe.close(r));
  const child=spawn(process.execPath,['server.js'],{cwd:path.resolve(__dirname,'..'),env:{...process.env,PORT:String(port)},windowsHide:true,stdio:['ignore','pipe','pipe']});
  t.after(()=>child.kill());let stderr='';child.stderr.on('data',s=>stderr+=s);

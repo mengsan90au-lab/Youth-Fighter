@@ -14,6 +14,8 @@ const requiredFiles = [
   'Youth-Fighter.html',
   'PLAY-YOUTH-FIGHTER.cmd',
   'Start-Youth-Fighter.cmd',
+  'COMBAT-START-HERE.md',
+  'docs/combat',
 ];
 
 for (const relPath of requiredFiles) {
@@ -51,7 +53,7 @@ for (const relPath of requiredFiles) {
 const manifest = {
   name: 'Youth Fighter Offline Build',
   generatedAt: new Date().toISOString(),
-  version: '0.10.0',
+  version: require('../package.json').version,
   sourceHashes,
   entryPoints: [
     'public/index.html',
