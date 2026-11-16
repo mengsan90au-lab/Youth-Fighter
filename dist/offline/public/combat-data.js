@@ -4,7 +4,7 @@
  const version=1;
  function skill(id,name,path,index,range,damage,cost,cool,startup,active,recovery,area=false){return {
   version,id,name,path,index,category:'ordinary',weapon:path==='spear'?'path-spear':'unarmed-or-wraps',role:index===0?'quick':index===1?'heavy':'area',
-  range,damage,cost,cool,geometry:{shape:area?'circle':'selected-circle',reach:range,targetCap:area?8:1,origin:'actor',facing:'locked-at-start',lineOfSight:true},
+  range,damage,cost,cool,geometry:{shape:path==='spear'?'cone':area?'circle':'selected-circle',halfAngle:path==='spear'?(index===0?.35:index===1?Math.PI*.6:Math.PI*.4):Math.PI,reach:range,targetCap:area?8:1,origin:'actor',facing:'locked-at-start',lineOfSight:true},
   formula:'max(1, damage + (level-1)*3 + equipmentAttack - equipmentDefence)',pvpScale:1,
   startup,active,recovery,hits:[{at:startup,scale:1}],movement:{speed:0,collision:'map'},
   interrupts:['travel','arrest','defeat','disconnect','invalid-owner'],cancels:[],status:[],comboTags:[path,index===0?'opener':'continuation'],

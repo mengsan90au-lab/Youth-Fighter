@@ -11,7 +11,7 @@
   if(p.questDone)p.quest=false;if(p.bountyDone)p.bounty=false;p.path=data.path==='spear'?'spear':'fist';p.wanted=bounded('wanted',0,999,0);p.jail=Number.isFinite(data.jail)?Math.max(0,Math.min(12,data.jail)):0;p.hp=Number.isFinite(data.hp)?Math.max(1,Math.min(p.maxHp,data.hp)):p.maxHp;p.mapId=data.version>=3&&Maps.map(data.mapId)?.playable?data.mapId:'sovann-city';p.x=Maps.map(p.mapId).spawn?.x||12;p.y=Maps.map(p.mapId).spawn?.y||12;if(data.version>=3&&Number.isFinite(data.x)&&Number.isFinite(data.y)&&!Maps.blocked(p.mapId,data.x,data.y)){p.x=data.x;p.y=data.y;}else if(p.mapId==='bamboo-grove'){p.x=21;p.y=12;}if(p.jail>0){p.mapId='sovann-city';p.x=4;p.y=24;}
   p.city=City.sanitize(data.city);const weapon=City.data.items.find(i=>i.id===p.city.equipment.weapon);if(weapon&&weapon.path!==p.path)delete p.city.equipment.weapon;
   // Action IDs, pending hits and presentation/combo state never survive a load.
-  p.action=null;p.combatVersion=1;p.combatState='ready';p.lastStrike=-10;p.combatUntil=0;p.target=null;p.aim=null;p.route=[];p.input={x:0,y:0};p.duel=null;return true;
+  p.combo=null;p.pendingAttack=null;p.counterUntil=0;p.defenseReadyAt=0;p.staggerUntil=0;p.staggerResistUntil=0;p.action=null;p.combatVersion=1;p.combatState='ready';p.lastStrike=-10;p.combatUntil=0;p.target=null;p.aim=null;p.route=[];p.input={x:0,y:0};p.duel=null;return true;
  }
  function load(storage){try{return JSON.parse(storage.getItem(KEY));}catch{return null;}}
  function save(storage,p){try{storage.setItem(p.testSession?'youth-fighter-map-testing-v1':KEY,JSON.stringify(snapshot(p)));return true;}catch{return false;}}

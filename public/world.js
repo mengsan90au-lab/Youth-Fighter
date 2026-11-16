@@ -38,6 +38,7 @@
   if(a.type==='movement-style'){if(Object.hasOwn(movement.styles,a.style))p.movementStyle=a.style;return;}
   if(a.type==='move'){p.input={x:clamp(Number(a.x)||0,-1,1),y:clamp(Number(a.y)||0,-1,1)};p.aim=null;p.route=[];return;}
   if(p.jail>0)return;
+  if(a.type==='dodge'||a.type==='guard'){combat.defend(w,p,a.type,a,combatHooks);return;}
   if(p.action&&['city-equip','city-unequip','city-rest','city-upgrade','city-repair','arrest'].includes(a.type))return;
   if(city.command(w,p,a))return;
   if(a.type==='exit'){useExit(w,p,a.id);return;}
@@ -58,12 +59,18 @@
  function eligible(w,p,t,pvp){return !!(t&&t.id!==p.id&&t.hp>0&&sameMap(p,t)&&!(t.jail>0)&&
   (!['civilian','guard','player'].includes(t.kind)||t.kind==='player'&&!insideCity(t)||pvp||t.wanted>0||city.duel(p,t,w.time)));}
  function resolveHit(w,p,v,s,a,ordinal,scale){
-  combat.emit(w,p,a,'hit',{targetId:v.id,hitOrdinal:ordinal});
-  const sparring=city.duel(p,v,w.time),damage=Math.max(1,s.damage*scale+(p.level-1)*3+city.bonus(p,'attack')-city.bonus(v,'defence'));city.hit(p,v);v.hp=Math.max(sparring?1:0,v.hp-damage);if(sparring&&v.hp<=1){p.duel=null;v.duel=null;event(w,'Sparring complete - no crime or death penalty',p.x,p.y,'city',p.mapId);}event(w,'−'+damage,v.x,v.y,s.index===2?'burst':'hit');
+  const raw=Math.max(1,s.damage*scale+(p.level-1)*3+city.bonus(p,'attack')-city.bonus(v,'defence')),defense=combat.defenseResult(w,v,p,raw);
+  if(defense.damage===0){p.combo=null;return;}const damage=defense.damage,sparring=city.duel(p,v,w.time);
+  combat.emit(w,p,a,defense.result,{targetId:v.id,hitOrdinal:ordinal,damage});if(defense.result==='hit')combat.confirm(w,p,v,s,a,ordinal);else p.combo=null;
+  city.hit(p,v);v.hp=Math.max(sparring?1:0,v.hp-damage);if(sparring&&v.hp<=1){p.duel=null;v.duel=null;event(w,'Sparring complete - no crime or death penalty',p.x,p.y,'city',p.mapId);}event(w,'−'+damage,v.x,v.y,s.index===2?'burst':'hit');
    if(insideCity(v)&&['civilian','guard','player'].includes(v.kind)&&!(v.wanted>0)&&!sparring){p.wanted+=v.hp===0?3:1;event(w,v.hp===0?'City killing • murder warrant issued':'City assault • guards alerted',p.x,p.y,'crime');}
+   if(v.hp>0&&defense.result==='hit'&&s.index===1)combat.stagger(w,v);
    if(v.hp===0){if(v.kind==='wolf'){p.kills++;reward(w,p,25,8);v.respawn=18;}if(v.kind==='bandit'){reward(w,p,40,15);v.respawn=25;event(w,'Outlaw defeated • arrest requires a living target',p.x,p.y);}
     if(v.kind==='civilian'||v.kind==='guard')v.respawn=20;if(v.kind==='player'){combat.clear(w,v,'defeat');if(v.wanted>0)jail(w,v);else{v.mapId='sovann-city';v.hp=v.maxHp;v.x=12;v.y=12;v.aim=null;v.route=[];v.input={x:0,y:0};movement.reset(v);v.gold=Math.max(0,v.gold-10);event(w,'Defeated • returned to the city',v.x,v.y);}}
    }
+ }
+ function hurtPlayer(w,e,p){const raw=Math.max(1,(e.kind==='guard'?24:9)-city.bonus(p,'defence')),result=combat.defenseResult(w,p,e,raw);if(!result.damage)return;
+  p.hp-=result.damage;event(w,'-'+result.damage,p.x,p.y,'hurt',p.mapId);if(p.hp<=0){combat.clear(w,p,'defeat');if(p.wanted>0)jail(w,p);else{p.mapId='sovann-city';p.hp=p.maxHp;p.x=12;p.y=12;p.aim=null;p.input={x:0,y:0};p.route=[];movement.reset(p);p.gold=Math.max(0,p.gold-10);event(w,'Defeated • returned to city (−10 silver)',p.x,p.y,'crime');}}
  }
  const combatHooks={target,entities,blocked,eligible,hit:resolveHit};
  function step(w,dt){if(!Number.isFinite(dt)||dt<=0)return;dt=clamp(dt,0,.1);w.tick=(w.tick||0)+1;const end=w.time+dt;
@@ -74,19 +81,30 @@
    p.travelLock=Math.max(0,(p.travelLock||0)-dt);
    p.cd=p.cd.map(c=>Math.max(0,c-dt));p.energy=Math.min(100,p.energy+dt*12);
    if(p.jail>0){p.jail=Math.max(0,p.jail-dt);if(p.jail===0){p.x=12;p.y=12;p.mapId='sovann-city';event(w,'Released from custody',p.x,p.y);}continue;}
-   if(p.action){p.currentSpeed=0;p.groundSpeed=0;p.movementLockReason='Combat commitment';}else movement.tick(w,p,dt,move);
+   if(p.staggerUntil>w.time-combat.EPS){p.currentSpeed=0;p.groundSpeed=0;}else if(!combat.motion(w,p,dt,move))movement.tick(w,p,dt,move);
    if(insideCity(p)&&p.wanted===0)p.hp=Math.min(p.maxHp,p.hp+dt*3);
    for(const exit of maps.map(p.mapId).exits)if(useExit(w,p,exit.id))break;
   }
   for(const p of Object.values(w.players))combat.update(w,p,combatHooks);
-  for(const e of w.entities){if(e.hp<=0){e.respawn-=dt;if(e.respawn<=0){e.hp=e.maxHp;e.x=e.homeX;e.y=e.homeY;}continue;}e.cd=Math.max(0,e.cd-dt);if(e.kind==='civilian'||e.kind==='training')continue;
+  for(const e of w.entities){if(e.hp<=0){e.telegraph=null;e.respawn-=dt;if(e.respawn<=0){e.hp=e.maxHp;e.x=e.homeX;e.y=e.homeY;}continue;}e.cd=Math.max(0,e.cd-dt);
+   if(e.staggerUntil>w.time+combat.EPS){e.telegraph=null;continue;}
+   if(e.telegraph){const a=e.telegraph;if(e.mapId!==a.mapId){e.telegraph=null;continue;}
+    if(!a.resolved&&w.time+combat.EPS>=a.impactAt){a.resolved=true;const p=target(w,a.targetId),bearing=p?Math.atan2(p.y-e.y,p.x-e.x):0;
+     if(p&&p.hp>0&&p.jail<=0&&sameMap(p,e)&&dist(e,p)<=1.8&&Math.cos(bearing-a.facing)>=.5&&combat.lineClear(e,p,blocked))hurtPlayer(w,e,p);e.aiState='recovery';}
+    if(w.time+combat.EPS>=a.endAt){e.telegraph=null;e.aiState='ready';}else continue;
+   }
+   if(e.kind==='civilian'||e.kind==='training')continue;
    const candidates=Object.values(w.players).filter(p=>sameMap(p,e)&&p.jail<=0&&(e.kind==='guard'?p.wanted>0&&insideCity(p):!insideCity(p)));
    candidates.sort((a,b)=>dist(a,e)-dist(b,e));const p=candidates[0],range=e.kind==='guard'?20:7;
    if(p&&dist(p,e)<range){if(dist(p,e)>1.5){const d=dist(p,e);if(e.cityNpc&&e.kind==='guard'){
      if(!e.pursuit||w.time>=(e.repathAt||0)){e.pursuit=nav.findPath(e,p,(x,y)=>blocked(x,y,e.mapId));e.repathAt=w.time+.7;}
      if(e.pursuit[0]&&dist(e,e.pursuit[0])<.2)e.pursuit.shift();const goal=e.pursuit[0]||p,dd=dist(e,goal);if(dd>.01){const stride=Math.min(dd,dt*5.8);move(e,e.x+(goal.x-e.x)/dd*stride,e.y+(goal.y-e.y)/dd*stride);}
     }else move(e,e.x+(p.x-e.x)/d*dt*(e.kind==='guard'?5.8:2.7),e.y+(p.y-e.y)/d*dt*(e.kind==='guard'?5.8:2.7));}
-    else if(e.cd===0){e.cd=1.2;p.hp-=Math.max(1,(e.kind==='guard'?24:9)-city.bonus(p,'defence'));event(w,'−'+(e.kind==='guard'?24:9),p.x,p.y,'hurt');if(p.hp<=0){combat.clear(w,p,'defeat');if(p.wanted>0)jail(w,p);else{p.mapId='sovann-city';p.hp=p.maxHp;p.x=12;p.y=12;p.aim=null;p.input={x:0,y:0};p.route=[];movement.reset(p);p.gold=Math.max(0,p.gold-10);event(w,'Defeated • returned to city (−10 silver)',p.x,p.y,'crime');}}}
+    else if(e.cd===0){if(e.kind==='guard'){e.cd=1.2;hurtPlayer(w,e,p);}else {
+     e.cd=1.5;e.telegraph={id:e.id+':'+(++w.actionSeq),targetId:p.id,mapId:e.mapId,startAt:w.time,impactAt:w.time+.4,endAt:w.time+.8,facing:Math.atan2(p.y-e.y,p.x-e.x),resolved:false};e.aiState='startup';
+     combat.emit(w,e,{id:e.telegraph.id,skillId:'enemy.prowler-bite',targetId:p.id},'enemy-startup',{until:e.telegraph.impactAt});
+    }}
+
    }else if(dist(e,{x:e.homeX,y:e.homeY})>.5){const d=dist(e,{x:e.homeX,y:e.homeY});move(e,e.x+(e.homeX-e.x)/d*dt,e.y+(e.homeY-e.y)/d*dt);}
   }
  }
