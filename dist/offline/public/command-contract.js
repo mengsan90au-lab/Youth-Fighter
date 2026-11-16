@@ -1,7 +1,7 @@
 /* Runtime intent gate used by offline and host YF.command. Extra authority fields are ignored. */
 (function(r,f){if(typeof module==='object')module.exports=f();else r.YFCommands=f();})(typeof globalThis!=='undefined'?globalThis:this,()=>{
  'use strict';
- const known=new Set(['dodge','guard','move','goto','movement-style','target','attack','equip','exit','buy','quest','bounty','claim','heal','arrest',
+ const known=new Set(['combat-study','combat-practice','dodge','guard','move','goto','movement-style','target','attack','equip','exit','buy','quest','bounty','claim','heal','arrest',
  'city-use','city-equip','city-unequip','city-duel-request','city-duel-accept','city-interact','city-quest-accept','city-quest-claim','city-buy','city-sell','city-store','city-retrieve','city-deposit','city-withdraw','city-repair','city-upgrade','city-rest']);
  function validate(a){
   if(!a||typeof a!=='object'||Array.isArray(a)||!known.has(a.type))return false;

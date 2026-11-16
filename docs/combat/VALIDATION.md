@@ -21,3 +21,11 @@ Implemented: finite hit-confirm routes and both branches for both paths, 150ms o
 Actual results: installed Node ran the exact test/check/build scripts: 32/32 tests pass, check exits 0 with the same two Unity metadata warnings, build regenerates both offline artifacts successfully. Tests cover 20/60Hz route branches, resets, queue first-wins/revalidation/expiry, front/back guard, dodge cost/collision and timing, stagger resistance, AI range escape, spear facing and read-only reduced-effects anticipation. The earlier browser policy block persists; manual gameplay, visual layout, physical LAN feel and measured render performance remain unverified.
 
 Guide: Q guards toward selected target; Space dodges along movement input or backward. Wait out recovery. Confirm 1, link 2 within the displayed window, then choose 1 quick or 3 heavy. Let the window expire, deliberately whiff or change targets to check reset. An orange enemy wedge anticipates a .4-second windup. Reduced effects should preserve this wedge.
+
+## Discovery stage, branch combat/discoverable-techniques
+
+Implemented: both named hidden responses, mentor clue/challenge, confirmed dummy-route proof, visible nonlethal practice defense, persistent known unlocks and separate cooldowns, save v5 accepting v2/v3/v4/v5. Locked/path/counter/resource/cooldown enforcement is in shared simulation. UI explains discovery and activation. Existing ordinary skills stay independent of hidden unlocks.
+
+Actual results: 37/37 Node tests pass, including full real-command mentor/route/drill/defense discovery for both paths at 20/60Hz, wrong/late/missed/remote requests, locked/expired activation and actual snapshot/restore sanitation. Exact check/build scripts exit 0; Unity check still warns about missing metadata. Browser layout/playthrough and physical LAN remain unverified for the previously recorded policy blocker.
+
+Guide: enter Temple Ward and approach Master Dara; choose Dara: study. Approach/select the dummy and finish 1 ? 2 ? 1 or 3. Choose Practice pulse. Wait roughly half a second, then Q toward the dummy (or time Space). Discovery names the technique; 4 activates it after later real timed defense. Fist can then use a quick 1 follow-up. Reload should retain the unlock and remove challenge/counter proofs.

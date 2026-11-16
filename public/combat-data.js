@@ -18,8 +18,13 @@
   skill('spear.serpent-sweep','Serpent sweep','spear',1,4,29,22,3,.25,.1,.3,true),
   skill('spear.naga-tempest','Naga tempest','spear',2,5,40,45,9,.45,.1,.4,true)
  ];
+ for(const [path,id,name,range,damage,cost,startup]of [['fist','fist.basin-echo','Basin Echo',2.8,26,16,.12],['spear','spear.tide-reversal','Tide-Reversal Spear',4.2,24,20,.22]]){
+  const s=skill(id,name,path,1,range,damage,cost,8,startup,.1,.28,path==='spear');
+  Object.assign(s,{index:null,category:'hidden',role:'timed-defense-response',unlock:{kind:'discovery',id},counterRequired:true,
+   discovery:{clue:'Master Dara: confirm a full route on the Temple dummy, then meet its practice pulse with a timed defense.',method:'mentor-route-and-defense',persistent:true,feedback:'Use 4 after a timed dodge/early guard. Fist opens a brief quick follow-up; spear sweeps its locked front.'}});skills.push(s);
+ }
  const byId=new Map(skills.map(s=>[s.id,s]));
- const forPath=path=>skills.filter(s=>s.path===(path==='spear'?'spear':'fist'));
+ const forPath=path=>skills.filter(s=>s.category==='ordinary'&&s.path===(path==='spear'?'spear':'fist'));
  function resolve(path,intent){const kit=forPath(path);if(typeof intent.skillId==='string'){const s=byId.get(intent.skillId);return s?.path===path&&(intent.skill===undefined||intent.skill===s.index)?s:null;}return Number.isInteger(intent.skill)?kit[intent.skill]||null:null;}
  function validate(data=skills){const errors=[],ids=new Set();for(const s of data){
   if(typeof s.id!=='string'||ids.has(s.id))errors.push('Duplicate or invalid skill ID');ids.add(s.id);

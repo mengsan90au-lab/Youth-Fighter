@@ -22,7 +22,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
 <body><canvas id="world" aria-label="Isometric game world"></canvas>
 <div id="start" class="veil"><div class="start-card"><div class="eyebrow">AN ORIGINAL MARTIAL ARTS WORLD</div><h1>YOUTH<br><em>FIGHTER</em></h1><p class="chapter">CHAPTER I · GOLDEN NAGA BASIN</p><p>Beyond the city gates, strength is freedom.<br>Inside them, every strike has a consequence.</p><label for="name">YOUR FIGHTER'S NAME</label><input id="name" maxlength="20" value="Meng San" autocomplete="off"><button id="begin" class="primary">Enter the basin <span>↗</span></button><div class="small">Playable prototype · Golden Naga tradition<br>Shift: run / Alt: slow / WASD to move · 1 / 2 / 3 to strike · click to select</div></div><div class="start-note">A world of eight traditions.<br>Your journey begins with one.</div></div>
 <header><div class="brand">YF<span>YOUTH FIGHTER<small>GOLDEN NAGA BASIN</small></span></div><div class="location"><i></i><span id="zone">SOVANN CITY</span><small id="law">Royal protection · city law applies</small></div><div class="session"><span id="connection">SOLO • OFFLINE</span><button id="openGraphics" title="Graphics settings [G]">Graphics [G]</button><button id="help" title="Controls and game rules">?</button><button id="sound" title="Toggle sound">SOUND OFF</button></div></header>
-<section id="fighter" class="panel"><div class="profile"><div class="portrait">龍</div><div><div class="eyebrow">GOLDEN NAGA DISCIPLE</div><h2 id="playerName">Meng San</h2><span id="level">Level 1 · Unarmed</span></div><div class="level-badge" id="levelBadge">1</div></div><div class="meter-label"><span>VITALITY</span><span id="hpText">120 / 120</span></div><div class="meter"><div id="hp"></div></div><div class="meter-label"><span>INNER ENERGY</span><span id="energyText">100 / 100</span></div><div class="meter energy"><div id="energy"></div></div><div class="stats"><span>◈ <b id="gold">0</b> silver</span><span id="xp">0 / 100 XP</span></div><div id="wanted"></div><div id="combatStatus" role="status"></div><div class="combat-tools"><button id="guard">Guard [Q] ? 8 energy</button><button id="dodge">Dodge [Space] ? 18</button></div></section>
+<section id="fighter" class="panel"><div class="profile"><div class="portrait">龍</div><div><div class="eyebrow">GOLDEN NAGA DISCIPLE</div><h2 id="playerName">Meng San</h2><span id="level">Level 1 · Unarmed</span></div><div class="level-badge" id="levelBadge">1</div></div><div class="meter-label"><span>VITALITY</span><span id="hpText">120 / 120</span></div><div class="meter"><div id="hp"></div></div><div class="meter-label"><span>INNER ENERGY</span><span id="energyText">100 / 100</span></div><div class="meter energy"><div id="energy"></div></div><div class="stats"><span>◈ <b id="gold">0</b> silver</span><span id="xp">0 / 100 XP</span></div><div id="wanted"></div><div class="combat-tools"><button id="studyCombat">Dara: study</button><button id="practiceCombat">Practice pulse</button></div><button id="hiddenCombat">Hidden technique [4]</button><small id="discoveryHint"></small><div id="combatStatus" role="status"></div><div class="combat-tools"><button id="guard">Guard [Q] ? 8 energy</button><button id="dodge">Dodge [Space] ? 18</button></div></section>
 <aside id="contracts" class="panel"><div class="eyebrow">ROYAL NOTICEBOARD</div><h2>A fighter's calling</h2><p class="hint">Speak at the gold marker in the city.</p><div class="contract"><div class="tag">FIELD CONTRACT</div><h3>Shadows in the grove</h3><p>Defeat 3 forest prowlers beyond the city.</p><div class="reward">60 silver · 100 XP</div><button id="quest">Accept contract</button><small id="questProgress"></small></div><div class="contract"><div class="tag red">GOVERNMENT WARRANT</div><h3>The outlaw Sok</h3><p>Reduce Sok to 35 health or less. Use Arrest while he is alive.</p><div class="reward">100 silver · 150 XP</div><button id="bounty">Accept warrant</button><small id="bountyProgress"></small></div><div class="law-note">CITY LAW<br><span>Assaults draw guards. City killings issue a murder warrant. Wanted fighters can be arrested.</span></div></aside>
 <aside id="mapBox" class="panel"><div class="map-heading"><span id="localMapName">SOVANN CITY</span><span id="population">1 FIGHTER</span></div><canvas id="map" width="200" height="150" aria-label="Minimap"></canvas><div class="map-key"><span>● City</span><span>● Wilderness</span><span>◆ Warrant</span></div><div class="map-tools"><span id="coords">12, 12</span><label for="movementStyle">Move <select id="movementStyle"><option value="slow">Slow Model Walk</option><option value="walk" selected>Normal Walk</option><option value="run">Run</option></select></label><small id="movementStatus" role="status">Normal Walk</small><button id="openMap">World [M]</button><button id="testGates">Map entrances [TEST]</button><button id="enterCity">Walk to Market Ward</button><button id="enterResidential">Walk to Residential Ward</button><button id="cityMap">City districts</button><button id="openMotion">Motion studio [L]</button><button id="openHero">Hero [H]</button><button id="openInventory">Inventory</button><button id="openBag">Gear [I]</button></div></aside>
 <div id="target" class="panel hidden"><div class="eyebrow" id="targetKind">TARGET</div><h3 id="targetName"></h3><div class="meter"><div id="targetHp"></div></div><div id="targetHealth"></div><button id="arrest">Arrest [F]</button></div>
@@ -469,7 +469,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
 </script><script data-source="command-contract.js">/* Runtime intent gate used by offline and host YF.command. Extra authority fields are ignored. */
 (function(r,f){if(typeof module==='object')module.exports=f();else r.YFCommands=f();})(typeof globalThis!=='undefined'?globalThis:this,()=>{
  'use strict';
- const known=new Set(['dodge','guard','move','goto','movement-style','target','attack','equip','exit','buy','quest','bounty','claim','heal','arrest',
+ const known=new Set(['combat-study','combat-practice','dodge','guard','move','goto','movement-style','target','attack','equip','exit','buy','quest','bounty','claim','heal','arrest',
  'city-use','city-equip','city-unequip','city-duel-request','city-duel-accept','city-interact','city-quest-accept','city-quest-claim','city-buy','city-sell','city-store','city-retrieve','city-deposit','city-withdraw','city-repair','city-upgrade','city-rest']);
  function validate(a){
   if(!a||typeof a!=='object'||Array.isArray(a)||!known.has(a.type))return false;
@@ -504,8 +504,13 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
   skill('spear.serpent-sweep','Serpent sweep','spear',1,4,29,22,3,.25,.1,.3,true),
   skill('spear.naga-tempest','Naga tempest','spear',2,5,40,45,9,.45,.1,.4,true)
  ];
+ for(const [path,id,name,range,damage,cost,startup]of [['fist','fist.basin-echo','Basin Echo',2.8,26,16,.12],['spear','spear.tide-reversal','Tide-Reversal Spear',4.2,24,20,.22]]){
+  const s=skill(id,name,path,1,range,damage,cost,8,startup,.1,.28,path==='spear');
+  Object.assign(s,{index:null,category:'hidden',role:'timed-defense-response',unlock:{kind:'discovery',id},counterRequired:true,
+   discovery:{clue:'Master Dara: confirm a full route on the Temple dummy, then meet its practice pulse with a timed defense.',method:'mentor-route-and-defense',persistent:true,feedback:'Use 4 after a timed dodge/early guard. Fist opens a brief quick follow-up; spear sweeps its locked front.'}});skills.push(s);
+ }
  const byId=new Map(skills.map(s=>[s.id,s]));
- const forPath=path=>skills.filter(s=>s.path===(path==='spear'?'spear':'fist'));
+ const forPath=path=>skills.filter(s=>s.category==='ordinary'&&s.path===(path==='spear'?'spear':'fist'));
  function resolve(path,intent){const kit=forPath(path);if(typeof intent.skillId==='string'){const s=byId.get(intent.skillId);return s?.path===path&&(intent.skill===undefined||intent.skill===s.index)?s:null;}return Number.isInteger(intent.skill)?kit[intent.skill]||null:null;}
  function validate(data=skills){const errors=[],ids=new Set();for(const s of data){
   if(typeof s.id!=='string'||ids.has(s.id))errors.push('Duplicate or invalid skill ID');ids.add(s.id);
@@ -548,7 +553,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
   const e={id:++w.seq,version:1,kind:'combat',text:'',actionId:a?.id||null,skillId:a?.skillId||null,actorId:p.id,targetId:a?.targetId||null,mapId:p.mapId,time:w.time,tick:w.tick||0,result,x:p.x,y:p.y,...extra};
   e.eventId='combat:'+e.id;w.events.push(e);if(w.events.length>128)w.events.shift();return e;
  }
- function clear(w,p,reason='interrupted'){if(p.action)emit(w,p,p.action,'interrupted',{reason});p.action=null;p.pendingAttack=null;Combos.clear(p);p.counterUntil=0;p.combatState=p.hp>0?'ready':'defeated';}
+ function clear(w,p,reason='interrupted'){if(p.action)emit(w,p,p.action,'interrupted',{reason});p.action=null;p.pendingAttack=null;Combos.clear(p);p.counterUntil=0;if(['travel','arrest','defeat','path-change','invalid-owner'].includes(reason)){p.challenge=null;p.drill=null;p.hiddenFollowupUntil=0;}p.combatState=p.hp>0?'ready':'defeated';}
  function state(a,time){if(time+EPS<a.startAt+a.startup)return 'startup';if(time+EPS<a.startAt+a.startup+a.active)return 'active';return 'recovery';}
  function equipmentValid(p){const id=p.city?.equipment?.weapon;return !id||(p.path==='fist'?id==='wraps':id==='reed-spear');}
  function lineClear(p,t,blocked){const d=Math.hypot(t.x-p.x,t.y-p.y),n=Math.max(1,Math.ceil(d/.08));for(let i=0;i<=n;i++)if(blocked(p.x+(t.x-p.x)*i/n,p.y+(t.y-p.y)*i/n,p.mapId))return false;return true;}
@@ -556,13 +561,14 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
   if(s.geometry.shape==='cone'&&d>EPS){const dot=((t.x-p.x)*Math.cos(a.facing)+(t.y-p.y)*Math.sin(a.facing))/d;if(dot<Math.cos(s.geometry.halfAngle))return false;}return true;}
  function start(w,p,intent,hooks){const s=Data.resolve(p.path,intent),t=hooks.target(w,p.target);
   if(!s||p.hp<=0||p.jail>0||p.travelLock>0||!equipmentValid(p)||p.staggerUntil>w.time+EPS)return false;
+  if(s.unlock.kind==='discovery'&&!p.combatProgress?.unlocks.includes(s.id)||s.counterRequired&&!(p.counterUntil>w.time))return false;
   if(p.action){if(p.action.kind!=='defense'&&!p.pendingAttack&&p.action.endAt-w.time<=Combos.bufferSeconds+EPS){p.pendingAttack={intent:{type:'attack',skillId:s.id,pvp:!!intent.pvp},targetId:p.target,until:w.time+Combos.bufferSeconds};emit(w,p,p.action,'buffered');}return false;}
-  if(p.cd[s.index]>EPS||p.energy<s.cost)return false;
+  if(((s.index===null?p.extraCd?.[s.id]:p.cd[s.index])||0)>EPS||p.energy<s.cost)return false;
   if(!hooks.eligible(w,p,t,!!intent.pvp)||!inShape(p,t,s,{facing:Math.atan2(t.y-p.y,t.x-p.x)},hooks.blocked))return false;
-  const link=Combos.prepare(p,s,t.id,w.time),startup=link?.stage===2&&s.index===0?s.startup*.65:s.startup;
+  const link=Combos.prepare(p,s,t.id,w.time),quick=s.index===0&&(link?.stage===2||p.hiddenFollowupUntil>w.time),startup=quick?s.startup*.65:s.startup;
   const a={id:p.id+':'+(++w.actionSeq),skillId:s.id,targetId:t.id,path:p.path,mapId:p.mapId,weapon:p.city?.equipment?.weapon||null,comboLink:link,
    startAt:w.time,startup,active:s.active,endAt:w.time+startup+s.active+s.recovery,nextHit:0,victims:[],pvp:!!intent.pvp,facing:Math.atan2(t.y-p.y,t.x-p.x)};
-  p.energy-=s.cost;p.cd[s.index]=s.cool;p.facing=a.facing;p.lastStrike=w.time;p.strike=s.presentation.pose;p.action=a;p.combatState='startup';p.combatUntil=w.time+5;
+  p.energy-=s.cost;if(s.index===null){p.extraCd||={};p.extraCd[s.id]=s.cool;}else p.cd[s.index]=s.cool;if(s.counterRequired)p.counterUntil=0;if(s.index===0)p.hiddenFollowupUntil=0;p.facing=a.facing;p.lastStrike=w.time;p.strike=s.presentation.pose;p.action=a;p.combatState='startup';p.combatUntil=w.time+5;
   if(t.kind==='player')t.combatUntil=w.time+5;emit(w,p,a,'startup');return true;
  }
  function update(w,p,hooks){
@@ -588,8 +594,8 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
   if(w.time+EPS>=a.endAt){emit(w,p,a,'complete');p.action=null;p.combatState='ready';const pending=p.pendingAttack;p.pendingAttack=null;if(pending&&pending.until>=w.time-EPS&&pending.targetId===p.target)start(w,p,pending.intent,hooks);return;}
   const phase=state(a,w.time);if(p.combatState!==phase){p.combatState=phase;emit(w,p,a,phase);}
  }
- function boundary(w){let next=Infinity;for(const p of Object.values(w.players)){const a=p.action,points=[p.staggerUntil,p.combo?.until];if(a){const s=Data.get(a.skillId);points.push(a.startAt+a.startup,a.startAt+a.startup+a.active,a.endAt,...(s?s.hits.slice(a.nextHit).map(h=>a.startAt+a.startup+h.at-s.startup):[]));}for(const at of points)if(at>w.time+EPS)next=Math.min(next,at);}for(const e of w.entities)if(e.telegraph)for(const at of [e.telegraph.impactAt,e.telegraph.endAt])if(at>w.time+EPS)next=Math.min(next,at);return next;}
- function confirm(w,p,t,s,a,ordinal){if(ordinal!==0)return;const result=Combos.hit(p,s,a,t.id,w.time);if(result)emit(w,p,a,'combo-'+result,{comboId:Combos.routes[p.path].id,until:p.combo?.until||null});return result;}
+ function boundary(w){let next=Infinity;for(const p of Object.values(w.players)){const a=p.action,points=[p.staggerUntil,p.combo?.until,p.drill?.impactAt,p.drill?.endAt];if(a){const s=Data.get(a.skillId);points.push(a.startAt+a.startup,a.startAt+a.startup+a.active,a.endAt,...(s?s.hits.slice(a.nextHit).map(h=>a.startAt+a.startup+h.at-s.startup):[]));}for(const at of points)if(at>w.time+EPS)next=Math.min(next,at);}for(const e of w.entities)if(e.telegraph)for(const at of [e.telegraph.impactAt,e.telegraph.endAt])if(at>w.time+EPS)next=Math.min(next,at);return next;}
+ function confirm(w,p,t,s,a,ordinal){if(ordinal!==0)return;if(s.id==='fist.basin-echo'){p.hiddenFollowupUntil=w.time+.9;emit(w,p,a,'hidden-followup',{until:p.hiddenFollowupUntil});}const result=Combos.hit(p,s,a,t.id,w.time);if(result)emit(w,p,a,'combo-'+result,{comboId:Combos.routes[p.path].id,until:p.combo?.until||null});return result;}
  function defend(w,p,type,intent,hooks){
   if(p.action||p.hp<=0||p.jail>0||p.travelLock>0||p.staggerUntil>w.time+EPS||w.time+EPS<(p.defenseReadyAt||0))return false;
   const dodge=type==='dodge',cost=dodge?18:8;if(p.energy<cost)return false;
@@ -601,12 +607,12 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
   p.facing=facing;p.combatState='startup';emit(w,p,p.action,'defense-start',{defense:type});return true;
  }
  function defenseResult(w,v,source,damage){const a=v.action;if(!a||a.kind!=='defense'||state(a,w.time)!=='active')return {result:'hit',damage};
-  if(a.defense==='dodge'){v.counterUntil=w.time+.9;emit(w,v,a,'dodged',{targetId:source.id});return {result:'dodged',damage:0};}
+  if(a.defense==='dodge'){v.counterUntil=w.time+.9;emit(w,v,a,'dodged',{targetId:source.id});return {result:'dodged',damage:0,timed:true};}
   const bearing=Math.atan2(source.y-v.y,source.x-v.x),angle=Math.atan2(Math.sin(bearing-a.facing),Math.cos(bearing-a.facing));
   if(Math.abs(angle)>Math.PI*70/180)return {result:'hit',damage};
   if(v.energy<10){clear(w,v,'guard-break');stagger(w,v,.2);return {result:'hit',damage};}
-  v.energy-=10;if(w.time<=a.startAt+a.startup+.12+EPS)v.counterUntil=w.time+.9;
-  emit(w,v,a,'guarded',{targetId:source.id});return {result:'guarded',damage:Math.max(1,Math.round(damage*.4))};
+  v.energy-=10;const timed=w.time<=a.startAt+a.startup+.12+EPS;if(timed)v.counterUntil=w.time+.9;
+  emit(w,v,a,'guarded',{targetId:source.id});return {result:'guarded',damage:Math.max(1,Math.round(damage*.4)),timed};
  }
  function stagger(w,p,duration=.12){if(w.time<(p.staggerResistUntil||0)||p.hp<=0)return false;clear(w,p,'stagger');p.staggerUntil=w.time+duration;p.staggerResistUntil=w.time+1.2;p.combatState='stagger';emit(w,p,null,'stagger',{until:p.staggerUntil});return true;}
  function motion(w,p,dt,move){const a=p.action;if(!a)return false;p.currentSpeed=0;p.groundSpeed=0;p.movementLockReason='Combat commitment';
@@ -618,15 +624,49 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
 (function(r,f){if(typeof module==='object')module.exports=f(require('./combat-data.js'));else r.YFCombatView=f(r.YFCombatData);})(typeof globalThis!=='undefined'?globalThis:this,Data=>{
  'use strict';
  function status(p,time){const c=p.combo;return (p.combatState||'ready').toUpperCase()+(p.pendingAttack?' | buffered':'')+(c?' | '+(c.stage===1?'Hit confirmed: 2':'Branch: 1 quick / 3 heavy')+' ('+Math.max(0,c.until-time).toFixed(1)+'s)':' | Route: hit 1, then 2, then 1 or 3');}
- function feedback(e,id){if(e.actorId!==id)return '';return ({'combo-opportunity':'Hit confirmed: link 2','combo-branch':'Choose 1 quick or 3 heavy','combo-complete':'Route complete','combo-expired':'Combo window expired',interrupted:'Interrupted: '+e.reason,miss:'Miss',dodged:'Timed dodge',guarded:'Guard confirmed'})[e.result]||'';}
+ function feedback(e,id){if(e.actorId!==id)return '';return e.text||({'combo-opportunity':'Hit confirmed: link 2','combo-branch':'Choose 1 quick or 3 heavy','hidden-followup':'Basin Echo: quick 1 follow-up available','combo-complete':'Route complete','combo-expired':'Combo window expired',interrupted:'Interrupted: '+e.reason,miss:'Miss',dodged:'Timed dodge',guarded:'Guard confirmed'})[e.result]||'';}
  function draw(ctx,entities,{project,time,scale}){for(const e of entities){if(e.hp<=0)continue;const a=e.action,t=e.telegraph;let reach=0,angle=Math.PI,color='#edc77a',facing=e.facing||0;
   if(t&&!t.resolved){reach=1.8;angle=Math.PI/3;facing=t.facing;color='#f29f78';}
   else if(a?.kind==='defense'){reach=.8;color=a.defense==='guard'?'#9edbd0':'#bfdcfa';angle=a.defense==='guard'?Math.PI*70/180:Math.PI;facing=a.facing;}
   else if(a&&e.combatState==='startup'){const s=Data.get(a.skillId);if(!s)continue;reach=s.range;angle=s.geometry.halfAngle||Math.PI;facing=a.facing;}
-  if(!reach)continue;const points=[];if(angle<Math.PI)points.push(project(e.x,e.y));const steps=32;for(let i=0;i<=steps;i++){const b=facing-angle+2*angle*i/steps;points.push(project(e.x+Math.cos(b)*reach,e.y+Math.sin(b)*reach));}
+  if(e.drill&&!e.drill.resolved){reach=1.1;angle=Math.PI;color='#f29f78';}if(!reach)continue;const points=[];if(angle<Math.PI)points.push(project(e.x,e.y));const steps=32;for(let i=0;i<=steps;i++){const b=facing-angle+2*angle*i/steps;points.push(project(e.x+Math.cos(b)*reach,e.y+Math.sin(b)*reach));}
   ctx.save();ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.strokeStyle=color;ctx.fillStyle=color+'20';ctx.lineWidth=1.5*scale;ctx.fill();ctx.stroke();ctx.restore();
  }}
  return {status,feedback,draw};
+});
+</script><script data-source="combat-discovery.js">/* Original clue-led mentor challenge. Progression is persistent; drills and proof are transient. */
+(function(r,f){if(typeof module==='object')module.exports=f(require('./combat-data.js'));else r.YFDiscovery=f(r.YFCombatData);})(typeof globalThis!=='undefined'?globalThis:this,Data=>{
+ 'use strict';const ids=Data.skills.filter(s=>s.category==='hidden').map(s=>s.id);
+ function sanitize(raw){return {version:1,unlocks:raw?.version===1&&Array.isArray(raw.unlocks)?ids.filter(id=>raw.unlocks.includes(id)):[]};}
+ function init(p){p.combatProgress=sanitize(null);p.challenge=null;p.drill=null;p.drillReadyAt=0;p.extraCd={};p.hiddenFollowupUntil=0;}
+ function say(w,p,h,message,result='study'){h.emit(w,p,null,result,{text:message});}
+ function command(w,p,a,h){if(!['combat-study','combat-practice'].includes(a.type))return false;
+  if(p.hp<=0||p.jail>0||p.wanted>0||p.action||p.staggerUntil>w.time)return true;
+  if(a.type==='combat-study'){
+   if(!h.activeNpc(w,p,'temple-trainer'))return true;
+   const id=ids.find(id=>Data.get(id).path===p.path);if(p.combatProgress.unlocks.includes(id)){say(w,p,h,Data.get(id).name+': use 4 after a timed dodge or early guard. Energy cost and 8s cooldown apply.');return true;}
+   p.challenge={path:p.path,mapId:p.mapId,until:w.time+180,route:false};p.drill=null;
+   say(w,p,h,'Dara: land 1 → 2 → 1 or 3 on the Temple dummy. Then use Practice pulse and guard just before the orange strike.');return true;
+  }
+  const c=p.challenge,t=h.target(w,'temple-dummy');
+  if(!c||c.path!==p.path||c.mapId!==p.mapId||c.until<=w.time||!c.route||!t||t.hp<=0||t.mapId!==p.mapId||Math.hypot(t.x-p.x,t.y-p.y)>3||p.drill||w.time<(p.drillReadyAt||0))return true;
+  p.drillReadyAt=w.time+2;p.drill={sourceId:t.id,mapId:p.mapId,path:p.path,impactAt:w.time+.6,endAt:w.time+.8,startAt:w.time,resolved:false};
+  say(w,p,h,'Practice pulse: Q just before impact, or time Space to evade. This strike is nonlethal.');return true;
+ }
+ function route(w,p,t,result,h){const c=p.challenge;if(result==='complete'&&t.id==='temple-dummy'&&c&&c.path===p.path&&c.mapId===p.mapId&&c.until>w.time){c.route=true;say(w,p,h,'Dara: route confirmed. Stay near the dummy; choose Practice pulse, then time a defense.');}}
+ function tick(w,p,h){const c=p.challenge;if(c&&(c.path!==p.path||c.mapId!==p.mapId||c.until<=w.time||p.wanted>0||p.jail>0)){p.challenge=null;p.drill=null;return;}
+  const d=p.drill;if(!d)return;
+  if(!c||d.path!==p.path||d.mapId!==p.mapId){p.drill=null;return;}
+  if(!d.resolved&&w.time+1e-9>=d.impactAt){d.resolved=true;const source=h.target(w,d.sourceId);
+   if(source&&source.hp>0&&source.mapId===p.mapId&&Math.hypot(source.x-p.x,source.y-p.y)<=3.5&&h.lineClear(source,p,h.blocked)){
+    const result=h.defenseResult(w,p,source,4);p.hp=Math.max(1,p.hp-result.damage);
+    if(result.timed){const id=ids.find(id=>Data.get(id).path===p.path);if(!p.combatProgress.unlocks.includes(id))p.combatProgress.unlocks.push(id);p.challenge=null;p.drill=null;say(w,p,h,'Discovered '+Data.get(id).name+'! Use 4 after a timed dodge or early guard; 8s cooldown.','discovered');return;}
+    say(w,p,h,'Dara: timing missed. Guard later, or dodge just before impact. Practice pulse can be retried.');
+   }
+  }
+  if(w.time+1e-9>=d.endAt)p.drill=null;
+ }
+ return {ids,sanitize,init,command,route,tick};
 });
 </script><script data-source="world.js">/* Shared, authoritative game rules. Runs in Node and in the offline browser. */
 (function(root,factory){if(typeof module==='object')module.exports=factory();else root.YF=factory();})(typeof globalThis!=='undefined'?globalThis:this,()=>{
@@ -639,6 +679,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
  const combatData=typeof module==='object'?require('./combat-data.js'):globalThis.YFCombatData;
  const combat=typeof module==='object'?require('./combat.js'):globalThis.YFCombat;
  const commands=typeof module==='object'?require('./command-contract.js'):globalThis.YFCommands;
+ const discovery=typeof module==='object'?require('./combat-discovery.js'):globalThis.YFDiscovery;
  const CITY=18, SIZE=48;
  const obstacles=[{x:5,y:5,w:6,h:5},{x:5,y:14,w:5,h:4},{x:14,y:5,w:4,h:5},{x:2,y:22,w:5,h:4}];
  const skills=combatData.forPath('fist'),spearSkills=combatData.forPath('spear');
@@ -659,7 +700,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
   city.spawn(w);return w;
  }
  function event(w,text,x,y,kind='info',mapId=null){w.events.push({id:++w.seq,text,x,y,kind,mapId});if(w.events.length>40)w.events.shift();}
- function addPlayer(w,id,name='Young fighter'){const p={id,kind:'player',name:String(name).replace(/[<>\u0000-\u001f]/g,'').slice(0,20)||'Young fighter',x:12,y:12,hp:120,maxHp:120,energy:100,gold:0,xp:0,level:1,kills:0,quest:false,questDone:false,bounty:false,bountyDone:false,wanted:0,jail:0,cd:[0,0,0],potions:3,path:'fist',route:[],lastStrike:-10,strike:0,target:null,aim:null,input:{x:0,y:0},facing:0,mapId:'sovann-city',travelLock:0};combat.init(p);p.movementStyle='walk';p.effectiveMovementStyle='walk';movement.reset(p);city.init(p);w.players[id]=p;event(w,p.name+' entered Golden Naga Basin',p.x,p.y);return p;}
+ function addPlayer(w,id,name='Young fighter'){const p={id,kind:'player',name:String(name).replace(/[<>\u0000-\u001f]/g,'').slice(0,20)||'Young fighter',x:12,y:12,hp:120,maxHp:120,energy:100,gold:0,xp:0,level:1,kills:0,quest:false,questDone:false,bounty:false,bountyDone:false,wanted:0,jail:0,cd:[0,0,0],potions:3,path:'fist',route:[],lastStrike:-10,strike:0,target:null,aim:null,input:{x:0,y:0},facing:0,mapId:'sovann-city',travelLock:0};combat.init(p);discovery.init(p);p.movementStyle='walk';p.effectiveMovementStyle='walk';movement.reset(p);city.init(p);w.players[id]=p;event(w,p.name+' entered Golden Naga Basin',p.x,p.y);return p;}
  function entities(w,mapId=null){return [...Object.values(w.players),...w.entities].filter(e=>!mapId||e.mapId===mapId);}
  function target(w,id){return Object.hasOwn(w.players,id)?w.players[id]:w.entities.find(e=>e.id===id);}
  function reward(w,p,xp,gold){p.xp+=xp;p.gold+=gold;while(p.xp>=p.level*100){p.xp-=p.level*100;p.level++;p.maxHp+=15;p.hp=p.maxHp;event(w,'Level '+p.level+' • strength awakened',p.x,p.y,'gold');}}
@@ -670,6 +711,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
   if(p.jail>0)return;
   if(a.type==='dodge'||a.type==='guard'){combat.defend(w,p,a.type,a,combatHooks);return;}
   if(p.action&&['city-equip','city-unequip','city-rest','city-upgrade','city-repair','arrest'].includes(a.type))return;
+  if(discovery.command(w,p,a,discoveryHooks))return;
   if(city.command(w,p,a))return;
   if(a.type==='exit'){useExit(w,p,a.id);return;}
   if(a.type==='goto'&&Number.isFinite(a.x)&&Number.isFinite(a.y)){if(a.mapId&&a.mapId!==p.mapId)return;const end={x:a.x,y:a.y};if(maps.blocked(p.mapId,end.x,end.y)){event(w,'Choose open ground on your current map.',p.x,p.y);return;}const exits=maps.map(p.mapId).exits,intended=exits.find(e=>dist(e,end)<=e.radius);p.route=nav.findPath(p,end,(x,y)=>blocked(x,y,p.mapId)||exits.some(e=>e!==intended&&Math.hypot(e.x-x,e.y-y)<e.radius+.2));p.aim=p.route.shift()||null;p.input={x:0,y:0};if(!p.aim)event(w,'Destination is blocked. Choose a road or open ground.',p.x,p.y);}
@@ -691,7 +733,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
  function resolveHit(w,p,v,s,a,ordinal,scale){
   const raw=Math.max(1,s.damage*scale+(p.level-1)*3+city.bonus(p,'attack')-city.bonus(v,'defence')),defense=combat.defenseResult(w,v,p,raw);
   if(defense.damage===0){p.combo=null;return;}const damage=defense.damage,sparring=city.duel(p,v,w.time);
-  combat.emit(w,p,a,defense.result,{targetId:v.id,hitOrdinal:ordinal,damage});if(defense.result==='hit')combat.confirm(w,p,v,s,a,ordinal);else p.combo=null;
+  combat.emit(w,p,a,defense.result,{targetId:v.id,hitOrdinal:ordinal,damage});if(defense.result==='hit'){const comboResult=combat.confirm(w,p,v,s,a,ordinal);discovery.route(w,p,v,comboResult,discoveryHooks);}else p.combo=null;
   city.hit(p,v);v.hp=Math.max(sparring?1:0,v.hp-damage);if(sparring&&v.hp<=1){p.duel=null;v.duel=null;event(w,'Sparring complete - no crime or death penalty',p.x,p.y,'city',p.mapId);}event(w,'−'+damage,v.x,v.y,s.index===2?'burst':'hit');
    if(insideCity(v)&&['civilian','guard','player'].includes(v.kind)&&!(v.wanted>0)&&!sparring){p.wanted+=v.hp===0?3:1;event(w,v.hp===0?'City killing • murder warrant issued':'City assault • guards alerted',p.x,p.y,'crime');}
    if(v.hp>0&&defense.result==='hit'&&s.index===1)combat.stagger(w,v);
@@ -702,6 +744,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
  function hurtPlayer(w,e,p){const raw=Math.max(1,(e.kind==='guard'?24:9)-city.bonus(p,'defence')),result=combat.defenseResult(w,p,e,raw);if(!result.damage)return;
   p.hp-=result.damage;event(w,'-'+result.damage,p.x,p.y,'hurt',p.mapId);if(p.hp<=0){combat.clear(w,p,'defeat');if(p.wanted>0)jail(w,p);else{p.mapId='sovann-city';p.hp=p.maxHp;p.x=12;p.y=12;p.aim=null;p.input={x:0,y:0};p.route=[];movement.reset(p);p.gold=Math.max(0,p.gold-10);event(w,'Defeated • returned to city (−10 silver)',p.x,p.y,'crime');}}
  }
+ const discoveryHooks={emit:combat.emit,activeNpc:city.activeNpc,target,lineClear:combat.lineClear,blocked,defenseResult:combat.defenseResult};
  const combatHooks={target,entities,blocked,eligible,hit:resolveHit};
  function step(w,dt){if(!Number.isFinite(dt)||dt<=0)return;dt=clamp(dt,0,.1);w.tick=(w.tick||0)+1;const end=w.time+dt;
   while(w.time<end-combat.EPS){const next=Math.min(end,combat.boundary(w)),slice=next-w.time;stepSlice(w,slice);}
@@ -709,13 +752,13 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
  function stepSlice(w,dt){w.time+=dt;city.tick(w,dt,move);
   for(const p of Object.values(w.players)){
    p.travelLock=Math.max(0,(p.travelLock||0)-dt);
-   p.cd=p.cd.map(c=>Math.max(0,c-dt));p.energy=Math.min(100,p.energy+dt*12);
+   p.cd=p.cd.map(c=>Math.max(0,c-dt));for(const key of Object.keys(p.extraCd||{}))p.extraCd[key]=Math.max(0,p.extraCd[key]-dt);p.energy=Math.min(100,p.energy+dt*12);
    if(p.jail>0){p.jail=Math.max(0,p.jail-dt);if(p.jail===0){p.x=12;p.y=12;p.mapId='sovann-city';event(w,'Released from custody',p.x,p.y);}continue;}
    if(p.staggerUntil>w.time-combat.EPS){p.currentSpeed=0;p.groundSpeed=0;}else if(!combat.motion(w,p,dt,move))movement.tick(w,p,dt,move);
    if(insideCity(p)&&p.wanted===0)p.hp=Math.min(p.maxHp,p.hp+dt*3);
    for(const exit of maps.map(p.mapId).exits)if(useExit(w,p,exit.id))break;
   }
-  for(const p of Object.values(w.players))combat.update(w,p,combatHooks);
+  for(const p of Object.values(w.players)){combat.update(w,p,combatHooks);discovery.tick(w,p,discoveryHooks);}
   for(const e of w.entities){if(e.hp<=0){e.telegraph=null;e.respawn-=dt;if(e.respawn<=0){e.hp=e.maxHp;e.x=e.homeX;e.y=e.homeY;}continue;}e.cd=Math.max(0,e.cd-dt);
    if(e.staggerUntil>w.time+combat.EPS){e.telegraph=null;continue;}
    if(e.telegraph){const a=e.telegraph;if(e.mapId!==a.mapId){e.telegraph=null;continue;}
@@ -777,9 +820,9 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
 });
 </script><script data-source="progression.js">/* Solo-only persistence. Network clients never upload this data to the host. */
 (function(root,factory){if(typeof module==='object')module.exports=factory();else root.YFSave=factory();})(typeof globalThis!=='undefined'?globalThis:this,()=>{
- 'use strict';const Maps=typeof module==='object'?require('./map-catalog.js'):globalThis.YFMaps;const City=typeof module==='object'?require('./city-system.js'):globalThis.YFCity;const KEY='youth-fighter-solo-v2';
- function snapshot(p){return {version:4,city:City.sanitize(p.city),energy:p.energy,cd:p.cd,mapId:p.mapId,x:p.x,y:p.y,name:p.name,level:p.level,xp:p.xp,gold:p.gold,potions:p.potions,kills:p.kills,quest:p.quest,questDone:p.questDone,bounty:p.bounty,bountyDone:p.bountyDone,path:p.path,wanted:p.wanted,jail:p.jail,hp:p.hp};}
- function restore(p,data){if(!data||![2,3,4].includes(data.version))return false;
+ 'use strict';const Maps=typeof module==='object'?require('./map-catalog.js'):globalThis.YFMaps;const City=typeof module==='object'?require('./city-system.js'):globalThis.YFCity;const Discovery=typeof module==='object'?require('./combat-discovery.js'):globalThis.YFDiscovery;const Data=typeof module==='object'?require('./combat-data.js'):globalThis.YFCombatData;const KEY='youth-fighter-solo-v2';
+ function snapshot(p){return {version:5,combatProgress:Discovery.sanitize(p.combatProgress),extraCd:{...p.extraCd},city:City.sanitize(p.city),energy:p.energy,cd:p.cd,mapId:p.mapId,x:p.x,y:p.y,name:p.name,level:p.level,xp:p.xp,gold:p.gold,potions:p.potions,kills:p.kills,quest:p.quest,questDone:p.questDone,bounty:p.bounty,bountyDone:p.bountyDone,path:p.path,wanted:p.wanted,jail:p.jail,hp:p.hp};}
+ function restore(p,data){if(!data||![2,3,4,5].includes(data.version))return false;
   const bounded=(k,min,max,fallback)=>Number.isFinite(data[k])?Math.max(min,Math.min(max,Math.floor(data[k]))):fallback;
   p.energy=Number.isFinite(data.energy)?Math.max(0,Math.min(100,data.energy)):100;if(Array.isArray(data.cd)&&data.cd.length===3)p.cd=data.cd.map(c=>Number.isFinite(c)?Math.max(0,Math.min(9,c)):0);
   p.name=typeof data.name==='string'?data.name.replace(/[<>\u0000-\u001f]/g,'').slice(0,20)||p.name:p.name;
@@ -788,7 +831,7 @@ window.YFAtlasImages={"world":"data:image/webp;base64,UklGRtpKCABXRUJQVlA4IM5KCA
   if(p.questDone)p.quest=false;if(p.bountyDone)p.bounty=false;p.path=data.path==='spear'?'spear':'fist';p.wanted=bounded('wanted',0,999,0);p.jail=Number.isFinite(data.jail)?Math.max(0,Math.min(12,data.jail)):0;p.hp=Number.isFinite(data.hp)?Math.max(1,Math.min(p.maxHp,data.hp)):p.maxHp;p.mapId=data.version>=3&&Maps.map(data.mapId)?.playable?data.mapId:'sovann-city';p.x=Maps.map(p.mapId).spawn?.x||12;p.y=Maps.map(p.mapId).spawn?.y||12;if(data.version>=3&&Number.isFinite(data.x)&&Number.isFinite(data.y)&&!Maps.blocked(p.mapId,data.x,data.y)){p.x=data.x;p.y=data.y;}else if(p.mapId==='bamboo-grove'){p.x=21;p.y=12;}if(p.jail>0){p.mapId='sovann-city';p.x=4;p.y=24;}
   p.city=City.sanitize(data.city);const weapon=City.data.items.find(i=>i.id===p.city.equipment.weapon);if(weapon&&weapon.path!==p.path)delete p.city.equipment.weapon;
   // Action IDs, pending hits and presentation/combo state never survive a load.
-  p.combo=null;p.pendingAttack=null;p.counterUntil=0;p.defenseReadyAt=0;p.staggerUntil=0;p.staggerResistUntil=0;p.action=null;p.combatVersion=1;p.combatState='ready';p.lastStrike=-10;p.combatUntil=0;p.target=null;p.aim=null;p.route=[];p.input={x:0,y:0};p.duel=null;return true;
+  p.combatProgress=Discovery.sanitize(data.version>=5?data.combatProgress:null);p.extraCd={};for(const s of Data.skills)if(s.index===null&&Number.isFinite(data.extraCd?.[s.id]))p.extraCd[s.id]=Math.max(0,Math.min(s.cool,data.extraCd[s.id]));p.challenge=null;p.drill=null;p.drillReadyAt=0;p.hiddenFollowupUntil=0;p.combo=null;p.pendingAttack=null;p.counterUntil=0;p.defenseReadyAt=0;p.staggerUntil=0;p.staggerResistUntil=0;p.action=null;p.combatVersion=1;p.combatState='ready';p.lastStrike=-10;p.combatUntil=0;p.target=null;p.aim=null;p.route=[];p.input={x:0,y:0};p.duel=null;return true;
  }
  function load(storage){try{return JSON.parse(storage.getItem(KEY));}catch{return null;}}
  function save(storage,p){try{storage.setItem(p.testSession?'youth-fighter-map-testing-v1':KEY,JSON.stringify(snapshot(p)));return true;}catch{return false;}}
@@ -1153,7 +1196,7 @@ function render(){ctx.fillStyle='#19372e';ctx.fillRect(0,0,W,H);
  if(!graphics.reduced){const vignette=ctx.createRadialGradient(W*.53,H*.5,H*.15,W*.53,H*.5,W*.65);vignette.addColorStop(0,'#081b1700');vignette.addColorStop(1,'#031716a0');ctx.fillStyle=vignette;ctx.fillRect(0,0,W,H);}
 }
 function renderMap(){atlas.update();}
-function ui(){if(!p)return;$('#combatStatus').textContent=YFCombatView.status(p,w.time);$('#guard').disabled=$('#dodge').disabled=p.jail>0||!!p.action||p.staggerUntil>w.time||p.defenseReadyAt>w.time; $('#playerName').textContent=p.name;$('#level').textContent='Level '+p.level+' · '+(p.path==='spear'?'Naga Spear':'Naga Fist');$('#levelBadge').textContent=p.level;$('#hp').style.width=(p.hp/p.maxHp*100)+'%';$('#energy').style.width=p.energy+'%';$('#hpText').textContent=Math.ceil(p.hp)+' / '+p.maxHp;$('#energyText').textContent=Math.floor(p.energy)+' / 100';$('#gold').textContent=p.gold;$('#xp').textContent=p.xp+' / '+p.level*100+' XP';$('#potions').textContent=p.potions+' tonics';$('#potion').disabled=p.potions===0||p.hp>=p.maxHp||p.jail>0;
+function ui(){if(!p)return;const hidden=YFCombatData.skills.find(s=>s.category==='hidden'&&s.path===p.path),learned=p.combatProgress?.unlocks.includes(hidden.id);$('#hiddenCombat').textContent=(learned?hidden.name:'Undiscovered technique')+' [4]';$('#hiddenCombat').disabled=!learned||p.counterUntil<=w.time||!!p.action||(p.extraCd[hidden.id]||0)>0;$('#studyCombat').disabled=!YFCity.activeNpc(w,p,'temple-trainer');$('#practiceCombat').disabled=!p.challenge?.route;$('#discoveryHint').textContent=p.challenge?(p.challenge.route?'Route passed. Practice pulse, then time Q or Space.':'Challenge: confirm 1 ? 2 ? 1 or 3 on the Temple dummy.'):learned?'Use 4 after timed defense. '+hidden.cost+' energy / 8s reuse.':'Visit Master Dara in Temple Ward for a discovery clue.';$('#combatStatus').textContent=YFCombatView.status(p,w.time);$('#guard').disabled=$('#dodge').disabled=p.jail>0||!!p.action||p.staggerUntil>w.time||p.defenseReadyAt>w.time; $('#playerName').textContent=p.name;$('#level').textContent='Level '+p.level+' · '+(p.path==='spear'?'Naga Spear':'Naga Fist');$('#levelBadge').textContent=p.level;$('#hp').style.width=(p.hp/p.maxHp*100)+'%';$('#energy').style.width=p.energy+'%';$('#hpText').textContent=Math.ceil(p.hp)+' / '+p.maxHp;$('#energyText').textContent=Math.floor(p.energy)+' / 100';$('#gold').textContent=p.gold;$('#xp').textContent=p.xp+' / '+p.level*100+' XP';$('#potions').textContent=p.potions+' tonics';$('#potion').disabled=p.potions===0||p.hp>=p.maxHp||p.jail>0;
  const city=YF.insideCity(p);$('#zone').textContent=p.jail>0?'CITY HOLD':YFMaps.map(p.mapId).name.toUpperCase();$('#law').textContent=city?'Royal protection · city law applies':'Open combat · no city protection';$('#wanted').textContent=p.jail>0?'IN CUSTODY · '+Math.ceil(p.jail)+'s until release':p.wanted>0?'WANTED · '+p.wanted+' severity · guards pursuing':'';
  const near=p.mapId==='sovann-city'&&YF.dist(p,{x:12,y:11})<5;$('#quest').textContent=p.questDone?'Contract complete ✓':p.quest?p.kills>=3?'Collect reward':'Hunt in the grove':'Accept contract';$('#quest').disabled=p.questDone||!near||(p.quest&&p.kills<3)||p.jail>0;$('#questProgress').textContent=p.quest?Math.min(p.kills,3)+' / 3 prowlers defeated':!near&&!p.questDone?'Return to the noticeboard':'';
  $('#bounty').textContent=p.bountyDone?'Warrant fulfilled ✓':p.bounty?'Warrant active · find Sok':'Accept warrant';$('#bounty').disabled=p.bounty||p.bountyDone||!near||p.jail>0;$('#bountyProgress').textContent=p.bounty?'◆ Outlaw camp · southeast grove':!near&&!p.bountyDone?'Return to the noticeboard':'';
@@ -1190,6 +1233,7 @@ function connect(){if(location.protocol==='file:')return;socket=new WebSocket((l
 $('#begin').onclick=()=>{selectedName=$('#name').value.trim()||'Young fighter';if(location.protocol==='file:')resumed=YFSave.restore(p,saved);p.name=selectedName;started=true;$('#start').classList.add('hidden');resetPresentation();connect();cam.x=p.x;cam.y=p.y;announce(resumed?'Welcome back. Your solo progress has been restored.':'Welcome to Sovann City. Accept a contract at the noticeboard.');};
 $('#name').addEventListener('keydown',e=>{if(e.key==='Enter')$('#begin').click();});$('#quest').onclick=()=>send({type:p.quest&&p.kills>=3?'claim':'quest'});$('#bounty').onclick=()=>send({type:'bounty'});$('#potion').onclick=()=>send({type:'heal'});$('#arrest').onclick=()=>send({type:'arrest'});
 function chooseNearest(){const ts=YF.entities(w,p.mapId).filter(e=>e.hp>0&&['wolf','bandit','training'].includes(e.kind));ts.sort((a,b)=>YF.dist(a,p)-YF.dist(b,p));if(ts[0])send({type:'target',id:ts[0].id});}
+$('#studyCombat').onclick=()=>send({type:'combat-study'});$('#practiceCombat').onclick=()=>send({type:'combat-practice'});$('#hiddenCombat').onclick=()=>send({type:'attack',skillId:YFCombatData.skills.find(s=>s.category==='hidden'&&s.path===p.path).id,pvp});
 $('#guard').onclick=()=>send({type:'guard'});$('#dodge').onclick=()=>send({type:'dodge',x:input.x,y:input.y});
 function strike(i){if(!p.target)chooseNearest();const t=YF.target(w,p.target);if(t&&YF.dist(p,t)>YF.skillsFor(p)[i].range)announce('Move closer to your target.');send({type:'attack',skill:i,pvp});}
 document.querySelectorAll('[data-skill]').forEach(b=>b.onclick=()=>strike(Number(b.dataset.skill)));$('#pvp').onclick=()=>{pvp=!pvp;$('#pvp').classList.toggle('active',pvp);$('#pvp').setAttribute('aria-pressed',String(pvp));$('#pvp span').replaceChildren(document.createTextNode(pvp?'CITY ATTACKS':'PEACEFUL'),Object.assign(document.createElement('small'),{textContent:pvp?'City law applies':'City attacks disabled'}));announce(pvp?'City attacks enabled. Striking peaceful targets is a crime.':'Peaceful mode enabled.');};
@@ -1198,7 +1242,7 @@ let baseMovementStyle='walk',sentMovementStyle=null;
  function applyMovementStyle(force=false){const style=keys.has('alt')?'slow':keys.has('shift')?'run':baseMovementStyle;if(force||style!==sentMovementStyle){sentMovementStyle=style;send({type:'movement-style',style});}}
  $('#movementStyle').onchange=()=>{baseMovementStyle=YFMovement.get($('#movementStyle').value).id;applyMovementStyle();};
  function updateMovement(){applyMovementStyle();const sx=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0),sy=(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0);input={x:(sx+sy)*.7071,y:(sy-sx)*.7071};send({type:'move',...input});}
-addEventListener('keydown',e=>{if(!started||YFAtlas.typing(e.target))return;const k=e.key.toLowerCase();if(e.repeat)return;if(motionStudio.dialog.open){if(k==='escape'||k==='l'){e.preventDefault();motionStudio.close();}return;}if(k==='l'&&!graphicsUI.dialog.open&&!heroUI.dialog.open&&!cityUI.dialog.open&&!atlas.dialog.open&&!$('#instructions').open&&!$('#equipment').open){e.preventDefault();motionStudio.open();return;}if(graphicsUI.dialog.open){if(k==='escape'||k==='g'){e.preventDefault();graphicsUI.dialog.close();}return;}if(k==='g'&&!heroUI.dialog.open&&!cityUI.dialog.open&&!atlas.dialog.open&&!$('#instructions').open&&!$('#equipment').open){e.preventDefault();graphicsUI.open();return;}if(heroUI.dialog.open){if(k==='escape'||k==='h'){e.preventDefault();heroUI.close();}return;}if(cityUI.dialog.open){if(k==='escape'){e.preventDefault();cityUI.close();}return;}if(k==='m'&&!$('#instructions').open&&!$('#equipment').open){e.preventDefault();atlas.toggle();return;}if(atlas.dialog.open){if(k==='escape'){e.preventDefault();atlas.back();}return;}if($('#instructions').open||$('#equipment').open)return;if(k==='shift'||k==='alt'){e.preventDefault();keys.add(k);applyMovementStyle();return;}if(['tab','arrowup','arrowdown','arrowleft','arrowright',' '].includes(k))e.preventDefault();keys.add(k);if(['w','a','s','d'].includes(k)||k.startsWith('arrow'))updateMovement();if(['1','2','3'].includes(k))strike(Number(k)-1);if(k==='q')send({type:'guard'});if(k===' ')send({type:'dodge',x:input.x,y:input.y});if(k==='r')send({type:'heal'});if(k==='f')send({type:'arrest'});if(k==='tab')chooseNearest();if(k==='i')openPanel('equipment');if(k==='e')cityUI.interact();if(k==='j')cityUI.openJournal();if(k==='h')heroUI.open();});addEventListener('keyup',e=>{const k=e.key.toLowerCase();keys.delete(k);if(started&&(k==='shift'||k==='alt'))applyMovementStyle();if(started&&!YFAtlas.typing(e.target)&&(['w','a','s','d'].includes(k)||k.startsWith('arrow')))updateMovement();});addEventListener('blur',()=>{keys.clear();updateMovement();clock.reset();});
+addEventListener('keydown',e=>{if(!started||YFAtlas.typing(e.target))return;const k=e.key.toLowerCase();if(e.repeat)return;if(motionStudio.dialog.open){if(k==='escape'||k==='l'){e.preventDefault();motionStudio.close();}return;}if(k==='l'&&!graphicsUI.dialog.open&&!heroUI.dialog.open&&!cityUI.dialog.open&&!atlas.dialog.open&&!$('#instructions').open&&!$('#equipment').open){e.preventDefault();motionStudio.open();return;}if(graphicsUI.dialog.open){if(k==='escape'||k==='g'){e.preventDefault();graphicsUI.dialog.close();}return;}if(k==='g'&&!heroUI.dialog.open&&!cityUI.dialog.open&&!atlas.dialog.open&&!$('#instructions').open&&!$('#equipment').open){e.preventDefault();graphicsUI.open();return;}if(heroUI.dialog.open){if(k==='escape'||k==='h'){e.preventDefault();heroUI.close();}return;}if(cityUI.dialog.open){if(k==='escape'){e.preventDefault();cityUI.close();}return;}if(k==='m'&&!$('#instructions').open&&!$('#equipment').open){e.preventDefault();atlas.toggle();return;}if(atlas.dialog.open){if(k==='escape'){e.preventDefault();atlas.back();}return;}if($('#instructions').open||$('#equipment').open)return;if(k==='shift'||k==='alt'){e.preventDefault();keys.add(k);applyMovementStyle();return;}if(['tab','arrowup','arrowdown','arrowleft','arrowright',' '].includes(k))e.preventDefault();keys.add(k);if(['w','a','s','d'].includes(k)||k.startsWith('arrow'))updateMovement();if(['1','2','3'].includes(k))strike(Number(k)-1);if(k==='4')$('#hiddenCombat').click();if(k==='q')send({type:'guard'});if(k===' ')send({type:'dodge',x:input.x,y:input.y});if(k==='r')send({type:'heal'});if(k==='f')send({type:'arrest'});if(k==='tab')chooseNearest();if(k==='i')openPanel('equipment');if(k==='e')cityUI.interact();if(k==='j')cityUI.openJournal();if(k==='h')heroUI.open();});addEventListener('keyup',e=>{const k=e.key.toLowerCase();keys.delete(k);if(started&&(k==='shift'||k==='alt'))applyMovementStyle();if(started&&!YFAtlas.typing(e.target)&&(['w','a','s','d'].includes(k)||k.startsWith('arrow')))updateMovement();});addEventListener('blur',()=>{keys.clear();updateMovement();clock.reset();});
 canvas.addEventListener('pointerdown',e=>{if(!started||graphicsUI.dialog.open)return;const x=e.clientX,y=e.clientY;let best=null,bd=45*scale;for(const t of YF.entities(w,p.mapId)){if(t.id===id||t.hp<=0)continue;const q=project((visualEntities.find(v=>v.id===t.id)||t).x,(visualEntities.find(v=>v.id===t.id)||t).y,t.kind==='wolf'?12:t.kind==='player'?37:22),d=Math.hypot(q.x-x,q.y-y);if(d<bd){best=t;bd=d;}}if(best){send({type:'target',id:best.id});if(best.cityNpc&&best.kind!=='training'&&YF.dist(p,best)<=2.8)cityUI.openNpc(best.id);}else{const q=unproject(x,y);send({type:'goto',x:q.x,y:q.y});}});
 $('#map').onclick=()=>{if(started)atlas.inspect(p.mapId);};
 document.querySelectorAll('[data-move]').forEach(b=>{const k={up:'w',down:'s',left:'a',right:'d'}[b.dataset.move];b.onpointerdown=e=>{b.setPointerCapture(e.pointerId);keys.add(k);updateMovement();};b.onpointerup=b.onpointercancel=()=>{keys.delete(k);updateMovement();};});
