@@ -1,7 +1,7 @@
 /* Shared validation contract for saves and network commands. */
 (function(root,factory){if(typeof module==='object')module.exports=factory();else root.YFSaveContract=factory();})(typeof globalThis!=='undefined'?globalThis:this,()=>{
  'use strict';
- const allowedVersions=new Set([2,3,4]);
+ const allowedVersions=new Set([2,3,4,5]);
  const clampNumber=(value,min,max)=>Number.isFinite(value)?Math.min(Math.max(value,min),max):null;
  function validateSaveData(data, options={}){
   const errors=[];
