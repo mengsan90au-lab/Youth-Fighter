@@ -6,7 +6,7 @@
  function draw(ctx,entities,{project,time,scale}){for(const e of entities){if(e.hp<=0)continue;const a=e.action,t=e.telegraph;let reach=0,angle=Math.PI,color='#edc77a',facing=e.facing||0;
   if(t&&!t.resolved){reach=1.8;angle=Math.PI/3;facing=t.facing;color='#f29f78';}
   else if(a?.kind==='defense'){reach=.8;color=a.defense==='guard'?'#9edbd0':'#bfdcfa';angle=a.defense==='guard'?Math.PI*70/180:Math.PI;facing=a.facing;}
-  else if(a&&e.combatState==='startup'){const s=Data.get(a.skillId);if(!s)continue;reach=s.range;angle=s.geometry.halfAngle||Math.PI;facing=a.facing;}
+  else if(a&&(e.combatState==='startup'||Data.get(a.skillId)?.category==='ultimate'&&e.combatState==='active')){const s=Data.get(a.skillId);if(!s)continue;reach=s.range;angle=s.geometry.halfAngle||Math.PI;facing=a.facing;}
   if(e.drill&&!e.drill.resolved){reach=1.1;angle=Math.PI;color='#f29f78';}if(!reach)continue;const points=[];if(angle<Math.PI)points.push(project(e.x,e.y));const steps=32;for(let i=0;i<=steps;i++){const b=facing-angle+2*angle*i/steps;points.push(project(e.x+Math.cos(b)*reach,e.y+Math.sin(b)*reach));}
   ctx.save();ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.strokeStyle=color;ctx.fillStyle=color+'20';ctx.lineWidth=1.5*scale;ctx.fill();ctx.stroke();ctx.restore();
  }}

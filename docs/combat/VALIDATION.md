@@ -29,3 +29,11 @@ Implemented: both named hidden responses, mentor clue/challenge, confirmed dummy
 Actual results: 37/37 Node tests pass, including full real-command mentor/route/drill/defense discovery for both paths at 20/60Hz, wrong/late/missed/remote requests, locked/expired activation and actual snapshot/restore sanitation. Exact check/build scripts exit 0; Unity check still warns about missing metadata. Browser layout/playthrough and physical LAN remain unverified for the previously recorded policy blocker.
 
 Guide: enter Temple Ward and approach Master Dara; choose Dara: study. Approach/select the dummy and finish 1 ? 2 ? 1 or 3. Choose Practice pulse. Wait roughly half a second, then Q toward the dummy (or time Space). Discovery names the technique; 4 activates it after later real timed defense. Fist can then use a quick 1 follow-up. Reload should retain the unlock and remove challenge/counter proofs.
+
+## Focus and ultimate stage, branch combat/mastery-ultimates
+
+Implemented: capped hostile-outcome Focus, reset/exclusion rules, Golden Basin Resonance and River Crown Tempest with explicit per-ordinal geometry/limits, standard/enhanced costs, same-target route enhancement, defender counterplay and returned/sparring victim exclusion. Ordinary third skills remain intact.
+
+Actual results: 45/45 tests pass through installed Node, including 10/20/60Hz ultimate schedules, once-only hit ordinals, hostile/source/global caps, defense exclusions, enhancement proof/cost/final-only multiplier, per-hit pulse/cone geometry, nonlethal sparring, player return protection and resource reset/load/forged-host rejection. Exact check/build scripts exit 0 with the same two Unity warnings. Browser playability/visual feel and physical LAN remain unverified; no full release acceptance claim.
+
+Guide: fight prowlers/bandit to earn capped Focus; practice dummies and sparring award none. 5 uses the separate standard ultimate at 60 Focus + 30 energy; complete a route against the same hostile and use V within two seconds for 70 + 35 enhanced activation. Telegraphs allow escape/defense; startup can be interrupted by a heavy hit. Travel/reload resets Focus but retains learned techniques. Existing 3 remains the original ordinary energy area skill.

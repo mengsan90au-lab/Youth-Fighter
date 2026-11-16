@@ -10,6 +10,7 @@
  const combat=typeof module==='object'?require('./combat.js'):globalThis.YFCombat;
  const commands=typeof module==='object'?require('./command-contract.js'):globalThis.YFCommands;
  const discovery=typeof module==='object'?require('./combat-discovery.js'):globalThis.YFDiscovery;
+ const focus=typeof module==='object'?require('./combat-focus.js'):globalThis.YFFocus;
  const CITY=18, SIZE=48;
  const obstacles=[{x:5,y:5,w:6,h:5},{x:5,y:14,w:5,h:4},{x:14,y:5,w:4,h:5},{x:2,y:22,w:5,h:4}];
  const skills=combatData.forPath('fist'),spearSkills=combatData.forPath('spear');
@@ -45,7 +46,7 @@
   if(city.command(w,p,a))return;
   if(a.type==='exit'){useExit(w,p,a.id);return;}
   if(a.type==='goto'&&Number.isFinite(a.x)&&Number.isFinite(a.y)){if(a.mapId&&a.mapId!==p.mapId)return;const end={x:a.x,y:a.y};if(maps.blocked(p.mapId,end.x,end.y)){event(w,'Choose open ground on your current map.',p.x,p.y);return;}const exits=maps.map(p.mapId).exits,intended=exits.find(e=>dist(e,end)<=e.radius);p.route=nav.findPath(p,end,(x,y)=>blocked(x,y,p.mapId)||exits.some(e=>e!==intended&&Math.hypot(e.x-x,e.y-y)<e.radius+.2));p.aim=p.route.shift()||null;p.input={x:0,y:0};if(!p.aim)event(w,'Destination is blocked. Choose a road or open ground.',p.x,p.y);}
-  if(a.type==='equip'&&!p.action&&['fist','spear'].includes(a.path)&&insideCity(p)&&p.wanted===0&&p.cd.every(c=>c===0)){p.path=a.path;const item=city.data.items.find(i=>i.id===p.city.equipment.weapon);if(item&&item.path!==p.path)delete p.city.equipment.weapon;combat.clear(w,p,'path-change');event(w,a.path==='spear'?'Naga Spear equipped • extended reach':'Naga Fist equipped • unarmed combat',p.x,p.y,'gold');}
+  if(a.type==='equip'&&a.path!==p.path&&!p.action&&['fist','spear'].includes(a.path)&&insideCity(p)&&p.wanted===0&&p.cd.every(c=>c===0)){p.path=a.path;const item=city.data.items.find(i=>i.id===p.city.equipment.weapon);if(item&&item.path!==p.path)delete p.city.equipment.weapon;combat.clear(w,p,'path-change');event(w,a.path==='spear'?'Naga Spear equipped • extended reach':'Naga Fist equipped • unarmed combat',p.x,p.y,'gold');}
   if(a.type==='buy'&&p.mapId==='sovann-city'&&insideCity(p)&&dist(p,{x:12,y:11})<5&&p.wanted===0&&p.gold>=12&&p.potions<9){p.gold-=12;p.potions++;event(w,'Tonic purchased • −12 silver',p.x,p.y,'heal');}
   if(a.type==='target'){const t=target(w,a.id);p.target=t&&sameMap(p,t)?t.id:null;}
   if(a.type==='quest'&&p.mapId==='sovann-city'&&insideCity(p)&&dist(p,{x:12,y:11})<5&&!p.questDone){p.quest=true;event(w,'Contract accepted • defeat 3 prowlers',p.x,p.y,'gold');}
@@ -61,13 +62,13 @@
  function eligible(w,p,t,pvp){return !!(t&&t.id!==p.id&&t.hp>0&&sameMap(p,t)&&!(t.jail>0)&&
   (!['civilian','guard','player'].includes(t.kind)||t.kind==='player'&&!insideCity(t)||pvp||t.wanted>0||city.duel(p,t,w.time)));}
  function resolveHit(w,p,v,s,a,ordinal,scale){
-  const raw=Math.max(1,s.damage*scale+(p.level-1)*3+city.bonus(p,'attack')-city.bonus(v,'defence')),defense=combat.defenseResult(w,v,p,raw);
+  const raw=Math.max(1,(s.damage+(p.level-1)*3+city.bonus(p,'attack'))*scale-city.bonus(v,'defence')),defense=combat.defenseResult(w,v,p,raw);
   if(defense.damage===0){p.combo=null;return;}const damage=defense.damage,sparring=city.duel(p,v,w.time);
-  combat.emit(w,p,a,defense.result,{targetId:v.id,hitOrdinal:ordinal,damage});if(defense.result==='hit'){const comboResult=combat.confirm(w,p,v,s,a,ordinal);discovery.route(w,p,v,comboResult,discoveryHooks);}else p.combo=null;
-  city.hit(p,v);v.hp=Math.max(sparring?1:0,v.hp-damage);if(sparring&&v.hp<=1){p.duel=null;v.duel=null;event(w,'Sparring complete - no crime or death penalty',p.x,p.y,'city',p.mapId);}event(w,'−'+damage,v.x,v.y,s.index===2?'burst':'hit');
+  combat.emit(w,p,a,defense.result,{targetId:v.id,hitOrdinal:ordinal,damage});if(defense.result==='hit'){const comboResult=combat.confirm(w,p,v,s,a,ordinal);discovery.route(w,p,v,comboResult,discoveryHooks);const gain=focus.hit(w,p,v,s,a,comboResult);if(gain)combat.emit(w,p,a,'focus',{gain,focus:p.focus});}else p.combo=null;
+  city.hit(p,v);v.hp=Math.max(sparring?1:0,v.hp-damage);if(sparring&&v.hp<=1){p.duel=null;v.duel=null;a.finishedTargets.push(v.id);event(w,'Sparring complete - no crime or death penalty',p.x,p.y,'city',p.mapId);}event(w,'−'+damage,v.x,v.y,s.index===2?'burst':'hit');
    if(insideCity(v)&&['civilian','guard','player'].includes(v.kind)&&!(v.wanted>0)&&!sparring){p.wanted+=v.hp===0?3:1;event(w,v.hp===0?'City killing • murder warrant issued':'City assault • guards alerted',p.x,p.y,'crime');}
    if(v.hp>0&&defense.result==='hit'&&s.index===1)combat.stagger(w,v);
-   if(v.hp===0){if(v.kind==='wolf'){p.kills++;reward(w,p,25,8);v.respawn=18;}if(v.kind==='bandit'){reward(w,p,40,15);v.respawn=25;event(w,'Outlaw defeated • arrest requires a living target',p.x,p.y);}
+   if(v.hp===0){a.finishedTargets.push(v.id);if(v.kind==='wolf'){p.kills++;reward(w,p,25,8);v.respawn=18;}if(v.kind==='bandit'){reward(w,p,40,15);v.respawn=25;event(w,'Outlaw defeated • arrest requires a living target',p.x,p.y);}
     if(v.kind==='civilian'||v.kind==='guard')v.respawn=20;if(v.kind==='player'){combat.clear(w,v,'defeat');if(v.wanted>0)jail(w,v);else{v.mapId='sovann-city';v.hp=v.maxHp;v.x=12;v.y=12;v.aim=null;v.route=[];v.input={x:0,y:0};movement.reset(v);v.gold=Math.max(0,v.gold-10);event(w,'Defeated • returned to the city',v.x,v.y);}}
    }
  }

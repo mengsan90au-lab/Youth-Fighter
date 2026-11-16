@@ -1,9 +1,9 @@
 {
   "name": "Youth Fighter Offline Build",
-  "generatedAt": "2026-11-16T04:43:01.353Z",
+  "generatedAt": "2026-11-16T04:47:35.696Z",
   "version": "0.10.0",
   "sourceHashes": {
-    "index.html": "cbd8077932fe71a6265dd738910a22b53b19b42b42139f273c6c9c780d3986bc",
+    "index.html": "33b5388921dc640772de646223e9cc535692f1cab92dad9ae43855e983d7332a",
     "style.css": "13ffc9629b7e3a823bb7c1b38fb3a29d42619e9166ffdd64440013be97761bd0",
     "atlas.css": "376297bfb6c51db82a65c2f4346ad6f9ed68ee984e0002a33e93ff6c9c868152",
     "approved-atlas.css": "a659e492e64aaa915ed70f07edd15084c7e8a08e2e9d736d45bf4770bed0b55a",
@@ -23,15 +23,16 @@
     "navigation.js": "89953bff3184f9b242e6e61d45ef706ef817085e18961a6535cee8b4433bbd55",
     "city-system.js": "c7ff183b9372bc643fc2bb0140b86ded66090157c1b083c82b2665d7f5f85e96",
     "movement-styles.js": "dd452437f9e256f3f24469778c4f33ad161fdb3840e925678006f06ec4c130a9",
-    "command-contract.js": "4f81e40bbc2350cc85bbd6461bdf60aae84e981b24844a5ee048e98dc7928bd4",
-    "combat-data.js": "9533311fb8cd51d06f794febad7586bd828358d1c882584716a2dc73cdeb5292",
+    "command-contract.js": "9ef6e51fdff49fedfae805910e18e50b0ab096046c8831adb671409c80874656",
+    "combat-data.js": "d577a50428f043dc5870bf3f7aac1cbf5f432280d2a18b2ac0d571444fdccdbb",
     "combat-combos.js": "60bf7e9308c6b758bc19c392a92de559d012e2b70ffa0e676989eac5645f9fbe",
-    "combat.js": "43a1b739b2ad7abc59609d92ed2b9d20a20d54a9099bc43feb87d4de761b799e",
-    "combat-presentation.js": "ce82d8f044c6d3a172cb5d94c8c27ae6b4e6c3e7cdfd2c1bf59a0d033ccb89ea",
+    "combat-focus.js": "1ecae34a46bf7396478e48ed7c4ef621e4d818348fd1502b7d06d07ba1605cf2",
+    "combat.js": "4f62aa7818a1c2dbf47c9ab802cba41346108959bae7d594f7ead854a0cfb327",
+    "combat-presentation.js": "b8f1a0fee2cdf4ba3f06e5b7e8782c80e03d05ee6c361aced8868bfcdb373577",
     "combat-discovery.js": "d7aee41e9ba358bf584a4b7658e17c93d798ca77418c7fce35a579d73c88f63e",
-    "world.js": "489f47a7d449f571132e39661815f48170756b1690e4fc0b09fd58bc77ff4565",
+    "world.js": "c363bdf3b3b208eff562af4a1ac137dcb193eff4030f44eead5643c4fab57f48",
     "test-maps.js": "b973f63a8d5a9c5bc55f5f3a744347e5cde4acecd3a25cc543cba8e0e0fb532f",
-    "progression.js": "28b13b168d1688dc24e9036ff481816e58d79b307cf1c7c83a4b3d830c426797",
+    "progression.js": "e145c1ba1f9a2bef86dbceb9caf76e28dbe0939dd1694edc7edc7e5b7ce8958c",
     "render-cache.js": "279781bf64672623512c68f9689ca5a4abb302c3aa15fa3285cbf8db06caa1ab",
     "residential-render.js": "524a09fbcff3089ce9eeb97948779afdf2634b1ce7bb72ebd6e477186c2f4d15",
     "city-render.js": "6b5efbb89c65e9ee53fd56178d75a22622faf5543b679dc5ac679759ac3e1b93",
@@ -47,7 +48,7 @@
     "performance.js": "b8597416d4fa5aa11214bf2ea84552749dd855fea45a1e2dac3b2b9a13a61ab4",
     "performance-ui.js": "ca7924a67dab48789f242add134d73709d09aa6a1985592e80e80e9704b43efc",
     "terrain-cache.js": "95e550e34803a85f6487adecfcd44852adec2d1c753ec8c07770c1e5cbaa9264",
-    "game.js": "2636f85ecce89ffd31acff10b0fefef865a3ea0db4e2e8698477772f953479b6"
+    "game.js": "c3b7b5fd3b9a445febc87205a9e193e5571e920e7ccfc0d3c2405b92edf4e16a"
   },
   "entryPoints": [
     "public/index.html",
