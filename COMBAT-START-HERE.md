@@ -1,6 +1,6 @@
 # Youth Fighter combat development preview
 
-Version 0.11.0-combat.0 is a review build. Automated simulation and packaging checks pass; real browser visual/playtesting and physical LAN testing remain outstanding. Keep your previous game folder until you confirm your saved character in the same browser.
+Version 0.11.0-combat.1 is a review build. Automated simulation, real-host two-client journeys and packaging checks pass; real browser visual/playtesting and physical LAN testing remain outstanding. Keep your previous game folder until you confirm your saved character in the same browser.
 
 ## Play
 
@@ -43,5 +43,7 @@ Solo save v5 accepts v2/v3/v4/v5 and retains known technique discoveries, progre
 Existing quests, inventory, city services, wanted status, guards, arrest and nonlethal consensual sparring remain. City attacks still require explicit intent and carry the existing crime consequences. R drinks a tonic; F arrests a living eligible target.
 
 ## Review status
+
+This revision fixes combined movement keys and directional dodge being rejected by the command gate. Network tests now start fresh characters, earn hidden techniques and Focus through normal commands, and verify standard/enhanced ultimates for both paths with a second observing client. These are native WebSocket clients on loopback, not browser or physical LAN playtests.
 
 Read [the acceptance ledger](docs/combat/ACCEPTANCE.md) for exact evidence and outstanding checks. Balance, authored martial animation/audio, browser layout/feel and real LAN timing need review. Procedural telegraphs remain enabled under reduced effects. Native Unity is blocked by missing project metadata and has not been compiled or tested.
