@@ -1,4 +1,8 @@
-# Youth Fighter v0.10.0 — Three movement styles
+# Youth Fighter - combat development preview
+
+The current branch adds authoritative combat timing, both-path linked routes and defense, mentor-discovered techniques and bounded Mastery Focus ultimates. **Start with [COMBAT-START-HERE.md](COMBAT-START-HERE.md)**. Review status: [acceptance ledger](docs/combat/ACCEPTANCE.md); [contracts](docs/combat/CONTRACTS.md); [validation](docs/combat/VALIDATION.md). This is a draft preview with automated evidence; real browser visual/playtesting and physical LAN checks remain outstanding. Unity is blocked by missing metadata.
+
+## Existing movement prototype
 
 The playable HTML/JavaScript hero now has separate **Slow Model Walk, Normal Walk and Run** pose sets, calibrated distance-driven gait, smooth presentation transitions and a compact mini-map driven by the same interpolated position. The release includes full source, original sheets, lossless runtime assets, standalone offline play, local multiplayer, a coordinate lab and visual review clips.
 

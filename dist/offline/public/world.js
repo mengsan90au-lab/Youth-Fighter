@@ -62,12 +62,12 @@
  function eligible(w,p,t,pvp){return !!(t&&t.id!==p.id&&t.hp>0&&sameMap(p,t)&&!(t.jail>0)&&
   (!['civilian','guard','player'].includes(t.kind)||t.kind==='player'&&!insideCity(t)||pvp||t.wanted>0||city.duel(p,t,w.time)));}
  function resolveHit(w,p,v,s,a,ordinal,scale){
-  const raw=Math.max(1,(s.damage+(p.level-1)*3+city.bonus(p,'attack'))*scale-city.bonus(v,'defence')),defense=combat.defenseResult(w,v,p,raw);
+  const raw=Math.max(1,(s.damage+(p.level-1)*3+city.bonus(p,'attack'))*scale*(v.kind==='player'?s.pvpScale:1)-city.bonus(v,'defence')),defense=combat.defenseResult(w,v,p,raw);
   if(defense.damage===0){p.combo=null;return;}const damage=defense.damage,sparring=city.duel(p,v,w.time);
-  combat.emit(w,p,a,defense.result,{targetId:v.id,hitOrdinal:ordinal,damage});if(defense.result==='hit'){const comboResult=combat.confirm(w,p,v,s,a,ordinal);discovery.route(w,p,v,comboResult,discoveryHooks);const gain=focus.hit(w,p,v,s,a,comboResult);if(gain)combat.emit(w,p,a,'focus',{gain,focus:p.focus});}else p.combo=null;
-  city.hit(p,v);v.hp=Math.max(sparring?1:0,v.hp-damage);if(sparring&&v.hp<=1){p.duel=null;v.duel=null;a.finishedTargets.push(v.id);event(w,'Sparring complete - no crime or death penalty',p.x,p.y,'city',p.mapId);}event(w,'−'+damage,v.x,v.y,s.index===2?'burst':'hit');
+  combat.emit(w,p,a,defense.result==='guarded'?'blocked':defense.result,{targetId:v.id,hitOrdinal:ordinal,damage});if(defense.result==='hit'){const comboResult=combat.confirm(w,p,v,s,a,ordinal);discovery.route(w,p,v,comboResult,discoveryHooks);const gain=focus.hit(w,p,v,s,a,comboResult);if(gain)combat.emit(w,p,a,'focus',{gain,focus:p.focus});}else p.combo=null;
+  city.hit(p,v);v.hp=Math.max(sparring?1:0,v.hp-damage);if(sparring&&v.hp<=1){p.duel=null;v.duel=null;a.finishedTargets.push(v.id);event(w,'Sparring complete - no crime or death penalty',p.x,p.y,'city',p.mapId);}event(w,'−'+damage,v.x,v.y,s.index===2||s.category==='ultimate'?'burst':'hit');
    if(insideCity(v)&&['civilian','guard','player'].includes(v.kind)&&!(v.wanted>0)&&!sparring){p.wanted+=v.hp===0?3:1;event(w,v.hp===0?'City killing • murder warrant issued':'City assault • guards alerted',p.x,p.y,'crime');}
-   if(v.hp>0&&defense.result==='hit'&&s.index===1)combat.stagger(w,v);
+   if(v.hp>0&&defense.result==='hit')for(const status of s.status)if(status.id==='stagger')combat.stagger(w,v,status.duration,status.resistance);
    if(v.hp===0){a.finishedTargets.push(v.id);if(v.kind==='wolf'){p.kills++;reward(w,p,25,8);v.respawn=18;}if(v.kind==='bandit'){reward(w,p,40,15);v.respawn=25;event(w,'Outlaw defeated • arrest requires a living target',p.x,p.y);}
     if(v.kind==='civilian'||v.kind==='guard')v.respawn=20;if(v.kind==='player'){combat.clear(w,v,'defeat');if(v.wanted>0)jail(w,v);else{v.mapId='sovann-city';v.hp=v.maxHp;v.x=12;v.y=12;v.aim=null;v.route=[];v.input={x:0,y:0};movement.reset(v);v.gold=Math.max(0,v.gold-10);event(w,'Defeated • returned to the city',v.x,v.y);}}
    }
