@@ -1,0 +1,56 @@
+/* Original vector atlas art + accurate local-map rendering. No gameplay mutation. */
+(function(r,f){if(typeof module==='object')module.exports=f(require('./map-catalog.js'));else r.YFMapRender=f(r.YFMaps);})(typeof globalThis!=='undefined'?globalThis:this,Maps=>{
+ 'use strict';const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const line=points=>points.map(p=>p.x+','+p.y).join(' '),svg=body=>'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" class="atlas-svg" aria-label="Interactive map">'+defs+body+'</svg>';
+ const defs='<defs><pattern id="sea" width="44" height="28" patternUnits="userSpaceOnUse"><path d="M4 15q8-6 16 0t16 0" fill="none" stroke="#789991" opacity=".23"/></pattern><pattern id="grain" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="3" cy="4" r=".6" fill="#776b46" opacity=".15"/></pattern><filter id="glow"><feGaussianBlur stdDeviation="4"/></filter></defs>';
+ const mountain=(x,y,s=1)=>'<g transform="translate('+x+' '+y+') scale('+s+')"><path d="M-21 18L0-24 24 18Z" fill="#64715c"/><path d="M0-24L24 18H3Z" fill="#455d50"/><path d="M-7-9L0-24 9-7 1-12Z" fill="#dedcc0"/></g>';
+ const tree=(x,y)=>'<g transform="translate('+x+' '+y+')"><path d="M0 0v18" stroke="#5d684a" stroke-width="3"/><path d="M0-20L-12 6H12ZM0-8L-15 15H15Z" fill="#4c7257"/></g>';
+ const symbol={capital:'♜',city:'▣',town:'▤',village:'⌂',monster:'⚔',dungeon:'◇',sect:'✦',border:'↔',port:'⚓'};
+ function world(current){let s='<rect width="1000" height="660" fill="#294c4b"/><rect width="1000" height="660" fill="url(#sea)"/>';
+  s+='<path d="M220 170Q450 35 660 195T795 255M225 445Q410 300 490 410T755 475M225 445Q300 620 410 565" stroke="#d6c28a" stroke-width="2" stroke-dasharray="5 9" fill="none" opacity=".4"/>';
+  for(const r of Maps.data.realms){const active=Maps.map(current)?.realmId===r.id;s+='<g class="atlas-realm" data-realm="'+r.id+'" role="button" tabindex="0" aria-label="Map marker: '+esc(r.name)+'"><polygon points="'+line(r.border.map(p=>({x:p.x,y:p.y+9})))+'" fill="#162f2d"/><polygon points="'+line(r.border)+'" fill="'+r.color+'" stroke="'+(active?'#fff0b5':'#83917a')+'" stroke-width="'+(active?3:1.5)+'"/><polygon points="'+line(r.border)+'" fill="url(#grain)"/>';
+   for(let i=0;i<3;i++)s+=mountain(r.x-25+i*24,r.y-30-(i%2)*10,.5);
+   s+='<circle cx="'+r.x+'" cy="'+r.y+'" r="'+(active?10:7)+'" fill="#1f3930" stroke="#f1d794" stroke-width="2"/><text x="'+r.x+'" y="'+(r.y+28)+'" text-anchor="middle" class="realm-name">'+esc(r.name)+'</text><text x="'+r.x+'" y="'+(r.y+45)+'" text-anchor="middle" class="realm-status">'+(active?'◆ YOU ARE HERE':r.playable?'PLAYABLE REGION':'ATLAS OPEN · GAMEPLAY LOCKED')+'</text></g>';
+  }
+  s+='<g transform="translate(930 570)" stroke="#dac999" fill="none"><path d="M0-33L8-7 33 0 8 7 0 33-8 7-33 0-8-7Z"/><path d="M0-45V45M-45 0H45" opacity=".5"/></g><text x="930" y="515" class="compass">N</text><text x="45" y="628" class="sea-label">THE WANDERING SEA</text>';return svg(s);
+ }
+ function region(rid,current){const r=Maps.realm(rid),g=Maps.region(rid);let s='<rect width="1000" height="660" fill="#c9c9a7"/><path d="M50 80L800 30 970 210 910 600 160 630 35 420Z" fill="#a8b690" stroke="#6c8b70" stroke-width="3"/><rect width="1000" height="660" fill="url(#grain)"/>';
+  for(const river of g.rivers)s+='<polyline points="'+line(river)+'" fill="none" stroke="#679d9c" stroke-width="18"/><polyline points="'+line(river)+'" fill="none" stroke="#a3c7bb" stroke-width="5"/>';
+  for(const road of g.roads)s+='<polyline points="'+line(road)+'" fill="none" stroke="#e4d3a4" stroke-width="13"/><polyline points="'+line(road)+'" fill="none" stroke="#8b8665" stroke-width="1.5" stroke-dasharray="4 6"/>';
+  for(const route of g.transportRoutes)s+='<polyline points="'+line(route)+'" fill="none" stroke="#4c817f" stroke-width="3" stroke-dasharray="8 7"/>';
+  for(const m of g.mountains)s+=mountain(m.x,m.y);for(const f of g.forests){s+=tree(f.x,f.y)+tree(f.x+17,f.y+12)+tree(f.x-15,f.y+9);}
+  for(const id of g.locationIds){const m=Maps.map(id),active=id===current;s+='<g data-location="'+id+'" class="atlas-location" role="button" tabindex="0" aria-label="Map marker: '+esc(m.name)+'"><circle cx="'+m.x+'" cy="'+m.y+'" r="25" fill="'+(m.playable?'#2f5748':'#677563')+'" stroke="'+(active?'#fff1b8':'#ded5ad')+'" stroke-width="'+(active?4:2)+'"/><text x="'+m.x+'" y="'+(m.y+7)+'" class="location-icon">'+symbol[m.kind]+'</text><text x="'+m.x+'" y="'+(m.y+44)+'" class="location-name">'+esc(m.name)+'</text><text x="'+m.x+'" y="'+(m.y+61)+'" class="location-status">'+(m.playable?(m.danger?'OPEN PvP · LV '+m.minLevel+'–'+m.maxLevel:'CITY LAW'):'LOCKED · '+m.kind.toUpperCase())+'</text></g>';}
+  for(const e of g.borderEntrances)s+='<text x="'+e.x+'" y="'+e.y+'" class="border-note" transform="rotate(90 '+e.x+' '+e.y+')">'+esc(e.name)+'</text>';return svg(s);
+ }
+ function projection(m,width=1000,height=660){const b=m.bounds,margin=45;return {point:p=>({x:margin+(p.x-b.minX)/(b.maxX-b.minX)*(width-margin*2),y:margin+(p.y-b.minY)/(b.maxY-b.minY)*(height-margin*2)}),inverse:(x,y)=>({x:b.minX+(x-margin)/(width-margin*2)*(b.maxX-b.minX),y:b.minY+(y-margin)/(height-margin*2)*(b.maxY-b.minY)}),sx:(width-margin*2)/(b.maxX-b.minX),sy:(height-margin*2)/(b.maxY-b.minY)};}
+ function local(id,selected){const m=Maps.map(id),t=projection(m);let s='<rect width="1000" height="660" fill="'+(m.danger?'#91a77b':'#ceccad')+'"/><rect width="1000" height="660" fill="url(#grain)"/>';
+  for(let i=0;i<20&&m.danger;i++)s+=tree(55+(i*83)%900,40+(i*137)%580);
+  for(const o of m.pavingAreas||[]){const a=t.point(o);s+='<rect x="'+a.x+'" y="'+a.y+'" width="'+o.w*t.sx+'" height="'+o.h*t.sy+'" fill="#dfd4ab"/>';}
+  for(const o of m.water||[]){const a=t.point(o);s+='<rect x="'+a.x+'" y="'+a.y+'" width="'+o.w*t.sx+'" height="'+o.h*t.sy+'" fill="#5a959a"/>';}
+  for(const r of (m.water?.length?[]:m.rivers))s+='<polyline points="'+line(r.map(t.point))+'" stroke="#6b9c9a" stroke-width="30" fill="none"/>';
+  for(const r of m.roads)s+='<polyline points="'+line(r.map(t.point))+'" stroke="#e5dab7" stroke-width="28" fill="none"/><polyline points="'+line(r.map(t.point))+'" stroke="#a6a07c" stroke-width="1" stroke-dasharray="4 5" fill="none"/>';
+  for(const o of m.bridges||[]){const a=t.point(o);s+='<rect x="'+a.x+'" y="'+a.y+'" width="'+o.w*t.sx+'" height="'+o.h*t.sy+'" fill="#cdbb8c" stroke="#7e7558"/>';}
+  for(const o of m.props||[]){if(o.kind!=='well')continue;const a=t.point(o);s+='<circle cx="'+a.x+'" cy="'+a.y+'" r="12" fill="#c8b98e" stroke="#4b7371" stroke-width="4"/><text x="'+(a.x+15)+'" y="'+a.y+'" class="poi-name">Community Well</text>';}
+  for(const b of m.buildings){const a=t.point(b);s+='<rect x="'+a.x+'" y="'+a.y+'" width="'+b.w*t.sx+'" height="'+b.h*t.sy+'" rx="3" fill="#7e9274" stroke="#4b6d57" stroke-width="2"/><text x="'+(a.x+b.w*t.sx/2)+'" y="'+(a.y+b.h*t.sy/2)+'" class="building-name">'+esc(b.name)+'</text>';}
+  for(const n of Maps.points(id).filter(n=>!['guard','resident'].includes(n.role))){const q=t.point(n),active=n.id===selected,exit=n.category==='Map exit';s+='<g data-poi="'+n.id+'" role="button" tabindex="0" class="poi '+(active?'selected':'')+'" aria-label="Map marker: '+esc(n.name)+'">'+(active?'<circle cx="'+q.x+'" cy="'+q.y+'" r="25" fill="#f0d27d" opacity=".4"/>':'')+'<circle cx="'+q.x+'" cy="'+q.y+'" r="'+(exit?12:8)+'" fill="'+(exit?'#a74e35':n.available?'#284b3d':'#7d8370')+'" stroke="#eee0b4" stroke-width="2"/><text x="'+(q.x+(q.x>700?-15:15))+'" y="'+(q.y-8)+'" text-anchor="'+(q.x>700?'end':'start')+'" class="poi-name">'+esc(n.name)+'</text></g>';}
+  s+='<g id="atlasLive"></g>';return svg(s);
+ }
+ function live(id,player,world,selected){if(player.mapId!==id)return '';const t=projection(Maps.map(id));let s='';for(const e of [...world.entities,...Object.values(world.players)]){if(e.mapId!==id||e.hp<=0||e.id===player.id)continue;const q=t.point(e);s+='<circle cx="'+q.x+'" cy="'+q.y+'" r="4" fill="'+(e.kind==='wolf'?'#91492e':e.kind==='player'?'#448aab':'#527b87')+'"/>';if(e.cityNpc&&['guard','resident'].includes(e.service))s+='<g data-poi="'+esc(e.id)+'" role="button" tabindex="0"><circle cx="'+q.x+'" cy="'+q.y+'" r="'+(selected===e.id?17:7)+'" fill="#557f75" opacity=".6"/><text x="'+(q.x+10)+'" y="'+(q.y-7)+'" class="poi-name">'+esc(e.name)+'</text></g>';}
+  if(player.aim){const pts=[player,player.aim,...player.route].map(t.point);s+='<polyline points="'+line(pts)+'" stroke="#765222" stroke-width="3" stroke-dasharray="6 5" fill="none"/>';}
+  const q=t.point(player),angle=(player.facing||0)*180/Math.PI+90;s+='<g transform="translate('+q.x+' '+q.y+') rotate('+angle+')"><circle r="13" fill="#f7da83" opacity=".3"/><path d="M0-13L8 9 0 5-8 9Z" fill="#fff3c0" stroke="#354d32" stroke-width="2"/></g>';return s;
+ }
+ function compactProjection(m,width=200,height=150){const b=m.bounds;return {point:p=>({x:8+(p.x-b.minX)/(b.maxX-b.minX)*(width-16),y:8+(p.y-b.minY)/(b.maxY-b.minY)*(height-16)}),inverse:(x,y)=>({x:b.minX+(x-8)/(width-16)*(b.maxX-b.minX),y:b.minY+(y-8)/(height-16)*(b.maxY-b.minY)})};}
+ function compact(ctx,width,height,player,world){const m=Maps.map(player.mapId);if(!m)return;const b=m.bounds,px=compactProjection(m,width,height).point;ctx.fillStyle=m.danger?'#2d5039':'#6b795b';ctx.fillRect(0,0,width,height);
+  for(const o of m.pavingAreas||[]){const q=px(o);ctx.fillStyle='#b9ab82';ctx.fillRect(q.x,q.y,o.w/(b.maxX-b.minX)*(width-16),o.h/(b.maxY-b.minY)*(height-16));}
+  for(const o of m.water||[]){const q=px(o);ctx.fillStyle='#57929a';ctx.fillRect(q.x,q.y,o.w/(b.maxX-b.minX)*(width-16),o.h/(b.maxY-b.minY)*(height-16));}
+  for(const r of m.roads){ctx.beginPath();r.map(px).forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.strokeStyle='#b6aa7a';ctx.lineWidth=3;ctx.stroke();}
+  for(const o of m.bridges||[]){const q=px(o);ctx.fillStyle='#d9c18a';ctx.fillRect(q.x,q.y,o.w/(b.maxX-b.minX)*(width-16),o.h/(b.maxY-b.minY)*(height-16));}
+  for(const o of m.buildings){const q=px(o);ctx.fillStyle='#344d3c';ctx.fillRect(q.x,q.y,o.w/(b.maxX-b.minX)*(width-16),o.h/(b.maxY-b.minY)*(height-16));}
+  for(const o of m.props||[]){if(o.kind!=='well')continue;const q=px(o);ctx.fillStyle='#d7bf84';ctx.beginPath();ctx.arc(q.x,q.y,3,0,7);ctx.fill();}
+  for(const e of [...world.entities,...Object.values(world.players)]){if(e.mapId!==m.id||e.hp<=0||e.id===player.id)continue;const q=px(e);ctx.fillStyle=e.kind==='wolf'?'#cf9371':e.kind==='bandit'?'#f0c571':'#82b1b3';ctx.beginPath();ctx.arc(q.x,q.y,e.kind==='bandit'?3:2,0,7);ctx.fill();}
+  for(const e of m.exits){const q=px(e);ctx.fillStyle='#ecba79';ctx.fillRect(q.x-3,q.y-3,6,6);}
+  for(const n of m.pois){if(!/quest|bounty|merchant|banker|trainer|government|healer|meditation/i.test(n.category))continue;const q=px(n);ctx.fillStyle='#f3da86';ctx.beginPath();ctx.moveTo(q.x,q.y-4);ctx.lineTo(q.x+3,q.y);ctx.lineTo(q.x,q.y+4);ctx.lineTo(q.x-3,q.y);ctx.closePath();ctx.fill();}
+  const q=px(player);ctx.save();ctx.translate(q.x,q.y);ctx.rotate((player.facing||0)+Math.PI/2);ctx.beginPath();ctx.moveTo(0,-7);ctx.lineTo(4,5);ctx.lineTo(0,2);ctx.lineTo(-4,5);ctx.closePath();ctx.fillStyle='#ffebae';ctx.fill();ctx.restore();
+ }
+ return {esc,world,region,local,live,compact,projection,compactProjection};
+});

@@ -1,0 +1,14 @@
+/* One terrain bitmap, rebuilt on map/scale changes. Animated objects stay in gameplay rendering. */
+(function(r){'use strict';r.YouthTerrainCache=class{
+ constructor(){this.entry=null;this.builds=0;}
+ clear(){this.entry=null;}
+ draw(area,ctx,{project,scale,palette,hash,reduced,time=0,width=Infinity,height=Infinity}){if(typeof r.OffscreenCanvas!=='function')return false;const key=area.id+':'+scale+':'+reduced;let e=this.entry;if(!e||e.key!==key){const b=area.bounds,unitX=24*scale,unitY=12*scale,minX=Math.floor(b.minX)-1,maxX=Math.ceil(b.maxX)+1,minY=Math.floor(b.minY)-1,maxY=Math.ceil(b.maxY)+1,originX=(maxY-minX)*unitX+4,originY=-(minX+minY)*unitY+4,width=Math.ceil((maxX-minY)*unitX+originX+8),height=Math.ceil((maxX+maxY)*unitY+originY+8),canvas=new r.OffscreenCanvas(width,height),c=canvas.getContext('2d'),ripples=[],point=(x,y)=>({x:(x-y)*unitX+originX,y:(x+y)*unitY+originY});
+   for(let x=minX;x<maxX;x++)for(let y=minY;y<maxY;y++){const water=(area.water||[]).some(o=>x+.5>=o.x&&x+.5<o.x+o.w&&y+.5>=o.y&&y+.5<o.y+o.h),bridge=(area.bridges||[]).some(o=>x+.5>=o.x&&x+.5<o.x+o.w&&y+.5>=o.y&&y+.5<o.y+o.h),river=area.cityDistrict?water&&!bridge:x>36&&y>34||x>42&&y>23,path=area.cityDistrict?(r.YFCityRender.road(area,x+.5,y+.5)||(area.pavingAreas||[]).some(o=>x+.5>=o.x&&x+.5<o.x+o.w&&y+.5>=o.y&&y+.5<o.y+o.h)):(y>=11&&y<=13&&x<29)||(x>=11&&x<=13&&y<24),city=area.danger===false,colors=river?palette.water:(area.cityDistrict?path:city||path)?(area.groundPalette?.stone||palette.stone):(area.groundPalette?.grass||palette.grass),a=point(x,y),v=[a,point(x+1,y),point(x+1,y+1),point(x,y+1)];c.beginPath();v.forEach((q,i)=>i?c.lineTo(q.x,q.y):c.moveTo(q.x,q.y));c.closePath();c.fillStyle=colors[Math.floor(hash(x,y)*colors.length)];c.fill();
+    if(river&&hash(x,y)>.6)ripples.push({x:x+.5,y:y+.5});
+    if(area.skinTheme==='khmer-residential'&&path)r.YFResidentialRender.pavement(x,y,{ctx:c,project:point,scale});
+    if(!reduced&&city&&hash(x,y)>.84){const q=point(x+.4,y+.5);c.strokeStyle='#b9b59820';c.lineWidth=.5;c.beginPath();c.moveTo(q.x-9*scale,q.y);c.lineTo(q.x+7*scale,q.y+4*scale);c.stroke();}
+    if(!reduced&&!city&&!path&&!river&&hash(x,y)>.76){const q=point(x+.5,y+.5);c.strokeStyle='#81935d77';c.lineWidth=1;c.beginPath();c.moveTo(q.x,q.y);c.lineTo(q.x-2*scale,q.y-4*scale);c.moveTo(q.x+3*scale,q.y);c.lineTo(q.x+4*scale,q.y-3*scale);c.stroke();}
+   }e=this.entry={key,canvas,originX,originY,ripples};this.builds++;}
+  const origin=project(0,0);ctx.drawImage(e.canvas,origin.x-e.originX,origin.y-e.originY);if(!reduced){ctx.strokeStyle='#8db7a42b';ctx.beginPath();for(const ripple of e.ripples){const q=project(ripple.x,ripple.y);if(q.x<0||q.x>width||q.y<0||q.y>height)continue;ctx.moveTo(q.x-7,q.y+Math.sin(time+ripple.x-.5));ctx.lineTo(q.x+7,q.y);}ctx.stroke();}return true;
+ }
+ };})(typeof globalThis!=='undefined'?globalThis:this);
