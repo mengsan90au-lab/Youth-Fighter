@@ -1,5 +1,7 @@
 # Shared combat contracts, version 1
 
+The five-school extension and save v6 policy are documented in [SCHOOLS-AND-CONTROLS.md](SCHOOLS-AND-CONTROLS.md). Earlier stage notes below describe the original two-path rollout; the extension adds Staff/Blade/Darts ordinary kits and school-gated learning without replacing their timing/authority contracts.
+
 All behavior below is a new Youth Fighter proposal implemented incrementally; the reference client provides no evidence for these mechanics. Canonical definitions: `public/combat-data.js`. Runtime: `public/combat.js`, integrated by `world.js`. Balancing values are provisional.
 
 ## Skill and intent

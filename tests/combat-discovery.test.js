@@ -2,7 +2,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),YF=require('../public/world.js'),Save=require('../public/progression.js'),Data=require('../public/combat-data.js');
 const {fixture,advance,attack,finish}=require('./combat-fixture.js');
 function school(path='fist'){
- const w=YF.createWorld(),p=YF.addPlayer(w,'student');YF.enterMap(w,p,'sovann-temple-ward',20,16);p.path=path;advance(w,.81);
+ const w=YF.createWorld(),p=YF.addPlayer(w,'student');require('../public/school-system.js').legacy(p);YF.enterMap(w,p,'sovann-temple-ward',20,16);p.path=path;advance(w,.81);
  YF.command(w,p.id,{type:'combat-study'});assert.ok(p.challenge);Object.assign(p,{x:23,y:17});const t=YF.target(w,'temple-dummy');YF.command(w,p.id,{type:'target',id:t.id});return {w,p,t};
 }
 function route(f,hz=60){attack(f,0);finish(f,hz);attack(f,1);finish(f,hz);attack(f,0);finish(f,hz);assert.equal(f.p.challenge.route,true);}
@@ -38,9 +38,9 @@ test('hidden activation enforces unlock/path/counter, consumes opportunity and s
   f.p.counterUntil=f.w.time+.9;YF.command(f.w,f.p.id,intent);assert.equal(f.p.action,null);
  }
 });
-test('save v5 keeps only known unlock IDs/cooldowns and clears all transient proofs',()=>{
+test('save v6 keeps only known unlock IDs/cooldowns and clears all transient proofs',()=>{
  const f=fixture();f.p.combatProgress.unlocks=['fist.basin-echo','invented'];f.p.extraCd={'fist.basin-echo':7,invented:900};f.p.challenge={route:true};f.p.counterUntil=999;f.p.pendingAttack={};
- const save=Save.snapshot(f.p);assert.equal(save.version,5);assert.deepEqual(save.combatProgress.unlocks,['fist.basin-echo']);
+ const save=Save.snapshot(f.p);assert.equal(save.version,6);assert.deepEqual(save.combatProgress.unlocks,['fist.basin-echo']);
  Save.restore(f.p,save);assert.deepEqual(f.p.combatProgress.unlocks,['fist.basin-echo']);assert.equal(f.p.extraCd['fist.basin-echo'],7);assert.equal(f.p.extraCd.invented,undefined);assert.equal(f.p.pendingAttack,null);assert.equal(f.p.challenge,null);assert.equal(f.p.counterUntil,0);
  for(const version of [2,3,4]){Save.restore(f.p,{...save,version});assert.deepEqual(f.p.combatProgress.unlocks,[]);}
 });

@@ -23,7 +23,7 @@
    if(c.receipt)html+='<p class="city-receipt" role="status">'+esc(c.receipt)+'</p>';
    if(this.mode==='journal'){for(const q of r.YFCityData.quests){const s=c.quests?.[q.id];html+='<article><h3>'+esc(q.name)+' <small>'+(s?.status||'Not accepted')+'</small></h3><p>'+esc(q.description)+'</p><p>'+q.gold+' silver / '+q.xp+' XP · '+esc(r.YFCityData.npcs.find(n=>n.id===q.giver).name)+(q.mode==='training'&&s?' · '+(s.count||0)+' / 3 strikes':'')+'</p></article>';}}
    else if(this.mode==='inventory'){
-    html+='<p>Choose your Naga path in Gear [I] or at the trainer. Equipment bonuses apply only to a compatible weapon. Durability '+(c.durability??100)+'% · upgrade '+(c.upgrade||0)+'/3.</p>';
+    html+='<p>Choose among five paths in Schools or at the trainer. Equipment bonuses apply only to a compatible owned weapon. Staff, Blade and Darts currently use innate practice weapons. Durability '+(c.durability??100)+'% · upgrade '+(c.upgrade||0)+'/3.</p>';
     for(const [slot,id]of Object.entries(c.equipment||{})){const i=r.YFCityData.items.find(i=>i.id===id);html+='<p>'+esc(slot)+': '+esc(i?.name)+b('city-unequip','Unequip',{slot})+'</p>';}
     for(const i of r.YFCityData.items.filter(i=>c.inventory?.[i.id]>0))html+='<article><h3>'+esc(i.name)+' × '+c.inventory[i.id]+'</h3><p>'+esc(this.stats(i))+'</p>'+(['weapon','armour','accessory','costume'].includes(i.type)?b('city-equip','Equip',{item:i.id}):i.type==='consumable'?b('city-use','Use',{item:i.id}):'')+'</article>';
     if(!r.YFCity.inventoryCount(c))html+='<p>Your inventory is empty. Quartermaster Kiri in Market Ward offers a delivery that earns enough silver for your first weapon.</p>';
@@ -35,7 +35,7 @@
     if(n.role==='banker'){html+='<h3>Bank balance: '+(c.bankGold||0)+' silver</h3>'+b('city-deposit','Deposit 10 silver',{amount:10},p.gold<10)+b('city-withdraw','Withdraw 10 silver',{amount:10},c.bankGold<10);for(const i of r.YFCityData.items){if(c.inventory?.[i.id])html+=b('city-store','Store '+i.name,{item:i.id},Object.values(c.equipment||{}).includes(i.id));if(c.storage?.[i.id])html+=b('city-retrieve','Retrieve '+i.name+' × '+c.storage[i.id],{item:i.id});}}
     if(n.role==='blacksmith')html+='<p>Upgrade caps at +3, one damage per tier. Maximum gear bonus remains small. Selling or storing an equipped item is blocked.</p>'+b('city-repair','Repair weapon · 4 silver',{},c.durability>=100||!c.equipment?.weapon)+b('city-upgrade','Upgrade · '+25*((c.upgrade||0)+1)+' silver',{},c.upgrade>=3||!c.equipment?.weapon);
     if(['innkeeper','meditation','healer'].includes(n.role))html+=b('city-rest',n.role==='healer'?'Clinic care - 5 silver':n.service==='well'?'Rest by the well - free':n.role==='meditation'?'Meditate · free':'Rest · 5 silver',{},world.time<(c.restUntil||0));
-    if(n.role==='trainer')html+=b('equip','Choose Naga Fist',{path:'fist'})+b('equip','Choose Naga Spear',{path:'spear'})+b('walk','Walk to practice dummy',{target:'temple-dummy'});
+    if(n.role==='trainer')html+='<p>Open Schools for school quests, reputation and skill lessons.</p>'+r.YFSchoolData.schools.map(s=>b('equip','Choose '+s.name,{path:s.id})).join('')+b('walk','Walk to practice dummy',{target:'temple-dummy'});
    }
    $('#cityServiceBody').innerHTML=html;
   }

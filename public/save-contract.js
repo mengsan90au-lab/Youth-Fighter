@@ -1,7 +1,7 @@
 /* Shared validation contract for saves and network commands. */
 (function(root,factory){if(typeof module==='object')module.exports=factory();else root.YFSaveContract=factory();})(typeof globalThis!=='undefined'?globalThis:this,()=>{
  'use strict';
- const allowedVersions=new Set([2,3,4,5]);
+ const allowedVersions=new Set([2,3,4,5,6]);
  const clampNumber=(value,min,max)=>Number.isFinite(value)?Math.min(Math.max(value,min),max):null;
  function validateSaveData(data, options={}){
   const errors=[];
@@ -14,7 +14,7 @@
   else if(mapLookup.map && typeof mapLookup.map==='function' && !mapLookup.map(data.mapId)){
     errors.push(`Save payload references an unknown mapId: ${data.mapId}.`);
   }
-  if(data.level!==undefined && !(Number.isFinite(data.level)&&data.level>=1&&data.level<=100)){errors.push('Player level is out of range.');}
+  if(data.level!==undefined && !(Number.isFinite(data.level)&&data.level>=1&&data.level<=999)){errors.push('Player level is out of range.');}
   if(data.xp!==undefined && !(Number.isFinite(data.xp)&&data.xp>=0)){errors.push('Player xp is invalid.');}
   if(data.gold!==undefined && !(Number.isFinite(data.gold)&&data.gold>=0&&data.gold<=999999)){errors.push('Player gold is invalid.');}
   if(data.hp!==undefined && !(Number.isFinite(data.hp)&&data.hp>=0)){errors.push('Player hp is invalid.');}
@@ -30,7 +30,7 @@
   const normalized={
    version:Number.parseInt(data.version,10),
    mapId:data.mapId,
-   level:clampNumber(data.level,1,100),
+   level:clampNumber(data.level,1,999),
    xp:clampNumber(data.xp,0,999999),
    gold:clampNumber(data.gold,0,999999),
    hp:clampNumber(data.hp,0,999999),

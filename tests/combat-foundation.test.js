@@ -2,7 +2,8 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const YF=require('../public/world.js'),Data=require('../public/combat-data.js'),Save=require('../public/progression.js'),Animation=require('../public/hero-animation.js');
 function fixture(path='fist',kind='training'){
- const w=YF.createWorld();w.entities=[];const p=YF.addPlayer(w,'hero');Object.assign(p,{mapId:'bamboo-grove',x:24,y:12,path});
+ const w=YF.createWorld();w.entities=[];const p=YF.addPlayer(w,'hero');require('../public/school-system.js').legacy(p); // Existing trained-character regression fixture.
+Object.assign(p,{mapId:'bamboo-grove',x:24,y:12,path});
  const t={id:'target',kind,mapId:p.mapId,x:25,y:12,hp:10000,maxHp:10000,homeX:25,homeY:12,cd:99};w.entities.push(t);
  YF.command(w,p.id,{type:'target',id:t.id});return {w,p,t};
 }

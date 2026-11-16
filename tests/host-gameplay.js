@@ -20,4 +20,15 @@ async function strike(c,intent){
  await c.event(e=>e.actionId===start.actionId&&e.result==='complete','attack completion');
  return [...c.events.values()].filter(e=>e.actionId===start.actionId);
 }
-module.exports={walk,travel,strike};
+async function firstLesson(c,path){
+ c.send({type:'equip',path});c.send({type:'movement-style',style:'run'});
+ await c.until(()=>c.player().schoolProgress.active===path,'enroll school');
+ await travel(c,'sovann-temple-ward');await walk(c,21.5,17);
+ c.send({type:'target',id:'temple-dummy'});c.send({type:'school-quest-accept',quest:'discipline'});
+ await c.until(()=>c.player().schoolProgress.records[path].quest?.id==='discipline','discipline quest');
+ for(let i=0;i<3;i++){await c.until(()=>c.player().cd[0]===0,'practice cooldown');await strike(c,{skill:0});}
+ c.send({type:'school-quest-claim'});await c.until(()=>c.player().schoolProgress.records[path].completed.includes('discipline'),'quest reward');
+ const heavy=require('../public/combat-data.js').forPath(path)[1];c.send({type:'school-learn',skillId:heavy.id});
+ await c.until(()=>c.player().schoolProgress.records[path].learned.includes(heavy.id),'earned second skill');
+}
+module.exports={walk,travel,strike,firstLesson};

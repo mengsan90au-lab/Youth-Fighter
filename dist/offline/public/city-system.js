@@ -1,6 +1,6 @@
 /* Authoritative city services: commands contain intents, never prices or rewards. */
 (function(r,f){if(typeof module==='object')module.exports=f(require('./city-data.js'),require('./map-catalog.js'));else r.YFCity=f(r.YFCityData,r.YFMaps);})(typeof globalThis!=='undefined'?globalThis:this,(Data,Maps)=>{
- 'use strict';const items=new Map(Data.items.map(i=>[i.id,i])),npcs=new Map(Data.npcs.map(n=>[n.id,n])),quests=new Map(Data.quests.map(q=>[q.id,q]));
+ 'use strict';const XP=typeof module==='object'?require('./experience.js'):globalThis.YFExperience;const items=new Map(Data.items.map(i=>[i.id,i])),npcs=new Map(Data.npcs.map(n=>[n.id,n])),quests=new Map(Data.quests.map(q=>[q.id,q]));
  const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),integer=(v,max=999999)=>Number.isInteger(v)&&v>=0&&v<=max;
  const blank=()=>({inventory:{},storage:{},bankGold:0,equipment:{},quests:{},upgrade:0,durability:100,restUntil:0,conversation:null,receipt:'',reputation:0});
  function init(p){p.city=blank();return p.city;}
@@ -16,7 +16,7 @@
  function change(c,id,amount,store='inventory'){c[store][id]=(c[store][id]||0)+amount;if(!c[store][id])delete c[store][id];}
  function activeNpc(w,p,id){const n=npcs.get(id),entity=w.entities.find(e=>e.id===id&&e.mapId===p.mapId);return n&&entity?.hp>0&&n.mapId===p.mapId&&distance(p,entity)<=2.8&&p.hp>0&&p.jail<=0?n:null;}
  function say(w,p,message){p.city.receipt=message;w.events.push({id:++w.seq,text:message,x:p.x,y:p.y,mapId:p.mapId,kind:'city'});if(w.events.length>40)w.events.shift();}
- function reward(p,q){p.gold+=q.gold;p.xp+=q.xp;while(p.xp>=p.level*100){p.xp-=p.level*100;p.level++;p.maxHp=120+(p.level-1)*15;p.hp=p.maxHp;}p.city.reputation++;}
+ function reward(p,q){p.gold=Math.min(999999,p.gold+q.gold);XP.award(p,q.xp);p.city.reputation++;}
  function command(w,p,a){if(typeof a.type!=='string')return false;if(!p.city)init(p);const c=p.city;
   if(a.type==='city-use'){const item=items.get(a.item);if(!item||item.type!=='consumable'||!(c.inventory[item.id]>0)||p.jail>0||p.hp<=0)return true;if(p.hp>=p.maxHp&&p.energy>=100){say(w,p,'Health and energy are already full.');return true;}change(c,item.id,-1);p.hp=Math.min(p.maxHp,p.hp+(item.heal||0));p.energy=Math.min(100,p.energy+(item.energy||0));say(w,p,'Used '+item.name+'.');return true;}
   if(a.type==='city-equip'){const item=items.get(a.item);if(!item||!['weapon','armour','accessory','costume'].includes(item.type)||!(c.inventory[item.id]>0)||p.wanted>0||p.jail>0||Maps.map(p.mapId)?.danger!==false||p.cd.some(t=>t>0))return true;

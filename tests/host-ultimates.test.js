@@ -1,7 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
 const YF=require('../public/world.js'),Combat=require('../public/combat.js'),Data=require('../public/combat-data.js');
-const {host}=require('./host-fixture.js'),{travel,strike}=require('./host-gameplay.js');
+const {host}=require('./host-fixture.js'),{travel,strike,firstLesson}=require('./host-gameplay.js');
 
 // Intent-only player driver. All observations come from broadcast snapshots.
 async function earnFocus(c,needed){
@@ -41,7 +41,7 @@ test('actual host accepts earned standard and enhanced ultimates for each path',
  await Promise.all(['fist','spear'].flatMap(path=>[false,true].map(enhanced=>t.test(path+' '+(enhanced?'enhanced':'standard'),async t=>{
   const server=await host(t),c=await server.connect(path+' ultimate'),observer=await server.connect('Observer');
   c.send({type:'equip',path});c.send({type:'movement-style',style:'run'});await c.until(()=>c.player().path===path,'choose path');
-  await travel(c,'bamboo-grove');await earnFocus(c,enhanced?70:60);
+  await firstLesson(c,path);await travel(c,'bamboo-grove');await earnFocus(c,enhanced?70:60);
   const earned=c.player().focus;assert.ok(earned<=100);assert.ok(c.player().kills>0);
   await approach(c,'bandit');
   if(enhanced){
