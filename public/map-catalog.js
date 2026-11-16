@@ -15,5 +15,36 @@
  function travelRoute(from,to){if(from===to)return [];const seen=new Set([from]),queue=[{id:from,path:[]}];while(queue.length){const n=queue.shift();for(const exit of map(n.id)?.exits||[]){if(!map(exit.toMap)?.playable||seen.has(exit.toMap))continue;const path=[...n.path,{mapId:n.id,exitId:exit.id,toMap:exit.toMap,name:exit.name,x:exit.x,y:exit.y}];if(exit.toMap===to)return path;seen.add(exit.toMap);queue.push({id:exit.toMap,path});}}return null;}
  function points(id){const m=map(id);return m?[...m.pois,...m.exits.map(e=>({...e,category:'Map exit',available:true}))]:[];}
  function find(id,query=''){const q=query.trim().toLowerCase();return points(id).filter(n=>(n.name+' '+n.category).toLowerCase().includes(q));}
- return {data,map,realm,region,districts:id=>data.locations.filter(m=>m.cityId===id),contains,blocked,travelRoute,points,find};
+ function validateMapEntry(id,entry,errors,sourceData=data){
+  if(!entry||typeof entry!=='object'){errors.push(`Map entry ${id} must be an object.`);return;}
+  if(!id||!String(id).trim()){errors.push('Encountered a map without a valid ID.');}
+  if(!entry.name||typeof entry.name!=='string'){errors.push(`Map ${id} is missing a valid name.`);}
+  if(!entry.bounds||typeof entry.bounds!=='object'){errors.push(`Map ${id} is missing bounds.`);return;}
+  const locationMap=new Map(Array.isArray(sourceData.locations)?sourceData.locations.map(m=>[m.id,m]):[]);
+  const resolveKnownMap=(mapId)=>locationMap.get(mapId) || map(mapId);
+  const containsLocal=(mapId,x,y)=>{const b=resolveKnownMap(mapId)?.bounds;if(!b)return false;return x>=b.minX&&x<=b.maxX&&y>=b.minY&&y<=b.maxY;};
+  const {minX,maxX,minY,maxY}=entry.bounds;
+  if(!Number.isFinite(minX)||!Number.isFinite(maxX)||!Number.isFinite(minY)||!Number.isFinite(maxY)){errors.push(`Map ${id} has invalid numeric bounds.`);}
+  else if(maxX<minX||maxY<minY){errors.push(`Map ${id} has inverted bounds.`);}
+  if(entry.spawn && (!Number.isFinite(entry.spawn.x)||!Number.isFinite(entry.spawn.y))){errors.push(`Map ${id} has an invalid spawn.`);}
+  else if(entry.spawn && !containsLocal(id,entry.spawn.x,entry.spawn.y)){errors.push(`Map ${id} spawn is outside the valid bounds.`);}
+  if(Array.isArray(entry.exits)){
+    for(const exit of entry.exits){
+      if(!exit||typeof exit!=='object'){errors.push(`Map ${id} contains an invalid exit definition.`);continue;}
+      if(!exit.id||!exit.toMap){errors.push(`Map ${id} exit ${exit.id||'unknown'} is missing a stable identifier or destination.`);continue;}
+      if(!resolveKnownMap(exit.toMap)){errors.push(`Map ${id} exit ${exit.id} points to an unknown map: ${exit.toMap}.`);continue;}
+      if(!Number.isFinite(exit.x)||!Number.isFinite(exit.y)){errors.push(`Map ${id} exit ${exit.id} has invalid coordinates.`);continue;}
+      if(!containsLocal(id,exit.x,exit.y)){errors.push(`Map ${id} exit ${exit.id} is outside bounds.`);}
+      if(entry.spawn && exit.toMap===id){errors.push(`Map ${id} exit ${exit.id} loops back to the same map without a destination change.`);}
+    }
+  }
+ }
+ function validateWorldData(customData=data){
+  const errors=[]; const locations=Array.isArray(customData.locations)?customData.locations:[];
+  const seen=new Set();
+  for(const [idx,entry] of locations.entries()){const id=entry&&typeof entry.id==='string'?entry.id:String(idx);if(seen.has(id)){errors.push(`Duplicate map ID detected: ${id}.`);continue;}seen.add(id);validateMapEntry(id,entry,errors,customData);}
+  if(Array.isArray(customData.realms)){for(const realm of customData.realms){if(!realm||typeof realm!=='object'){errors.push('A realm definition is invalid.');continue;}if(!realm.id){errors.push('Realm missing an ID.');continue;}if(!realm.name){errors.push(`Realm ${realm.id} is missing a name.`);} if(realm.locationIds && Array.isArray(realm.locationIds)){for(const id of realm.locationIds){if(!locations.some(m=>m.id===id)){errors.push(`Realm ${realm.id} references unknown map ID ${id}.`);}}}}}
+  return {valid:errors.length===0,errors};
+ }
+ return {data,map,realm,region,districts:id=>data.locations.filter(m=>m.cityId===id),contains,blocked,travelRoute,points,find,validateMapEntry,validateWorldData};
 });

@@ -11,3 +11,15 @@ The current art pipeline remains 2D sprites. It does not provide an authored 3D 
 Source: public/movement-styles.js for shared rules; public/world.js for authority/collision; public/hero-locomotion.js and hero-motion-render.js for presentation; public/performance.js for timing/interpolation; public/map-renderer.js for local mini-maps; public/motion-studio.js for isolated review/lab; server.js for LAN hosting. Artwork is under art/ and runtime textures under public/assets/.
 
 Developer commands: npm test; npm run check; npm run build. Optional Python/Pillow verification: python tools/verify-movement-styles.py. Optional native Canvas capture/benchmark instructions are in MOVEMENT-STYLES.md. No npm dependencies are needed for ordinary game/server play; optional capture tools require @napi-rs/canvas.
+
+## Engineering documentation
+- [docs/architecture/ARCHITECTURE_OVERVIEW.md](./docs/architecture/ARCHITECTURE_OVERVIEW.md)
+- [docs/architecture/SYSTEM_DEPENDENCIES.md](./docs/architecture/SYSTEM_DEPENDENCIES.md)
+- [docs/architecture/DATA_CONTRACTS.md](./docs/architecture/DATA_CONTRACTS.md)
+- [docs/architecture/CLIENT_SERVER_BOUNDARIES.md](./docs/architecture/CLIENT_SERVER_BOUNDARIES.md)
+- [docs/world/WORLD_STRUCTURE.md](./docs/world/WORLD_STRUCTURE.md)
+- [docs/management/DEVELOPMENT_ROADMAP.md](./docs/management/DEVELOPMENT_ROADMAP.md)
+- [docs/management/GITHUB_WORKFLOW.md](./docs/management/GITHUB_WORKFLOW.md)
+- [docs/management/DEFINITION_OF_DONE.md](./docs/management/DEFINITION_OF_DONE.md)
+- [docs/testing/TEST_STRATEGY.md](./docs/testing/TEST_STRATEGY.md)
+- [CONTRIBUTING.md](./CONTRIBUTING.md)
