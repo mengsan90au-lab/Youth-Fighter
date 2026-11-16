@@ -1,0 +1,27 @@
+# Shared combat contracts, version 1
+
+All behavior below is a new Youth Fighter proposal implemented incrementally; the reference client provides no evidence for these mechanics. Canonical definitions: `public/combat-data.js`. Runtime: `public/combat.js`, integrated by `world.js`. Balancing values are provisional.
+
+## Skill and intent
+
+The immutable registry validates unique stable IDs, path, weapon identity, role, geometry, damage formula, energy, cooldown, startup/active/recovery, ordered hit schedule, movement, interrupts/cancels, statuses, PvP scale, combo tags, unlock and presentation references. Times are simulation **seconds**, distances are map gameplay units. Paths remain `fist` and `spear`. The compatibility adapter accepts `{type:'attack',skill:0..2,pvp?:boolean}` or `{type:'attack',skillId:string,pvp?:boolean}`; if both selectors are supplied they must agree. `p.target` is selected through a target command. Unknown/wrong-path IDs, malformed selectors, incompatible equipment and ineligible targets fail without spending. Client damage, time, hit, unlock and resource fields have no effect. Runtime command shape validation applies at `YF.command`, shared by solo and host. No unbounded command queue.
+
+## Action and lifecycle
+
+Transient action: unique `actorId:worldActionSequence` ID, skill/target/path/map/weapon captured at start, locked facing, startAt/endAt, timings, next hit ordinal, consumed ordinal/target keys, and explicit city-attack permission. Actor position is the origin; movement is held during commitment. Map collision remains `world.move`/`maps.blocked`. No lunge is authoritative in the foundation. Fist uses unarmed hands or compatible wraps; spear has an innate designated path spear, with optional owned reed-spear bonuses. Broken durability removes the existing equipment bonus, not the path weapon. Path switching safely unequips incompatible owned weapons into the retained inventory.
+
+Transitions: ready → startup → active → recovery → ready. Startup includes `[start, start+startup)`; active includes `[start+startup, start+startup+active)`; recovery ends at endAt. A hit at a boundary is due when `time + 1e-9 >= scheduled time`. At each outer step (finite positive dt, at most .1s), simulation splits at all action/hit/phase boundaries. Even a step crossing several boundaries consumes each hit ordinal exactly once. Equal-time actors resolve in stable player insertion order. Collision/AI movement can still differ by up to one outer simulation step; tests declare supported tolerances. Render FPS does not enter these rules.
+
+Energy and cooldown spend together at accepted start, never at button press or impact. Interrupted or missed attacks receive **no refund**. Traveling cancels before movement between maps; arrest and defeat cancel before returning the actor; disconnect deletes the actor; restore clears transient actions, navigation, targeting and duels. Equipment and path changes cannot run during an action. A removed/dead/cross-map/protected primary causes a miss at that strike, without target substitution. The foundation does not add stagger, dodge or guard until their dependent stage.
+
+At impact, revalidate each victim: alive, different actor, same map, not jailed, independently eligible PvP/sparring/wanted status, reach and unobstructed sampled segment (≤.08 units). Single skills affect only the primary. Foundation area parity affects the primary plus wolves/bandits within the circle, maximum eight; it never silently expands to peaceful bystanders. Every affected victim passes permission checks. Consensual sparring clamps to 1 HP and ends reciprocally. Existing law, durability, training and kill rewards run only after a confirmed eligible hit. Defeated NPCs cannot be re-hit. Later multihits require explicit per-target limits and player-return protection.
+
+## Events and persistence
+
+Combat event v1 includes numeric monotonically increasing `id`, stable `eventId=combat:id`, actionId, skillId, actorId, relevant targetId, mapId, simulation time and outer tick, result/phase, hitOrdinal when applicable, and position. Events are bounded to 128 entries; text events retain legacy IDs in the same sequence. Renderers deduplicate by increasing ID; a reconnect starts from the welcome sequence. Replayed snapshots never resolve hits or award resources. Events are best-effort LAN presentation, not a durable replay log; missed snapshots may lose cosmetic effects. Gameplay is in world snapshots. Never reward by consuming presentation events.
+
+Save v4 remains compatible with v2/v3/v4 in the foundation: existing progression and sanitized city state are persistent. Action, combo, buffer, Focus and defense are transient until an explicit later contract says otherwise. Local save data is never sent at online join. Online reconnect starts a fresh session character.
+
+## Future stages (not foundation completion claims)
+
+Combos require authoritative outcomes, bounded buffer/window, target continuity and finite branches. Hidden techniques require teachable challenges, persistent validated unlock IDs and simulation enforcement. Focus requires real outcome caps/exclusions and reset rules. Ultimates require explicit multihit schedules, telegraph/counterplay, per-target limits and bounded enhancement. Unity can translate these contracts only after a real project compiles; no renderer or Unity project replacement is part of this work. Spatial indexing and interest management remain future scale work; queries currently filter the small same-map world.
