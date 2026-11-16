@@ -67,3 +67,11 @@ test('reduced-effects telegraphs and HUD consume snapshots without mutation',()=
  const ctx=new Proxy({}, {get:(_,k)=>()=>calls.push(k),set:()=>true});View.draw(ctx,[f.p],{project:(x,y)=>({x,y}),time:0,scale:1,reduced:true});
  assert.ok(calls.includes('stroke'));assert.match(View.status(f.p,0),/STARTUP/);assert.equal(JSON.stringify(f.w),before);
 });
+test('River-Step Counter requires an actual timed dodge and continues against that attacker only',()=>{
+ for(const branch of [0,2])for(const hz of [20,60]){
+  const f=pair();YF.command(f.w,f.q.id,{type:'dodge',x:0,y:1});attack(f,0);advance(f.w,.12,hz);assert.equal(f.q.combo.id,'fist.river-step-counter');assert.equal(f.q.combo.targetId,f.p.id);
+  advance(f.w,.34,hz);YF.command(f.w,f.q.id,{type:'attack',skill:1});assert.equal(f.q.action.comboLink.id,'fist.river-step-counter');advance(f.w,f.q.action.endAt-f.w.time,hz);assert.equal(f.q.combo.stage,2);
+  YF.command(f.w,f.q.id,{type:'attack',skill:branch});advance(f.w,f.q.action.endAt-f.w.time,hz);assert.equal(f.q.combo,null);assert.ok(f.w.events.some(e=>e.result==='combo-complete'&&e.comboId==='fist.river-step-counter'));
+ }
+ const f=pair();YF.command(f.w,f.q.id,{type:'dodge',x:0,y:1});advance(f.w,.5);assert.equal(f.q.combo,null);
+});
