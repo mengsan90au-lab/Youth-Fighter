@@ -1,6 +1,6 @@
 # Combat preview acceptance — 16 November 2026
 
-Overall status: **partial development preview; full combat release acceptance is not met**. Ordinary skills, linked routes, hidden techniques, defense and ultimates are implemented in shared simulation with automated evidence. Browser playability/visual QA and physical LAN feel remain unverified. All PRs are drafts and main remains at the recoverable baseline.
+Overall status: **partial development preview; full combat release acceptance is not met**. This table records the original two-path combat scope. The repository owner has since merged that work; the school feature starts at upstream main 60f15d4. The five-school scope, mouse controls, lesson gates and level-999 progression are documented in [SCHOOLS-AND-CONTROLS.md](SCHOOLS-AND-CONTROLS.md), with current results in VALIDATION.md. Browser playability/visual QA and physical LAN feel remain unverified.
 
 | Requirement | Status | Evidence / remaining work |
 |---|---|---|
@@ -29,4 +29,4 @@ Validation commands and per-stage results are in VALIDATION.md. The new source/p
 
 All new combat content has provisional balance. No live JX2 gameplay, hidden rules, frame performance or ultimate system was verified. See ASSET-PROVENANCE.md for asset boundaries and placeholders.
 
-Review draft PRs in dependency order: #12 (audit/foundation) → #14 (combos/defense) → #16 (discovery) → #18 (Focus/ultimates) → #20 (integration) → network-validation follow-up. Retarget dependent PRs as earlier branches merge only after review and user approval; no automatic merge is authorized. Parent tracker: #10; reused authority/save tickets remain linked rather than duplicated.
+Historical review order was #12 (audit/foundation) → #14 (combos/defense) → #16 (discovery) → #18 (Focus/ultimates) → #20 (integration) → #21 (network validation). Those changes were subsequently merged by the repository owner. The five-school feature is isolated on feature/schools-and-controls; no automatic merge is authorized. Parent tracker: #10; reused authority/save tickets remain linked rather than duplicated.

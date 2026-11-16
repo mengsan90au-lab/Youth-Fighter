@@ -2,8 +2,9 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const Data=require('../public/combat-data.js');
 const {host}=require('./host-fixture.js');
-const {walk,travel,strike}=require('./host-gameplay.js');
+const {walk,travel,strike,firstLesson}=require('./host-gameplay.js');
 async function learn(c,path){
+ await firstLesson(c,path);
  c.send({type:'equip',path});c.send({type:'movement-style',style:'run'});
  await c.until(()=>c.player().path===path,'choose '+path);
  await travel(c,'sovann-temple-ward');await walk(c,20,16);
@@ -12,14 +13,20 @@ async function learn(c,path){
  await strike(c,{skill:0});await strike(c,{skill:1});await strike(c,{skill:0});
  assert.equal(c.player().challenge.route,true);
  assert.equal(c.player().focus,0,'training cannot award Focus');
- c.send({type:'combat-practice'});await c.until(()=>!!c.player().drill,'practice anticipation');
- const impact=c.player().drill.impactAt;
- await c.until(w=>w.time>=impact-.17,'early guard timing');c.send({type:'guard'});
  const hidden=Data.skills.find(s=>s.path===path&&s.category==='hidden');
- await c.until(()=>c.player().combatProgress.unlocks.includes(hidden.id),'earned hidden unlock');
+ // The UI receives 10Hz snapshots, while a timed guard has a 120ms window.
+ // Schedule intent from anticipation and allow the same retry available to players.
+ for(let attempt=0;attempt<3&&!c.player().combatProgress.unlocks.includes(hidden.id);attempt++){
+  await c.until(w=>!c.player().drill&&!c.player().action&&w.time>=c.player().drillReadyAt&&w.time>=c.player().defenseReadyAt,'practice ready');
+  c.send({type:'combat-practice'});await c.until(()=>!!c.player().drill,'practice anticipation');
+  const impact=c.player().drill.impactAt,delay=Math.max(0,(impact-c.state.time-.15)*1000);
+  await new Promise(resolve=>setTimeout(resolve,delay));c.send({type:'guard'});
+  await c.until(w=>w.time>=impact+.1,'practice result');
+ }
+ assert.ok(c.player().combatProgress.unlocks.includes(hidden.id),'earned hidden unlock');
  await c.until(()=>!c.player().action,'guard recovery');
  const hits=(await strike(c,{skillId:hidden.id})).filter(e=>e.result==='hit');
- assert.equal(hits.length,1);assert.equal(hits[0].damage,hidden.damage);
+ assert.equal(hits.length,1);assert.equal(hits[0].damage,hidden.damage+(c.player().level-1)*3);
  assert.ok(c.player().extraCd[hidden.id]>7);
  assert.equal(c.player().counterUntil,0);assert.equal(c.player().focus,0);
  return hidden.id;

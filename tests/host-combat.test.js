@@ -14,11 +14,12 @@ test('actual host ingress owns delayed hits, rejects forged/malformed intent and
  assert.equal(welcome.state.players[id].level,1);assert.deepEqual(welcome.state.players[id].city.inventory,{});assert.equal(welcome.state.players[id].focus,0);assert.deepEqual(welcome.state.players[id].combatProgress.unlocks,[]);
  c.send({type:'target',id:'guard0'});c.send({type:'attack',skill:'bad',damage:999999});c.send({type:'move',x:'Infinity',y:0});c.send({type:'restore',version:4,level:100});c.ws.send('{');c.ws.send('[]');
  c.send({type:'attack',skillId:'fist.golden-basin-resonance',pvp:true,focus:100});c.send({type:'attack',skillId:'fist.basin-echo',unlocked:true,counterUntil:999,pvp:true});
- c.send({type:'attack',skillId:'fist.naga-awakening',pvp:true,damage:99999,focus:100,time:9000});
- const startup=await c.until(m=>m.type==='state'&&m.state.players[id]?.action?.skillId==='fist.naga-awakening');
- assert.equal(startup.state.entities.find(e=>e.id==='guard0').hp,250);assert.ok(startup.state.players[id].energy<60);
+ c.send({type:'attack',skillId:'fist.naga-awakening',pvp:true,learned:true});
+ c.send({type:'attack',skillId:'fist.naga-fist',pvp:true,damage:99999,focus:100,time:9000});
+ const startup=await c.until(m=>m.type==='state'&&m.state.players[id]?.action?.skillId==='fist.naga-fist');
+ assert.equal(startup.state.entities.find(e=>e.id==='guard0').hp,250);assert.equal(startup.state.players[id].energy,100);
  const impact=await c.until(m=>m.type==='state'&&m.state.events.some(e=>e.result==='hit'&&e.actorId===id));
- assert.equal(impact.state.entities.find(e=>e.id==='guard0').hp,208);assert.equal(impact.state.players[id].wanted,1);
+ assert.equal(impact.state.entities.find(e=>e.id==='guard0').hp,232);assert.equal(impact.state.players[id].wanted,1);
  assert.equal(impact.state.events.filter(e=>e.result==='hit'&&e.actorId===id).length,1);
  for(let i=0;i<120;i++)c.send({type:'attack',skillId:'does-not-exist',damage:99999});
  const r=client();t.after(()=>r.ws.close());await new Promise(resolve=>r.ws.addEventListener('open',resolve));r.send({type:'join',name:'Authority test',focus:100,action:{skillId:'fist.naga-awakening'}});

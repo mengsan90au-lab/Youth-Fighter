@@ -12,11 +12,12 @@ function verify(){
  const source=read('public/index.html'),names=[...source.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m=>m[1]);
  assert.equal(Object.keys(manifest.sourceHashes).filter(k=>k.endsWith('.js')).length,names.length);
  for(const before of ['command-contract.js','combat-data.js','combat-combos.js','combat-focus.js','combat.js','combat-discovery.js'])assert.ok(names.indexOf(before)>=0&&names.indexOf(before)<names.indexOf('world.js'),'Invalid dependency order: '+before);
+ for(const [before,after]of [['school-data.js','experience.js'],['experience.js','school-system.js'],['school-system.js','city-system.js'],['school-system.js','combat.js'],['keybindings.js','school-ui.js'],['school-ui.js','game.js']])assert.ok(names.indexOf(before)>=0&&names.indexOf(before)<names.indexOf(after),'Invalid school dependency order: '+before);
  const standalone=read('Youth-Fighter.html');assert.equal(standalone,read('dist/offline/Youth-Fighter.html'),'Stale packaged standalone');assert.doesNotMatch(standalone,/<script src=|<link rel="stylesheet" href=/);
  const bodies=[...standalone.matchAll(/<script(?: data-source="([^"]+)")?>([\s\S]*?)<\/script>/g)];
  for(const [,rel,body]of bodies){new vm.Script(body,{filename:rel||'embedded-assets'});if(rel)assert.equal(body,read('public/'+rel).replace(/<\/script/gi,'<\\/script'),'Stale inline script '+rel);}
  assert.equal(bodies.filter(b=>b[1]).length,names.length);
- for(const rel of ['PLAY-YOUTH-FIGHTER.cmd','Start-Youth-Fighter.cmd','server.js','COMBAT-START-HERE.md','docs/combat/ACCEPTANCE.md'])assert.equal(read(rel),read('dist/offline/'+rel),'Stale launcher/host/guide '+rel);
+ for(const rel of ['PLAY-YOUTH-FIGHTER.cmd','Start-Youth-Fighter.cmd','server.js','COMBAT-START-HERE.md','docs/combat/ACCEPTANCE.md','docs/combat/SCHOOLS-AND-CONTROLS.md'])assert.equal(read(rel),read('dist/offline/'+rel),'Stale launcher/host/guide '+rel);
  return {scripts,inlineScripts:bodies.length,sourceHashes:Object.keys(manifest.sourceHashes).length,artifacts:['public/index.html','Youth-Fighter.html','dist/offline/public/index.html','dist/offline/Youth-Fighter.html'],guiVerified:false};
 }
 if(require.main===module)console.log(JSON.stringify(verify(),null,2));

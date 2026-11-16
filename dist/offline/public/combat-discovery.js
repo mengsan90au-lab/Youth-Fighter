@@ -8,7 +8,7 @@
   if(p.hp<=0||p.jail>0||p.wanted>0||p.action||p.staggerUntil>w.time)return true;
   if(a.type==='combat-study'){
    if(!h.activeNpc(w,p,'temple-trainer'))return true;
-   const id=ids.find(id=>Data.get(id).path===p.path);if(p.combatProgress.unlocks.includes(id)){say(w,p,h,Data.get(id).name+': use 4 after a timed dodge or early guard. Energy cost and 8s cooldown apply.');return true;}
+   const id=ids.find(id=>Data.get(id).path===p.path);if(!id){say(w,p,h,'Advanced discoveries for this school are planned for a later update.');return true;}if(p.combatProgress.unlocks.includes(id)){say(w,p,h,Data.get(id).name+': use 4 after a timed dodge or early guard. Energy cost and 8s cooldown apply.');return true;}
    p.challenge={path:p.path,mapId:p.mapId,until:w.time+180,route:false};p.drill=null;
    say(w,p,h,'Dara: land 1 → 2 → 1 or 3 on the Temple dummy. Then use Practice pulse and guard just before the orange strike.');return true;
   }

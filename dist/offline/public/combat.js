@@ -1,6 +1,6 @@
 /* Shared simulation actions. Rendering and client timers never resolve hits. */
 (function(r,f){if(typeof module==='object')module.exports=f(require('./combat-data.js'),require('./combat-combos.js'),require('./combat-focus.js'));else r.YFCombat=f(r.YFCombatData,r.YFCombos,r.YFFocus);})(typeof globalThis!=='undefined'?globalThis:this,(Data,Combos,Focus)=>{
- 'use strict';const EPS=1e-9;
+ 'use strict';const EPS=1e-9;const Schools=typeof module==='object'?require('./school-system.js'):globalThis.YFSchools;
  function init(p){p.combatVersion=1;p.action=null;p.combatState='ready';p.combo=null;p.comboLockUntil=0;p.pendingAttack=null;p.defenseReadyAt=0;p.staggerUntil=0;p.staggerResistUntil=0;p.counterUntil=0;Focus.reset(p);}
  function emit(w,p,a,result,extra={}){
   const e={id:++w.seq,version:1,kind:'combat',text:'',actionId:a?.id||null,skillId:a?.skillId||null,actorId:p.id,targetId:a?.targetId||null,mapId:p.mapId,time:w.time,tick:w.tick||0,result,x:p.x,y:p.y,...extra};
@@ -8,12 +8,12 @@
  }
  function clear(w,p,reason='interrupted'){if(p.action)emit(w,p,p.action,'interrupted',{reason});p.action=null;p.pendingAttack=null;p.ultimateLink=null;Combos.clear(p);p.counterUntil=0;if(['travel','arrest','defeat','path-change','invalid-owner'].includes(reason)){p.challenge=null;p.drill=null;p.hiddenFollowupUntil=0;p.comboLockUntil=0;p.staggerUntil=0;p.staggerResistUntil=0;Focus.reset(p);}p.combatState=p.hp>0?'ready':'defeated';}
  function state(a,time){if(time+EPS<a.startAt+a.startup)return 'startup';if(time+EPS<a.startAt+a.startup+a.active)return 'active';return 'recovery';}
- function equipmentValid(p){const id=p.city?.equipment?.weapon;return !id||(p.path==='fist'?id==='wraps':id==='reed-spear');}
+ function equipmentValid(p){const id=p.city?.equipment?.weapon;return !id||id===Schools.data.get(p.path)?.equipment;}
  function lineClear(p,t,blocked){const d=Math.hypot(t.x-p.x,t.y-p.y),n=Math.max(1,Math.ceil(d/.08));for(let i=0;i<=n;i++)if(blocked(p.x+(t.x-p.x)*i/n,p.y+(t.y-p.y)*i/n,p.mapId))return false;return true;}
  function inShape(p,t,s,a,blocked){const d=Math.hypot(t.x-p.x,t.y-p.y);if(d>s.range+EPS||!lineClear(p,t,blocked))return false;
   if(s.geometry.shape==='cone'&&d>EPS){const dot=((t.x-p.x)*Math.cos(a.facing)+(t.y-p.y)*Math.sin(a.facing))/d;if(dot<Math.cos(s.geometry.halfAngle))return false;}return true;}
  function start(w,p,intent,hooks){const s=Data.resolve(p.path,intent),t=hooks.target(w,p.target);
-  if(!s||p.hp<=0||p.jail>0||p.travelLock>0||!equipmentValid(p)||p.staggerUntil>w.time+EPS)return false;
+  if(!s||!Schools.canUse(p,s)||p.hp<=0||p.jail>0||p.travelLock>0||!equipmentValid(p)||p.staggerUntil>w.time+EPS)return false;
   if(s.unlock.kind==='discovery'&&!p.combatProgress?.unlocks.includes(s.id)||s.counterRequired&&!(p.counterUntil>w.time))return false;
   const enhanced=s.category==='ultimate'&&intent.enhanced===true,linkEligible=p.ultimateLink&&p.ultimateLink.path===p.path&&p.ultimateLink.targetId===p.target&&p.ultimateLink.until>w.time;
   if(enhanced&&!linkEligible)return false;const energyCost=enhanced?s.enhancement.energyCost:s.cost,focusCost=enhanced?s.enhancement.focusCost:s.focusCost||0;
