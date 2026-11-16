@@ -5,12 +5,15 @@ const path = require('node:path');
 
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist', 'offline');
+const sourceHashes = require('./build-standalone.js').generate();
 const requiredFiles = [
   'public',
   'server.js',
   'README.md',
   'START-HERE.md',
   'Youth-Fighter.html',
+  'PLAY-YOUTH-FIGHTER.cmd',
+  'Start-Youth-Fighter.cmd',
 ];
 
 for (const relPath of requiredFiles) {
@@ -20,6 +23,8 @@ for (const relPath of requiredFiles) {
   }
 }
 
+if(path.resolve(distDir)!==path.join(rootDir,'dist','offline'))throw new Error('Unsafe build output path');
+console.log('Replacing verified build output: '+distDir);
 fs.rmSync(distDir, { recursive: true, force: true });
 fs.mkdirSync(distDir, { recursive: true });
 
@@ -47,6 +52,7 @@ const manifest = {
   name: 'Youth Fighter Offline Build',
   generatedAt: new Date().toISOString(),
   version: '0.10.0',
+  sourceHashes,
   entryPoints: [
     'public/index.html',
     'Youth-Fighter.html',
