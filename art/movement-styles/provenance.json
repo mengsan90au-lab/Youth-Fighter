@@ -1,0 +1,119 @@
+{
+  "assets": [
+    {
+      "style": "slow",
+      "direction": "E",
+      "sha256": "b6f1d580837fc6ab12c12d2a6306b0a02cc83561b04502d69a1e0af68405cbee",
+      "original": "art/movement-styles/slow-e.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "slow",
+      "direction": "SE",
+      "sha256": "12382b8d68a1a25e3ffeadbeef2e5319ef16aa2b60277d32c300281fab01a460",
+      "original": "art/movement-styles/slow-se.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "slow",
+      "direction": "S",
+      "sha256": "b58893d741bddb7aa1aeaa5fa81e331810b7f344ae71a0bb99da8342f3698299",
+      "original": "art/movement-styles/slow-s.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "slow",
+      "direction": "SW",
+      "sha256": "4176435fd41dba99c0d058a333a182fbde20d52527b26cb068da2b927e36397e",
+      "original": "art/movement-styles/slow-sw.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "slow",
+      "direction": "W",
+      "sha256": "968f629553109987fd87d0f1acff0045879131b3b2d368e9b49294a44ea8cbb1",
+      "original": "art/movement-styles/slow-w.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "slow",
+      "direction": "NW",
+      "sha256": "36613eabade9ef4abbfaa46022608c1ef0015833c36799995ae468964493b323",
+      "original": "art/movement-styles/slow-nw.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "slow",
+      "direction": "N",
+      "sha256": "79fb2198c7b771c6accd1b083f1f7ecd4a8173252c1eeb4cbe396b6a753cb4a9",
+      "original": "art/movement-styles/slow-n.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "slow",
+      "direction": "NE",
+      "sha256": "64d5d53feb7671f9282f31f87fc643d561142809840127620236e63c50196e8f",
+      "original": "art/movement-styles/slow-ne.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "run",
+      "direction": "E",
+      "sha256": "e60ee5922d44a1c475cc8cfe71d0c023380c555aa2d509ebf9fcb447242f8789",
+      "original": "art/movement-styles/run-e.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "run",
+      "direction": "SE",
+      "sha256": "6c1dc66ca16fe75aed6f50c68f336ab19b3e2fe6d917d482a300f06f4c8268d5",
+      "original": "art/movement-styles/run-se.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "run",
+      "direction": "S",
+      "sha256": "cdae98da3469fa783f877d219cd60031ba1aa47a4b76a283025e211d12c0b5d2",
+      "original": "art/movement-styles/run-s.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "run",
+      "direction": "SW",
+      "sha256": "7006c51b344a56fd63acc57035d82df4054707f3e451ca451898f53aaae9b464",
+      "original": "art/movement-styles/run-sw.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "run",
+      "direction": "W",
+      "sha256": "5acfeafdce3542b9c32cba257839562063918a8ff54e0acdaefa64d3979dc050",
+      "original": "art/movement-styles/run-w.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "run",
+      "direction": "NW",
+      "sha256": "6dc9ce654d0dcfb3e78e8633ebd552c43bd8c9af7347f83d2490d48e52a23b8b",
+      "original": "art/movement-styles/run-nw.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "run",
+      "direction": "N",
+      "sha256": "d46c3745b6b574bd06db7db1cc5250f785deeb48cccd7a3d95150e0ba3a1b438",
+      "original": "art/movement-styles/run-n.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    },
+    {
+      "style": "run",
+      "direction": "NE",
+      "sha256": "a755d4bcd56b299e4390214852671800264dc529e1a7a30d7beb83bdc86784a0",
+      "original": "art/movement-styles/run-ne.png",
+      "source": "image_gen; independent 12-pose directional sprite candidate, not rig export"
+    }
+  ],
+  "normalWalkOriginals": "../hero-motion",
+  "status": "Three independent generated directional pose sets. Displacement-driven phase and shared ground pivots reduce sliding; not skeletal IK or a single rig. Detail drift and imperfect foot contact remain.",
+  "calibration": "2 world units per metre, provisional game convention; no anatomical rig"
+}

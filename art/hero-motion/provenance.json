@@ -1,0 +1,56 @@
+{
+  "assets": [
+    {
+      "direction": "E",
+      "original": "art/hero-motion/walk-e.png",
+      "sha256": "50b01aede137491e42e7c64cc0eb1875e8297a11b2b06da0b13adfd1486fea09",
+      "method": "image_gen using Golden Naga visual references; individually generated views, not rig exports"
+    },
+    {
+      "direction": "SE",
+      "original": "art/hero-motion/walk-se.png",
+      "sha256": "0c87b9bc1b654500d9919e0f10e4e2733d269ad07150bf0e57f06edf190f2d75",
+      "method": "image_gen using Golden Naga visual references; individually generated views, not rig exports"
+    },
+    {
+      "direction": "S",
+      "original": "art/hero-motion/walk-s.png",
+      "sha256": "889f1292f2a4af2e167fd8c6d2b3c7f932a22ebed395c365240998da77cd4113",
+      "method": "image_gen using Golden Naga visual references; individually generated views, not rig exports"
+    },
+    {
+      "direction": "SW",
+      "original": "art/hero-motion/walk-sw.png",
+      "sha256": "60e75f286824273d3e44af962df940affd211166d2efdbf4d845c79d6a8f3840",
+      "method": "image_gen using Golden Naga visual references; individually generated views, not rig exports"
+    },
+    {
+      "direction": "W",
+      "original": "art/hero-motion/walk-w.png",
+      "sha256": "06fa8fb993477529b8d52296783094abd65a68981c78ac7435f3d4b836dae81b",
+      "method": "image_gen using Golden Naga visual references; individually generated views, not rig exports"
+    },
+    {
+      "direction": "NW",
+      "original": "art/hero-motion/walk-nw.png",
+      "sha256": "302f1051ffbd0530f8ab6e41cfef80940d3ef7331579bf422f2a4fbc2f0cedb9",
+      "method": "image_gen using Golden Naga visual references; individually generated views, not rig exports"
+    },
+    {
+      "direction": "N",
+      "original": "art/hero-motion/walk-n.png",
+      "sha256": "b53169a2e5824dc809eebc425a0eb13195fc5d91108bfd6de629b8c664958483",
+      "method": "image_gen using Golden Naga visual references; individually generated views, not rig exports"
+    },
+    {
+      "direction": "NE",
+      "original": "art/hero-motion/walk-ne.png",
+      "sha256": "fdf895c47e341e87d382664b447d3e9921624b43a76def366879cc661aa13635",
+      "method": "image_gen using Golden Naga visual references; individually generated views, not rig exports"
+    }
+  ],
+  "idle": "idle.png",
+  "turnaround": "turnaround.png",
+  "rejectedDraft": "Opaque 24-pose sheet excluded",
+  "limits": "Generated directional sprite artwork; not derived from one rigged 3D source. Identity and foot contact need an authored-rig cleanup pass."
+}

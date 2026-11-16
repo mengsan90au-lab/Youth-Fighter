@@ -1,0 +1,1395 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "world",
+      "width": 1672,
+      "height": 941,
+      "path": "assets/maps/world.webp",
+      "nativeResource": "ApprovedAtlas/world",
+      "original": "art/approved-originals/world.png",
+      "sha256": "ee54979bc584eb513c0ebad52d97eec09fc088c73e6caba1b535c8696c2193c5",
+      "bakedLabels": true
+    },
+    {
+      "id": "golden-naga",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/maps/golden-naga.webp",
+      "nativeResource": "ApprovedAtlas/golden-naga",
+      "original": "art/approved-originals/golden-naga.png",
+      "sha256": "e622d2da752f3877be653cf535c09a5e26de90782c813e286e44caf69cd4f7f8",
+      "bakedLabels": true
+    },
+    {
+      "id": "jade-peak",
+      "width": 1671,
+      "height": 941,
+      "path": "assets/maps/jade-peak.webp",
+      "nativeResource": "ApprovedAtlas/jade-peak",
+      "original": "art/approved-originals/jade-peak.png",
+      "sha256": "eaea7933e34e9222786e786bd3dec9ce3735d85c5b38ed50b46c5132c37e77ab",
+      "bakedLabels": true
+    },
+    {
+      "id": "moonblade",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/maps/moonblade.webp",
+      "nativeResource": "ApprovedAtlas/moonblade",
+      "original": "art/approved-originals/moonblade.png",
+      "sha256": "037087f92db3b5f261682634fc22580d9acac1276a571883bda27722c56092d9",
+      "bakedLabels": true
+    },
+    {
+      "id": "skybreak",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/maps/skybreak.webp",
+      "nativeResource": "ApprovedAtlas/skybreak",
+      "original": "art/approved-originals/skybreak.png",
+      "sha256": "3286a310fa82b99e10ed6f7874b9845a8dad9358d086064d8a1f01fe0c56461f",
+      "bakedLabels": true
+    },
+    {
+      "id": "sunwave",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/maps/sunwave.webp",
+      "nativeResource": "ApprovedAtlas/sunwave",
+      "original": "art/approved-originals/sunwave.png",
+      "sha256": "fd3be9306a849e07f1449f029b92cc62f1633c51b0d3abec145d197121476fdb",
+      "bakedLabels": true
+    },
+    {
+      "id": "serpent-lotus",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/maps/serpent-lotus.webp",
+      "nativeResource": "ApprovedAtlas/serpent-lotus",
+      "original": "art/approved-originals/serpent-lotus.png",
+      "sha256": "38ce49aeb4be9b9ab91853097ae5305087ccd5e8597889006b7caa1047375e66",
+      "bakedLabels": true
+    },
+    {
+      "id": "storm-reed",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/maps/storm-reed.webp",
+      "nativeResource": "ApprovedAtlas/storm-reed",
+      "original": "art/approved-originals/storm-reed.png",
+      "sha256": "6b925b0e2429d14f37479c9c481eb52bfcd6c4a43ea20801a7129f96d0f2b70d",
+      "bakedLabels": true
+    },
+    {
+      "id": "iron-banner",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/maps/iron-banner.webp",
+      "nativeResource": "ApprovedAtlas/iron-banner",
+      "original": "art/approved-originals/iron-banner.png",
+      "sha256": "04be912d13aa4eb7d09057ca151ba60e9331387566eb80cbaaca6c3fab0c6ddb",
+      "bakedLabels": true
+    }
+  ],
+  "world": {
+    "assetId": "world",
+    "markers": [
+      {
+        "id": "golden-naga",
+        "name": "Golden Naga Basin",
+        "realmId": "golden-naga",
+        "x": 0.631,
+        "y": 0.632,
+        "rank": "realm",
+        "baked": true,
+        "hit": {
+          "x": 0.619,
+          "y": 0.601,
+          "w": 0.18919999999999998,
+          "h": 0.049
+        }
+      },
+      {
+        "id": "jade-peak",
+        "name": "Jade Peak Dominion",
+        "realmId": "jade-peak",
+        "x": 0.565,
+        "y": 0.263,
+        "rank": "realm",
+        "baked": true,
+        "hit": {
+          "x": 0.5529999999999999,
+          "y": 0.232,
+          "w": 0.19779999999999998,
+          "h": 0.049
+        }
+      },
+      {
+        "id": "moonblade",
+        "name": "Moonblade Archipelago",
+        "realmId": "moonblade",
+        "x": 0.894,
+        "y": 0.469,
+        "rank": "realm",
+        "baked": true,
+        "hit": {
+          "x": 0.74,
+          "y": 0.445,
+          "w": 0.17,
+          "h": 0.08
+        }
+      },
+      {
+        "id": "skybreak",
+        "name": "Skybreak Peninsula",
+        "realmId": "skybreak",
+        "x": 0.819,
+        "y": 0.248,
+        "rank": "realm",
+        "baked": true,
+        "hit": {
+          "x": 0.8069999999999999,
+          "y": 0.217,
+          "w": 0.19300000000000006,
+          "h": 0.049
+        }
+      },
+      {
+        "id": "sunwave",
+        "name": "Sunwave Coast",
+        "realmId": "sunwave",
+        "x": 0.171,
+        "y": 0.681,
+        "rank": "realm",
+        "baked": true,
+        "hit": {
+          "x": 0.159,
+          "y": 0.65,
+          "w": 0.1548,
+          "h": 0.049
+        }
+      },
+      {
+        "id": "serpent-lotus",
+        "name": "Serpent Lotus Realm",
+        "realmId": "serpent-lotus",
+        "x": 0.423,
+        "y": 0.576,
+        "rank": "realm",
+        "baked": true,
+        "hit": {
+          "x": 0.411,
+          "y": 0.5449999999999999,
+          "w": 0.20639999999999997,
+          "h": 0.049
+        }
+      },
+      {
+        "id": "storm-reed",
+        "name": "Storm Reed Isles",
+        "realmId": "storm-reed",
+        "x": 0.846,
+        "y": 0.788,
+        "rank": "realm",
+        "baked": true,
+        "hit": {
+          "x": 0.834,
+          "y": 0.757,
+          "w": 0.16600000000000004,
+          "h": 0.049
+        }
+      },
+      {
+        "id": "iron-banner",
+        "name": "Iron Banner Frontier",
+        "realmId": "iron-banner",
+        "x": 0.218,
+        "y": 0.231,
+        "rank": "realm",
+        "baked": true,
+        "hit": {
+          "x": 0.206,
+          "y": 0.2,
+          "w": 0.21499999999999997,
+          "h": 0.049
+        }
+      }
+    ]
+  },
+  "regions": [
+    {
+      "realmId": "golden-naga",
+      "assetId": "golden-naga",
+      "markers": [
+        {
+          "id": "golden-naga-naga-royal-city",
+          "name": "Naga Royal City",
+          "realmId": "golden-naga",
+          "x": 0.407,
+          "y": 0.557,
+          "rank": "capital",
+          "baked": true,
+          "hit": {
+            "x": 0.39499999999999996,
+            "y": 0.526,
+            "w": 0.15549999999999997,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sovann-city",
+          "name": "Sovann City",
+          "realmId": "golden-naga",
+          "x": 0.238,
+          "y": 0.651,
+          "rank": "main",
+          "baked": true,
+          "hit": {
+            "x": 0.22599999999999998,
+            "y": 0.62,
+            "w": 0.12549999999999997,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "golden-naga-angkor-gate-village",
+          "name": "Angkor Gate Town",
+          "realmId": "golden-naga",
+          "x": 0.339,
+          "y": 0.232,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.327,
+            "y": 0.201,
+            "w": 0.1422,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "golden-naga-lotus-market-town",
+          "name": "Lotus Reservoir Town",
+          "realmId": "golden-naga",
+          "x": 0.709,
+          "y": 0.382,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.697,
+            "y": 0.351,
+            "w": 0.16699999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "golden-naga-red-krama-outpost",
+          "name": "Red Krama Outpost",
+          "realmId": "golden-naga",
+          "x": 0.057,
+          "y": 0.381,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.045,
+            "y": 0.35,
+            "w": 0.14839999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "golden-naga-basin-trade-port",
+          "name": "Basin Trade Port",
+          "realmId": "golden-naga",
+          "x": 0.247,
+          "y": 0.882,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.235,
+            "y": 0.851,
+            "w": 0.1422,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "golden-naga-veal-rice-village",
+          "name": "Veal Rice Village",
+          "realmId": "golden-naga",
+          "x": 0.355,
+          "y": 0.759,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.34299999999999997,
+            "y": 0.728,
+            "w": 0.14839999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "golden-naga-prey-sralau-town",
+          "name": "Prey Sralau Town",
+          "realmId": "golden-naga",
+          "x": 0.71,
+          "y": 0.575,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.698,
+            "y": 0.5439999999999999,
+            "w": 0.1422,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "golden-naga-sandstone-crossing",
+          "name": "Sandstone Crossing",
+          "realmId": "golden-naga",
+          "x": 0.357,
+          "y": 0.543,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.22039999999999998,
+            "y": 0.512,
+            "w": 0.1546,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "bamboo-grove",
+          "name": "Bamboo Grove",
+          "realmId": "golden-naga",
+          "x": 0.32,
+          "y": 0.704,
+          "rank": "monster",
+          "baked": false,
+          "hit": {
+            "x": 0.308,
+            "y": 0.689,
+            "w": 0.13,
+            "h": 0.045
+          }
+        },
+        {
+          "id": "golden-naga-crocodile-marsh",
+          "name": "Crocodile Marsh",
+          "realmId": "golden-naga",
+          "x": 0.445,
+          "y": 0.804,
+          "rank": "monster",
+          "baked": false,
+          "hit": {
+            "x": 0.433,
+            "y": 0.789,
+            "w": 0.13,
+            "h": 0.045
+          }
+        }
+      ]
+    },
+    {
+      "realmId": "jade-peak",
+      "assetId": "jade-peak",
+      "markers": [
+        {
+          "id": "jade-peak-jade-crown",
+          "name": "Tianjing City",
+          "realmId": "jade-peak",
+          "x": 0.441,
+          "y": 0.543,
+          "rank": "capital",
+          "baked": true,
+          "hit": {
+            "x": 0.429,
+            "y": 0.512,
+            "w": 0.14049999999999999,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-cloudstep-city",
+          "name": "Long River City",
+          "realmId": "jade-peak",
+          "x": 0.59,
+          "y": 0.742,
+          "rank": "main",
+          "baked": true,
+          "hit": {
+            "x": 0.578,
+            "y": 0.711,
+            "w": 0.15549999999999997,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-qinghe-town",
+          "name": "Qinghe Town",
+          "realmId": "jade-peak",
+          "x": 0.66,
+          "y": 0.231,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.648,
+            "y": 0.2,
+            "w": 0.11120000000000001,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-pine-gate",
+          "name": "Pine Gate Town",
+          "realmId": "jade-peak",
+          "x": 0.294,
+          "y": 0.385,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.18219999999999997,
+            "y": 0.354,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-cloud-pass-town",
+          "name": "Cloud Pass Town",
+          "realmId": "jade-peak",
+          "x": 0.169,
+          "y": 0.227,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.157,
+            "y": 0.196,
+            "w": 0.13599999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-willow-ford",
+          "name": "Willow Ford",
+          "realmId": "jade-peak",
+          "x": 0.41,
+          "y": 0.362,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.39799999999999996,
+            "y": 0.33099999999999996,
+            "w": 0.11120000000000001,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-lotus-mirror-town",
+          "name": "Lotus Mirror Town",
+          "realmId": "jade-peak",
+          "x": 0.636,
+          "y": 0.575,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.624,
+            "y": 0.5439999999999999,
+            "w": 0.14839999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-stone-reed-town",
+          "name": "Stone Reed Town",
+          "realmId": "jade-peak",
+          "x": 0.575,
+          "y": 0.673,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.563,
+            "y": 0.642,
+            "w": 0.13599999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-eastwater-port",
+          "name": "Eastwater Port",
+          "realmId": "jade-peak",
+          "x": 0.708,
+          "y": 0.805,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.696,
+            "y": 0.774,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "jade-peak-autumn-vale",
+          "name": "Autumn Vale",
+          "realmId": "jade-peak",
+          "x": 0.328,
+          "y": 0.843,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.316,
+            "y": 0.8119999999999999,
+            "w": 0.11120000000000001,
+            "h": 0.049
+          }
+        }
+      ]
+    },
+    {
+      "realmId": "moonblade",
+      "assetId": "moonblade",
+      "markers": [
+        {
+          "id": "moonblade-tsukihara",
+          "name": "Tsukihana City",
+          "realmId": "moonblade",
+          "x": 0.462,
+          "y": 0.399,
+          "rank": "capital",
+          "baked": true,
+          "hit": {
+            "x": 0.45,
+            "y": 0.368,
+            "w": 0.148,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "moonblade-crescent-harbour",
+          "name": "Shiosaki City",
+          "realmId": "moonblade",
+          "x": 0.757,
+          "y": 0.628,
+          "rank": "main",
+          "baked": true,
+          "hit": {
+            "x": 0.745,
+            "y": 0.597,
+            "w": 0.14049999999999999,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "moonblade-white-pine-town",
+          "name": "White Pine Town",
+          "realmId": "moonblade",
+          "x": 0.82,
+          "y": 0.444,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.8079999999999999,
+            "y": 0.41300000000000003,
+            "w": 0.13599999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "moonblade-mist-reed-town",
+          "name": "Mist Reed Town",
+          "realmId": "moonblade",
+          "x": 0.231,
+          "y": 0.346,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.219,
+            "y": 0.31499999999999995,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "moonblade-moonwater-port",
+          "name": "Moonwater Port",
+          "realmId": "moonblade",
+          "x": 0.29,
+          "y": 0.607,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.27799999999999997,
+            "y": 0.576,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "moonblade-cedar-hollow",
+          "name": "Cedar Hollow",
+          "realmId": "moonblade",
+          "x": 0.585,
+          "y": 0.708,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.573,
+            "y": 0.6769999999999999,
+            "w": 0.11739999999999999,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "moonblade-crane-bay",
+          "name": "Crane Bay",
+          "realmId": "moonblade",
+          "x": 0.676,
+          "y": 0.335,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.664,
+            "y": 0.30400000000000005,
+            "w": 0.0988,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "moonblade-lantern-isle-town",
+          "name": "Lantern Isle Town",
+          "realmId": "moonblade",
+          "x": 0.329,
+          "y": 0.74,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.317,
+            "y": 0.709,
+            "w": 0.14839999999999998,
+            "h": 0.049
+          }
+        }
+      ]
+    },
+    {
+      "realmId": "skybreak",
+      "assetId": "skybreak",
+      "markers": [
+        {
+          "id": "skybreak-skybreak-court",
+          "name": "Haneul City",
+          "realmId": "skybreak",
+          "x": 0.326,
+          "y": 0.589,
+          "rank": "capital",
+          "baked": true,
+          "hit": {
+            "x": 0.314,
+            "y": 0.5579999999999999,
+            "w": 0.12549999999999997,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "skybreak-red-cliff-town",
+          "name": "Seongrim City",
+          "realmId": "skybreak",
+          "x": 0.304,
+          "y": 0.82,
+          "rank": "main",
+          "baked": true,
+          "hit": {
+            "x": 0.1815,
+            "y": 0.7889999999999999,
+            "w": 0.14049999999999999,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "skybreak-dawn-pass-town",
+          "name": "Dawn Pass Town",
+          "realmId": "skybreak",
+          "x": 0.454,
+          "y": 0.231,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.442,
+            "y": 0.2,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "skybreak-pinewater-town",
+          "name": "Pinewater Town",
+          "realmId": "skybreak",
+          "x": 0.188,
+          "y": 0.509,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.176,
+            "y": 0.478,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "skybreak-silver-reed-town",
+          "name": "Silver Reed Town",
+          "realmId": "skybreak",
+          "x": 0.165,
+          "y": 0.605,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.153,
+            "y": 0.574,
+            "w": 0.1422,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "skybreak-eastcliff-port",
+          "name": "Eastcliff Port",
+          "realmId": "skybreak",
+          "x": 0.759,
+          "y": 0.527,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.747,
+            "y": 0.496,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "skybreak-snow-gate-outpost",
+          "name": "Snow Gate Outpost",
+          "realmId": "skybreak",
+          "x": 0.631,
+          "y": 0.329,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.619,
+            "y": 0.29800000000000004,
+            "w": 0.14839999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "skybreak-southwind-town",
+          "name": "Southwind Town",
+          "realmId": "skybreak",
+          "x": 0.303,
+          "y": 0.901,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.291,
+            "y": 0.87,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        }
+      ]
+    },
+    {
+      "realmId": "sunwave",
+      "assetId": "sunwave",
+      "markers": [
+        {
+          "id": "sunwave-sunwave-bay",
+          "name": "Baia Clara",
+          "realmId": "sunwave",
+          "x": 0.789,
+          "y": 0.635,
+          "rank": "capital",
+          "baked": true,
+          "hit": {
+            "x": 0.777,
+            "y": 0.604,
+            "w": 0.11800000000000001,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sunwave-marimba-harbour",
+          "name": "Rio Verde",
+          "realmId": "sunwave",
+          "x": 0.592,
+          "y": 0.481,
+          "rank": "main",
+          "baked": true,
+          "hit": {
+            "x": 0.58,
+            "y": 0.44999999999999996,
+            "w": 0.1105,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sunwave-porto-sol",
+          "name": "Porto Sol",
+          "realmId": "sunwave",
+          "x": 0.615,
+          "y": 0.819,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.603,
+            "y": 0.7879999999999999,
+            "w": 0.0988,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sunwave-serra-gate",
+          "name": "Serra Gate",
+          "realmId": "sunwave",
+          "x": 0.417,
+          "y": 0.478,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.40499999999999997,
+            "y": 0.44699999999999995,
+            "w": 0.105,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sunwave-palmwater-town",
+          "name": "Palmwater Town",
+          "realmId": "sunwave",
+          "x": 0.283,
+          "y": 0.202,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.27099999999999996,
+            "y": 0.171,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sunwave-dune-spring",
+          "name": "Dune Spring",
+          "realmId": "sunwave",
+          "x": 0.304,
+          "y": 0.362,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.292,
+            "y": 0.33099999999999996,
+            "w": 0.11120000000000001,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sunwave-golden-reed-town",
+          "name": "Golden Reed Town",
+          "realmId": "sunwave",
+          "x": 0.689,
+          "y": 0.583,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.6769999999999999,
+            "y": 0.5519999999999999,
+            "w": 0.1422,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sunwave-mangrove-landing",
+          "name": "Mangrove Landing",
+          "realmId": "sunwave",
+          "x": 0.634,
+          "y": 0.262,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.622,
+            "y": 0.231,
+            "w": 0.1422,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "sunwave-southstone-town",
+          "name": "Southstone Town",
+          "realmId": "sunwave",
+          "x": 0.433,
+          "y": 0.728,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.421,
+            "y": 0.697,
+            "w": 0.13599999999999998,
+            "h": 0.049
+          }
+        }
+      ]
+    },
+    {
+      "realmId": "serpent-lotus",
+      "assetId": "serpent-lotus",
+      "markers": [
+        {
+          "id": "serpent-lotus-lotus-crown",
+          "name": "Padmavati City",
+          "realmId": "serpent-lotus",
+          "x": 0.354,
+          "y": 0.439,
+          "rank": "capital",
+          "baked": true,
+          "hit": {
+            "x": 0.34199999999999997,
+            "y": 0.40800000000000003,
+            "w": 0.148,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-red-earth-town",
+          "name": "Suryagarh City",
+          "realmId": "serpent-lotus",
+          "x": 0.652,
+          "y": 0.519,
+          "rank": "main",
+          "baked": true,
+          "hit": {
+            "x": 0.64,
+            "y": 0.488,
+            "w": 0.148,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-lotus-ford",
+          "name": "Lotus Ford",
+          "realmId": "serpent-lotus",
+          "x": 0.438,
+          "y": 0.257,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.426,
+            "y": 0.226,
+            "w": 0.105,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-amber-pass-town",
+          "name": "Amber Pass Town",
+          "realmId": "serpent-lotus",
+          "x": 0.197,
+          "y": 0.303,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.185,
+            "y": 0.272,
+            "w": 0.13599999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-tamarind-vale",
+          "name": "Tamarind Vale",
+          "realmId": "serpent-lotus",
+          "x": 0.484,
+          "y": 0.734,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.472,
+            "y": 0.703,
+            "w": 0.1236,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-sandwell-town",
+          "name": "Sandwell Town",
+          "realmId": "serpent-lotus",
+          "x": 0.194,
+          "y": 0.445,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.182,
+            "y": 0.41400000000000003,
+            "w": 0.1236,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-riverveil-port",
+          "name": "Riverveil Port",
+          "realmId": "serpent-lotus",
+          "x": 0.257,
+          "y": 0.664,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.245,
+            "y": 0.633,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-banyan-crossing",
+          "name": "Banyan Crossing",
+          "realmId": "serpent-lotus",
+          "x": 0.505,
+          "y": 0.41,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.493,
+            "y": 0.379,
+            "w": 0.13599999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-copper-ridge-town",
+          "name": "Copper Ridge Town",
+          "realmId": "serpent-lotus",
+          "x": 0.685,
+          "y": 0.412,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.673,
+            "y": 0.381,
+            "w": 0.14839999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "serpent-lotus-south-lotus-town",
+          "name": "South Lotus Town",
+          "realmId": "serpent-lotus",
+          "x": 0.348,
+          "y": 0.882,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.33599999999999997,
+            "y": 0.851,
+            "w": 0.1422,
+            "h": 0.049
+          }
+        }
+      ]
+    },
+    {
+      "realmId": "storm-reed",
+      "assetId": "storm-reed",
+      "markers": [
+        {
+          "id": "storm-reed-storm-reed-haven",
+          "name": "Amihan City",
+          "realmId": "storm-reed",
+          "x": 0.245,
+          "y": 0.827,
+          "rank": "capital",
+          "baked": true,
+          "hit": {
+            "x": 0.23299999999999998,
+            "y": 0.7959999999999999,
+            "w": 0.12549999999999997,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "storm-reed-twin-stick-harbour",
+          "name": "Tala Harbour",
+          "realmId": "storm-reed",
+          "x": 0.392,
+          "y": 0.279,
+          "rank": "main",
+          "baked": true,
+          "hit": {
+            "x": 0.38,
+            "y": 0.24800000000000003,
+            "w": 0.13299999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "storm-reed-reedwater-town",
+          "name": "Reedwater Town",
+          "realmId": "storm-reed",
+          "x": 0.132,
+          "y": 0.44,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.12000000000000001,
+            "y": 0.40900000000000003,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "storm-reed-luntian-grove",
+          "name": "Luntian Grove",
+          "realmId": "storm-reed",
+          "x": 0.422,
+          "y": 0.635,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.41,
+            "y": 0.604,
+            "w": 0.1236,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "storm-reed-coral-passage-town",
+          "name": "Coral Passage Town",
+          "realmId": "storm-reed",
+          "x": 0.538,
+          "y": 0.441,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.526,
+            "y": 0.41000000000000003,
+            "w": 0.1546,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "storm-reed-eastwind-town",
+          "name": "Eastwind Town",
+          "realmId": "storm-reed",
+          "x": 0.878,
+          "y": 0.413,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.866,
+            "y": 0.382,
+            "w": 0.1236,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "storm-reed-bamboo-reach",
+          "name": "Bamboo Reach",
+          "realmId": "storm-reed",
+          "x": 0.436,
+          "y": 0.192,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.424,
+            "y": 0.161,
+            "w": 0.11739999999999999,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "storm-reed-rainstone-town",
+          "name": "Rainstone Town",
+          "realmId": "storm-reed",
+          "x": 0.484,
+          "y": 0.85,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.472,
+            "y": 0.819,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "storm-reed-pearl-cove",
+          "name": "Pearl Cove",
+          "realmId": "storm-reed",
+          "x": 0.186,
+          "y": 0.567,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.174,
+            "y": 0.5359999999999999,
+            "w": 0.105,
+            "h": 0.049
+          }
+        }
+      ]
+    },
+    {
+      "realmId": "iron-banner",
+      "assetId": "iron-banner",
+      "markers": [
+        {
+          "id": "iron-banner-iron-banner-keep",
+          "name": "Alderwatch City",
+          "realmId": "iron-banner",
+          "x": 0.411,
+          "y": 0.684,
+          "rank": "capital",
+          "baked": true,
+          "hit": {
+            "x": 0.39899999999999997,
+            "y": 0.653,
+            "w": 0.15549999999999997,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-oakford",
+          "name": "Westmere City",
+          "realmId": "iron-banner",
+          "x": 0.182,
+          "y": 0.737,
+          "rank": "main",
+          "baked": true,
+          "hit": {
+            "x": 0.16999999999999998,
+            "y": 0.706,
+            "w": 0.14049999999999999,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-three-lakes-town",
+          "name": "Three Lakes Town",
+          "realmId": "iron-banner",
+          "x": 0.378,
+          "y": 0.42,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.366,
+            "y": 0.389,
+            "w": 0.1422,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-highpass-town",
+          "name": "Highpass Town",
+          "realmId": "iron-banner",
+          "x": 0.837,
+          "y": 0.313,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.825,
+            "y": 0.28200000000000003,
+            "w": 0.1236,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-greyford",
+          "name": "Greyford",
+          "realmId": "iron-banner",
+          "x": 0.602,
+          "y": 0.662,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.59,
+            "y": 0.631,
+            "w": 0.0926,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-pinehaven",
+          "name": "Pinehaven",
+          "realmId": "iron-banner",
+          "x": 0.289,
+          "y": 0.203,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.27699999999999997,
+            "y": 0.17200000000000001,
+            "w": 0.0988,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-stonefield-town",
+          "name": "Stonefield Town",
+          "realmId": "iron-banner",
+          "x": 0.368,
+          "y": 0.821,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.356,
+            "y": 0.7899999999999999,
+            "w": 0.13599999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-coldwater-town",
+          "name": "Coldwater Town",
+          "realmId": "iron-banner",
+          "x": 0.351,
+          "y": 0.287,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.33899999999999997,
+            "y": 0.256,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-ridgegate-outpost",
+          "name": "Ridgegate Outpost",
+          "realmId": "iron-banner",
+          "x": 0.831,
+          "y": 0.475,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.819,
+            "y": 0.44399999999999995,
+            "w": 0.14839999999999998,
+            "h": 0.049
+          }
+        },
+        {
+          "id": "iron-banner-oakbridge-town",
+          "name": "Oakbridge Town",
+          "realmId": "iron-banner",
+          "x": 0.611,
+          "y": 0.802,
+          "rank": "small",
+          "baked": true,
+          "hit": {
+            "x": 0.599,
+            "y": 0.771,
+            "w": 0.1298,
+            "h": 0.049
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-14400F",
+    "logicalProcessors": 16,
+    "platform": "win32",
+    "release": "10.0.26300",
+    "architecture": "x64",
+    "node": "v24.22.1",
+    "viewport": "1440x900, DPR 1",
+    "renderer": "@napi-rs/canvas CPU raster; no browser/display/GPU timing"
+  },
+  "seconds": 2,
+  "results": [
+    {
+      "mapId": "sovann-market-ward",
+      "syntheticCallbackHz": 30,
+      "samples": 60,
+      "meanCallbackMs": 3.6594799999999927,
+      "p95CallbackMs": 4.218200000000024,
+      "maxCallbackMs": 4.3279,
+      "terrainBuilds": 1,
+      "heroImageDecoded": true,
+      "finalPosition": {
+        "x": 23.970232570893547,
+        "y": 18.028081660157344
+      },
+      "measurement": "Native CPU Canvas callbacks; synthetic timestamps; not browser FPS"
+    },
+    {
+      "mapId": "sovann-market-ward",
+      "syntheticCallbackHz": 60,
+      "samples": 120,
+      "meanCallbackMs": 3.938257500000001,
+      "p95CallbackMs": 4.955900000000156,
+      "maxCallbackMs": 11.347800000000007,
+      "terrainBuilds": 1,
+      "heroImageDecoded": true,
+      "finalPosition": {
+        "x": 23.970232570893547,
+        "y": 18.028081660157344
+      },
+      "measurement": "Native CPU Canvas callbacks; synthetic timestamps; not browser FPS"
+    },
+    {
+      "mapId": "sovann-market-ward",
+      "syntheticCallbackHz": 120,
+      "samples": 240,
+      "meanCallbackMs": 3.6912916666666584,
+      "p95CallbackMs": 4.30560000000014,
+      "maxCallbackMs": 5.70430000000033,
+      "terrainBuilds": 1,
+      "heroImageDecoded": true,
+      "finalPosition": {
+        "x": 23.97020906534925,
+        "y": 18.0281025748554
+      },
+      "measurement": "Native CPU Canvas callbacks; synthetic timestamps; not browser FPS"
+    },
+    {
+      "mapId": "sovann-residential-ward",
+      "syntheticCallbackHz": 30,
+      "samples": 60,
+      "meanCallbackMs": 5.152161666666613,
+      "p95CallbackMs": 5.691399999999703,
+      "maxCallbackMs": 6.019900000000234,
+      "terrainBuilds": 1,
+      "heroImageDecoded": true,
+      "finalPosition": {
+        "x": 23.970232570893547,
+        "y": 18.028081660157344
+      },
+      "measurement": "Native CPU Canvas callbacks; synthetic timestamps; not browser FPS"
+    },
+    {
+      "mapId": "sovann-residential-ward",
+      "syntheticCallbackHz": 60,
+      "samples": 120,
+      "meanCallbackMs": 5.412019999999992,
+      "p95CallbackMs": 7.525499999999738,
+      "maxCallbackMs": 8.679600000001301,
+      "terrainBuilds": 1,
+      "heroImageDecoded": true,
+      "finalPosition": {
+        "x": 23.970232570893547,
+        "y": 18.028081660157344
+      },
+      "measurement": "Native CPU Canvas callbacks; synthetic timestamps; not browser FPS"
+    },
+    {
+      "mapId": "sovann-residential-ward",
+      "syntheticCallbackHz": 120,
+      "samples": 240,
+      "meanCallbackMs": 5.123252083333364,
+      "p95CallbackMs": 6.588999999999942,
+      "maxCallbackMs": 9.456599999999526,
+      "terrainBuilds": 1,
+      "heroImageDecoded": true,
+      "finalPosition": {
+        "x": 23.97020906534925,
+        "y": 18.0281025748554
+      },
+      "measurement": "Native CPU Canvas callbacks; synthetic timestamps; not browser FPS"
+    }
+  ]
+}

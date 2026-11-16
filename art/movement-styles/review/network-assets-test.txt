@@ -1,0 +1,9 @@
+Γ£ö Real server supports 10 clients, rejects an 11th, synchronizes combat, and removes disconnects (4914.7697ms)
+Γä╣ tests 1
+Γä╣ suites 0
+Γä╣ pass 1
+Γä╣ fail 0
+Γä╣ cancelled 0
+Γä╣ skipped 0
+Γä╣ todo 0
+Γä╣ duration_ms 5003.9169

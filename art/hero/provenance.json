@@ -1,0 +1,9 @@
+{
+  "generator": "image_gen",
+  "reference_library_id": "libfile_eb1ab7ae9e808191b2986a478c7e55e5",
+  "generated_png_sha256": "a1fc88192d67233d7828ab527ff930e567159b1ad3ed53915b1e3e4b894ae8b9",
+  "runtime_sha256": "54732671bd2dc3c12b8343d9124c40c412ea622fbb9328cfae5c674020008058",
+  "runtime_codec": "lossless WebP",
+  "date": "2026-11-14",
+  "description": "Original directional animated sprite asset. Row/frame registration is metadata; this is not a UV-mapped or skinned 3D mesh."
+}

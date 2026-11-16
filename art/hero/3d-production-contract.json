@@ -1,0 +1,73 @@
+{
+  "status": "proposed authoring contract; not implemented model/importer",
+  "mesh": {
+    "format": "glTF 2.0 or Unity-ready FBX after validation",
+    "desktop_triangle_target": [
+      20000,
+      35000
+    ],
+    "lower_detail_triangle_target": [
+      10000,
+      15000
+    ],
+    "root_motion": "disabled; simulation drives position"
+  },
+  "required_bones": [
+    "root",
+    "pelvis",
+    "spine",
+    "chest",
+    "neck",
+    "head",
+    "clavicles",
+    "upper_arms",
+    "forearms",
+    "hands",
+    "fingers",
+    "thighs",
+    "calves",
+    "feet",
+    "toes"
+  ],
+  "materials": [
+    "skin",
+    "charcoal_fabric",
+    "indigo_trim",
+    "leather_wraps_boots",
+    "gold_ornament",
+    "maroon_sash"
+  ],
+  "texture_dimensions": [
+    1024,
+    2048
+  ],
+  "clips": [
+    "idle",
+    "walk",
+    "run",
+    "punch",
+    "elbow",
+    "power_action",
+    "hit",
+    "defeat"
+  ],
+  "source_of_gameplay_truth": [
+    "mapId",
+    "x",
+    "y",
+    "facing",
+    "lastStrike",
+    "strike",
+    "path",
+    "city.equipment"
+  ],
+  "not_delivered": [
+    "geometry",
+    "topology",
+    "uvs",
+    "pbr_maps",
+    "humanoid_rig",
+    "facial_blendshapes",
+    "native_animator"
+  ]
+}

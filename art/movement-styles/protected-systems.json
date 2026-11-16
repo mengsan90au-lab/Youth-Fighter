@@ -1,0 +1,13 @@
+{
+  "unchangedFiles": {
+    "public/city-data.js": "0949f787a04a8506053d6d5511dcf31fccdcb0fe1d73e09f546064268af1d293",
+    "public/city-system.js": "c7ff183b9372bc643fc2bb0140b86ded66090157c1b083c82b2665d7f5f85e96",
+    "public/navigation.js": "89953bff3184f9b242e6e61d45ef706ef817085e18961a6535cee8b4433bbd55",
+    "public/progression.js": "8882a4fb7eb925380f6fa561b4adde95b83d9c2bf05f44df01a24ee6b80a8b7f",
+    "public/map-data.json": "82de92853291a830eab1609a15235d022e590da6c8b7ece77bb422ad4f674dac",
+    "public/residential-data.js": "91bb7b526c7dbc2dc3164a58222cfb8495f56127a6221b987053d20b4fb184c5",
+    "public/hero-animation.js": "9d88afef5c19d22ce424654c1e7316781ecd674e432ad1fd0c0548d924e432e6"
+  },
+  "previousZipSHA256": "0d77af9c949536c836bf14174d0d0d9dd9a9c30436520374ef6ee82342ea455c",
+  "purpose": "Gameplay movement/renderer changed intentionally; city rules, save format and other listed systems are byte-identical to v0.9.0. Original ZIP is retained."
+}

@@ -1,0 +1,13 @@
+{
+  "generator": "image_gen",
+  "description": "Original six-cell Khmer-inspired building kit generated for Youth Fighter. Lossless WebP encoding; runtime selects source cells without stretching the map artwork.",
+  "runtime_path": "public/assets/residential/khmer-building-kit.webp",
+  "runtime_sha256": "1cc26087936f0a716f27c100331bcf6ee7061e5abf89a21b4b9229b0151d48d6",
+  "generated_png_sha256": "d10146aa7f70239168dfe3f652d60c481c7c22cadd1e69f0abdb9b2bb5ecc052",
+  "width": 1536,
+  "height": 1024,
+  "columns": 3,
+  "rows": 2,
+  "style_reference_library_id": "libfile_3a1b10b724608191a9d0488eba91a32c",
+  "date": "2026-11-13"
+}

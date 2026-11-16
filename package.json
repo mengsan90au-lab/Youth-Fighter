@@ -1,0 +1,14 @@
+{
+  "name": "youth-fighter-prototype",
+  "version": "0.10.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/*.test.js",
+    "check": "node tools/check-unity-config.js",
+    "build": "node tools/build-offline.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

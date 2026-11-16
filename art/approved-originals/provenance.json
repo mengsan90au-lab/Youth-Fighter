@@ -1,0 +1,92 @@
+[
+  {
+    "id": "world",
+    "width": 1672,
+    "height": 941,
+    "path": "assets/maps/world.webp",
+    "nativeResource": "ApprovedAtlas/world",
+    "original": "art/approved-originals/world.png",
+    "sha256": "ee54979bc584eb513c0ebad52d97eec09fc088c73e6caba1b535c8696c2193c5",
+    "bakedLabels": true
+  },
+  {
+    "id": "golden-naga",
+    "width": 1536,
+    "height": 1024,
+    "path": "assets/maps/golden-naga.webp",
+    "nativeResource": "ApprovedAtlas/golden-naga",
+    "original": "art/approved-originals/golden-naga.png",
+    "sha256": "e622d2da752f3877be653cf535c09a5e26de90782c813e286e44caf69cd4f7f8",
+    "bakedLabels": true
+  },
+  {
+    "id": "jade-peak",
+    "width": 1671,
+    "height": 941,
+    "path": "assets/maps/jade-peak.webp",
+    "nativeResource": "ApprovedAtlas/jade-peak",
+    "original": "art/approved-originals/jade-peak.png",
+    "sha256": "eaea7933e34e9222786e786bd3dec9ce3735d85c5b38ed50b46c5132c37e77ab",
+    "bakedLabels": true
+  },
+  {
+    "id": "moonblade",
+    "width": 1536,
+    "height": 1024,
+    "path": "assets/maps/moonblade.webp",
+    "nativeResource": "ApprovedAtlas/moonblade",
+    "original": "art/approved-originals/moonblade.png",
+    "sha256": "037087f92db3b5f261682634fc22580d9acac1276a571883bda27722c56092d9",
+    "bakedLabels": true
+  },
+  {
+    "id": "skybreak",
+    "width": 1536,
+    "height": 1024,
+    "path": "assets/maps/skybreak.webp",
+    "nativeResource": "ApprovedAtlas/skybreak",
+    "original": "art/approved-originals/skybreak.png",
+    "sha256": "3286a310fa82b99e10ed6f7874b9845a8dad9358d086064d8a1f01fe0c56461f",
+    "bakedLabels": true
+  },
+  {
+    "id": "sunwave",
+    "width": 1536,
+    "height": 1024,
+    "path": "assets/maps/sunwave.webp",
+    "nativeResource": "ApprovedAtlas/sunwave",
+    "original": "art/approved-originals/sunwave.png",
+    "sha256": "fd3be9306a849e07f1449f029b92cc62f1633c51b0d3abec145d197121476fdb",
+    "bakedLabels": true
+  },
+  {
+    "id": "serpent-lotus",
+    "width": 1536,
+    "height": 1024,
+    "path": "assets/maps/serpent-lotus.webp",
+    "nativeResource": "ApprovedAtlas/serpent-lotus",
+    "original": "art/approved-originals/serpent-lotus.png",
+    "sha256": "38ce49aeb4be9b9ab91853097ae5305087ccd5e8597889006b7caa1047375e66",
+    "bakedLabels": true
+  },
+  {
+    "id": "storm-reed",
+    "width": 1536,
+    "height": 1024,
+    "path": "assets/maps/storm-reed.webp",
+    "nativeResource": "ApprovedAtlas/storm-reed",
+    "original": "art/approved-originals/storm-reed.png",
+    "sha256": "6b925b0e2429d14f37479c9c481eb52bfcd6c4a43ea20801a7129f96d0f2b70d",
+    "bakedLabels": true
+  },
+  {
+    "id": "iron-banner",
+    "width": 1536,
+    "height": 1024,
+    "path": "assets/maps/iron-banner.webp",
+    "nativeResource": "ApprovedAtlas/iron-banner",
+    "original": "art/approved-originals/iron-banner.png",
+    "sha256": "04be912d13aa4eb7d09057ca151ba60e9331387566eb80cbaaca6c3fab0c6ddb",
+    "bakedLabels": true
+  }
+]
